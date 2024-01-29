@@ -1,53 +1,68 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+    --base-white: #ffffff;
+    --base-white-soft: #f8f8f8;
+    --base-white-mute: #f2f2f2;
+    --base-grey: #c9c9c9;
+    --base-grey-lighter: #eaeaea;
+    --base-grey-darker: #909090;
+    --base-black: #181818;
+    --base-black-soft: #222222;
+    --base-black-mute: #282828;
+    --base-very-light-primary: hsla(210, 100%, 97%, 1);
+    --base-lighter-primary: hsla(210, 100%, 85%, 1);
+    --base-light-primary: hsla(210, 100%, 80%, 1);
+    --base-primary: hsla(210, 100%, 70%, 1);
+    --base-dark-primary: hsla(210, 100%, 40%, 1);
+    --base-darker-primary: hsla(210, 100%, 30%, 1);
+    --base-very-dark-primary: hsla(210, 34%, 13%, 1);
+    --base-secondary: hsla(30, 100%, 70%, 1);
 }
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
+    --color-background: var(--base-very-light-primary);
+    --color-navbar-first-background: var(--base-black-mute);
+    --color-navbar-second-background: var(--base-very-light-primary);
+    --color-navbar-button-background: var(--base-dark-primary);
+    --color-navbar-button-border: var(--base-black-mute);
+    --color-navbar-button-text: var(--base-very-light-primary);
+    --color-navbar-button-hover-background: var(--base-secondary);
+    --color-navbar-button-hover-border: var(--base-very-light-primary);
+    --color-navbar-button-tooltip-text: var(--base-very-light-primary);
+    --color-navbar-button-tooltip-background: var(--base-black-mute);
+    --color-navbar-button-tooltip-border: var(--base-black-mute);
+    --color-mono-table-title-text: var(--base-very-light-primary);
+    --color-mono-table-letters-background: var(--base-dark-primary);
+    --color-mono-table-letters-hover-background: var(--base-secondary);
+    --color-mono-table-letters-hover-border: var(--base-secondary);
+    --color-mono-table-letters-text: var(--base-very-light-primary);
+    --color-mono-table-content-border: var(--base-dark-primary);
+    --color-mono-table-content-background: var(--base-very-light-primary);
+    --color-mono-table-content-hover-background: var(--base-white);
+    --color-mono-table-content-hover-border: var(--base-secondary);
+    --color-mono-table-content-text: var(--base-very-dark-primary);
+    --section-gap: 160px;
 }
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
+    --color-background: var(--base-black);
+    --color-background-soft: var(--base-black-soft);
+    --color-background-mute: var(--base-black-mute);
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
+    --color-border: var(--base-divider-dark-2);
+    --color-border-hover: var(--base-divider-dark-1);
 
     --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    --color-text: var(--base-white);
   }
+}*/
+
+/* Font related */
+:root {
+  --navbar-base-font-size: 1rem;
+  --navbar-base-font-weight: 500;
 }
 
 *,
@@ -79,7 +94,6 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
-  font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
