@@ -1,47 +1,35 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+﻿<script setup lang="ts">
+import NavBar from './components/NavBar.vue'
+import TextLetterGrid from './components/TextLetterGrid.vue'
+import DecipherLetterGrid from './components/DecipherLetterGrid.vue'
+import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <NavBar/>
   </header>
-
   <main>
-    <TheWelcome />
+    <div class="main-content-grid">
+      <TextLetterGrid/>
+      <DecipherLetterGrid/>
+      <SpanishLetterGrid/>
+    </div>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .main-content-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .table-title {
+    color: var(--base-very-dark-primary);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    margin-left: 0.5rem;
+    text-align: center;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
