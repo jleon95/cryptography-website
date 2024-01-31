@@ -17,76 +17,83 @@
 
   const items = ref(gridItemList);
 
-  function resetTableDeployment () {
-    let tableTitleContainer = document.getElementById("spanish-table-title-container");
-    let tableTitleIcon = document.getElementById("spanish-table-title-icon");
-    let tableTitleText = document.getElementById("spanish-table-title-text");
-    let tableGridContainer = document.getElementById("spanish-table-grid-container");
+  function resetTableDeployment() {
 
-    tableTitleContainer.style.width = window.getComputedStyle(tableTitleContainer).width;
+    let tableTitleContainer = document.getElementById("spanish-table-title-container")!;
+    let tableTitleIcon = document.getElementById("spanish-table-title-icon")!;
+    let tableTitleText = document.getElementById("spanish-table-title-text")!;
+    let tableGridContainer = document.getElementById("spanish-table-grid-container")!;
+
+    tableTitleContainer.style.setProperty("width", window.getComputedStyle(tableTitleContainer).getPropertyValue("width"));
     tableTitleContainer.classList.remove("expand-title-container");
     tableTitleContainer.classList.remove("shrink-title-container");
 
-    tableTitleIcon.style.opacity = window.getComputedStyle(tableTitleIcon).opacity;
+    tableTitleIcon.style.setProperty("opacity", window.getComputedStyle(tableTitleIcon).getPropertyValue("opacity"));
     tableTitleIcon.classList.remove("fade-in-info-icon");
     tableTitleIcon.classList.remove("fade-out-info-icon");
 
-    tableTitleText.style.opacity = window.getComputedStyle(tableTitleText).opacity;
+    tableTitleText.style.setProperty("opacity", window.getComputedStyle(tableTitleText).getPropertyValue("opacity"));
     tableTitleText.classList.remove("fade-in-title-text");
     tableTitleText.classList.remove("fade-out-title-text");
 
-    tableGridContainer.style.opacity = window.getComputedStyle(tableGridContainer).opacity;
+    tableGridContainer.style.setProperty("opacity", window.getComputedStyle(tableGridContainer).getPropertyValue("opacity"));
     tableGridContainer.classList.remove("inflate-table-grid");
     tableGridContainer.classList.remove("deflate-table-grid");
   }
 
-  function deployTable(event: Event) {
+  function deployTable() {
 
-    let tableTitleContainer = document.getElementById("spanish-table-title-container");
-    tableTitleContainer?.removeEventListener("click", deployTable);
-    let tableTitleIcon = document.getElementById("spanish-table-title-icon");
-    let tableTitleText = document.getElementById("spanish-table-title-text");
-    let tableGridContainer = document.getElementById("spanish-table-grid-container");
+    let tableTitleContainer = document.getElementById("spanish-table-title-container")!;
+    tableTitleContainer.removeEventListener("click", deployTable);
+    let tableTitleIcon = document.getElementById("spanish-table-title-icon")!;
+    let tableTitleText = document.getElementById("spanish-table-title-text")!;
+    let tableGridContainer = document.getElementById("spanish-table-grid-container")!;
+
+    let waitAndChangeProperty = (element: HTMLElement, property: string, newValue: string, time: number) => { setTimeout(() => element.style.setProperty(property, newValue), time) };
 
     if (!isTableDeployed) {
 
       resetTableDeployment();
-      tableTitleIcon?.classList.add("fade-out-info-icon");
-      let fadeOutTableIconDuration: number = parseFloat(window.getComputedStyle(tableTitleIcon).animationDuration);
-      setTimeout(() => tableTitleIcon.style.display = "none", fadeOutTableIconDuration * 1000);
-      tableTitleContainer?.classList.add("expand-title-container");
-      let expandTableTitleContainerDuration: number = parseFloat(window.getComputedStyle(tableTitleContainer).animationDuration)
-        + parseFloat(window.getComputedStyle(tableTitleContainer).animationDelay);
-      setTimeout(() => tableTitleText.style.display = "initial", expandTableTitleContainerDuration * 1000);
-      tableTitleText?.classList.add("fade-in-title-text");
-      let fadeInTitleTextDuration: number = parseFloat(window.getComputedStyle(tableTitleText).animationDuration) + expandTableTitleContainerDuration;
-      setTimeout(() => tableGridContainer?.classList.add("inflate-table-grid"), fadeInTitleTextDuration * 1000);
+
+      tableTitleIcon.classList.add("fade-out-info-icon");
+      let fadeOutTableIconDuration: number = parseFloat(window.getComputedStyle(tableTitleIcon).getPropertyValue("animation-duration"));
+      waitAndChangeProperty(tableTitleIcon, "display", "none", fadeOutTableIconDuration * 1000);
+
+      tableTitleContainer.classList.add("expand-title-container");
+      let expandTableTitleContainerDuration: number = parseFloat(window.getComputedStyle(tableTitleContainer).getPropertyValue("animation-duration"))
+        + parseFloat(window.getComputedStyle(tableTitleContainer).getPropertyValue("animation-delay"));
+      waitAndChangeProperty(tableTitleText, "display", "initial", expandTableTitleContainerDuration * 1000);
+
+      tableTitleText.classList.add("fade-in-title-text");
+      let fadeInTitleTextDuration: number = parseFloat(window.getComputedStyle(tableTitleText).getPropertyValue("animation-duration")) + expandTableTitleContainerDuration;
+      setTimeout(() => tableGridContainer.classList.add("inflate-table-grid"), fadeInTitleTextDuration * 1000);
 
       isTableDeployed = !isTableDeployed;
       setTimeout(() => tableTitleContainer?.addEventListener("click", deployTable), (expandTableTitleContainerDuration + fadeInTitleTextDuration) * 1000);
     }
     else {
-      tableGridContainer.style.opacity = window.getComputedStyle(tableGridContainer).opacity;
-      tableGridContainer?.classList.remove("inflate-table-grid");
-      tableGridContainer?.classList.add("deflate-table-grid");
-      let fadeOutTableGridDuration: number = parseFloat(window.getComputedStyle(tableGridContainer).animationDuration);
 
-      tableTitleText.style.opacity = window.getComputedStyle(tableTitleText).opacity;
-      tableTitleText.classList?.remove("fade-in-title-text");
-      tableTitleText.classList?.add("fade-out-title-text");
-      let fadeOutTitleTextDuration: number = parseFloat(window.getComputedStyle(tableTitleText).animationDelay);
-      setTimeout(() => tableTitleText.style.display = "none", (fadeOutTableGridDuration + fadeOutTitleTextDuration) * 1000);
+      // The elements keep the last animation frame as their new style, but if you remove the animation class then that info is gone.
+      // So, extract the relevant style from the class and then delete it safely.
+      let reverseElementAnimation = (element: HTMLElement, animatedProperty: string, oldAnimationClass: string, newAnimationClass: string) => {
+        element.style.setProperty(animatedProperty, window.getComputedStyle(element).getPropertyValue(animatedProperty));
+        element.classList.remove(oldAnimationClass);
+        element.classList.add(newAnimationClass);
+      };
 
-      tableTitleContainer.style.width = window.getComputedStyle(tableTitleContainer).width;
-      tableTitleContainer?.classList.remove("expand-title-container");
-      tableTitleContainer?.classList.add("shrink-title-container");
-      let shrinkTableTitleContainerDuration: number = parseFloat(window.getComputedStyle(tableTitleContainer).animationDuration)
-        + parseFloat(window.getComputedStyle(tableTitleContainer).animationDelay);
-      setTimeout(() => tableTitleIcon.style.display = "initial", shrinkTableTitleContainerDuration * 1000);
+      reverseElementAnimation(tableGridContainer, "opacity", "inflate-table-grid", "deflate-table-grid");
+      let fadeOutTableGridDuration: number = parseFloat(window.getComputedStyle(tableGridContainer).getPropertyValue("animation-duration"));
 
-      tableTitleIcon.style.opacity = window.getComputedStyle(tableTitleIcon).opacity;
-      tableTitleIcon?.classList.remove("fade-out-info-icon");
-      tableTitleIcon?.classList.add("fade-in-info-icon");
+      reverseElementAnimation(tableTitleText, "opacity", "fade-in-title-text", "fade-out-title-text");
+      let fadeOutTitleTextDuration: number = parseFloat(window.getComputedStyle(tableTitleText).getPropertyValue("animation-delay"));
+      waitAndChangeProperty(tableTitleText, "display", "none", (fadeOutTableGridDuration + fadeOutTitleTextDuration) * 1000);
+
+      reverseElementAnimation(tableTitleContainer, "width", "expand-title-container", "shrink-title-container")
+      let shrinkTableTitleContainerDuration: number = parseFloat(window.getComputedStyle(tableTitleContainer).getPropertyValue("animation-duration"))
+        + parseFloat(window.getComputedStyle(tableTitleContainer).getPropertyValue("animation-delay"));
+      waitAndChangeProperty(tableTitleIcon, "display", "initial", shrinkTableTitleContainerDuration * 1000);
+
+      reverseElementAnimation(tableTitleIcon, "opacity", "fade-out-info-icon", "fade-in-info-icon");
 
       isTableDeployed = !isTableDeployed;
       setTimeout(() => tableTitleContainer?.addEventListener("click", deployTable), (fadeOutTitleTextDuration + shrinkTableTitleContainerDuration) * 1000);
