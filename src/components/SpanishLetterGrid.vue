@@ -17,6 +17,8 @@
 
   const items = ref(gridItemList);
 
+  /* Start table deployment code */
+
   function resetTableDeployment() {
 
     let tableTitleContainer = document.getElementById("spanish-table-title-container")!;
@@ -25,20 +27,16 @@
     let tableGridContainer = document.getElementById("spanish-table-grid-container")!;
 
     tableTitleContainer.style.setProperty("width", window.getComputedStyle(tableTitleContainer).getPropertyValue("width"));
-    tableTitleContainer.classList.remove("expand-title-container");
-    tableTitleContainer.classList.remove("shrink-title-container");
+    tableTitleContainer.classList.remove("expand-title-container", "shrink-title-container");
 
     tableTitleIcon.style.setProperty("opacity", window.getComputedStyle(tableTitleIcon).getPropertyValue("opacity"));
-    tableTitleIcon.classList.remove("fade-in-info-icon");
-    tableTitleIcon.classList.remove("fade-out-info-icon");
+    tableTitleIcon.classList.remove("fade-in-info-icon", "fade-out-info-icon");
 
     tableTitleText.style.setProperty("opacity", window.getComputedStyle(tableTitleText).getPropertyValue("opacity"));
-    tableTitleText.classList.remove("fade-in-title-text");
-    tableTitleText.classList.remove("fade-out-title-text");
+    tableTitleText.classList.remove("fade-in-title-text", "fade-out-title-text");
 
     tableGridContainer.style.setProperty("opacity", window.getComputedStyle(tableGridContainer).getPropertyValue("opacity"));
-    tableGridContainer.classList.remove("inflate-table-grid");
-    tableGridContainer.classList.remove("deflate-table-grid");
+    tableGridContainer.classList.remove("inflate-table-grid", "deflate-table-grid");
   }
 
   function deployTable() {
@@ -73,7 +71,7 @@
     }
     else {
 
-      // The elements keep the last animation frame as their new style, but if you remove the animation class then that info is gone.
+      // The elements keep the last animation frame as their new style (animation-fill-mode: forwards), but if you remove the animation class the style is gone.
       // So, extract the relevant style from the class and then delete it safely.
       let reverseElementAnimation = (element: HTMLElement, animatedProperty: string, oldAnimationClass: string, newAnimationClass: string) => {
         element.style.setProperty(animatedProperty, window.getComputedStyle(element).getPropertyValue(animatedProperty));
@@ -99,6 +97,8 @@
       setTimeout(() => tableTitleContainer?.addEventListener("click", deployTable), (fadeOutTitleTextDuration + shrinkTableTitleContainerDuration) * 1000);
     }
   }
+
+  /* End table deployment code */
 </script>
 
 <template>
