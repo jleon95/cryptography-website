@@ -15,48 +15,42 @@
     gridItemList.push(item);
   }
 
-  let onceTransitionEnds = (transitionElement: Element|null, transitionClass: string, statesToRemove: Array<string>) => {
-    return new Promise(resolve => {
-      const onTransitionEndCb = () => {
-        transitionElement.removeEventListener('transitionend', onTransitionEndCb);
-        for (const state of statesToRemove) {
-          transitionElement.classList.remove(state);
-        }
-        resolve();
-      }
-      transitionElement.addEventListener('transitionend', onTransitionEndCb, { once: true });
-      transitionElement.classList.add(transitionClass);
-    });
-  }
+  const items = ref(gridItemList);
 
   function resetTableDeployment () {
     let tableTitleContainer = document.getElementById("spanish-table-title-container");
     let tableTitleIcon = document.getElementById("spanish-table-title-icon");
     let tableTitleText = document.getElementById("spanish-table-title-text");
+    let tableGridContainer = document.getElementById("spanish-table-grid-container");
 
-    tableTitleContainer.classList.remove("expanded-title-container");
+    tableTitleContainer.style.width = window.getComputedStyle(tableTitleContainer).width;
+    tableTitleContainer.classList.remove("expand-title-container");
+    tableTitleContainer.classList.remove("shrink-title-container");
 
-    tableTitleIcon.classList.add("faded-in-info-icon");
-    tableTitleIcon.classList.add("displayed-info-icon");
-    tableTitleIcon.classList.remove("faded-out-info-icon");
-    tableTitleIcon.classList.remove("undisplayed-info-icon");
+    tableTitleIcon.style.opacity = window.getComputedStyle(tableTitleIcon).opacity;
+    tableTitleIcon.classList.remove("fade-in-info-icon");
+    tableTitleIcon.classList.remove("fade-out-info-icon");
 
-    tableTitleText.classList.remove("faded-in-title-text");
-    tableTitleText.classList.remove("displayed-title-text");
-    tableTitleText.classList.add("faded-out-title-text");
-    tableTitleText.classList.add("undisplayed-title-text");
+    tableTitleText.style.opacity = window.getComputedStyle(tableTitleText).opacity;
+    tableTitleText.classList.remove("fade-in-title-text");
+    tableTitleText.classList.remove("fade-out-title-text");
+
+    tableGridContainer.style.opacity = window.getComputedStyle(tableGridContainer).opacity;
+    tableGridContainer.classList.remove("inflate-table-grid");
+    tableGridContainer.classList.remove("deflate-table-grid");
   }
 
-  function deployTable() {
+  function deployTable(event: Event) {
 
     let tableTitleContainer = document.getElementById("spanish-table-title-container");
+    tableTitleContainer?.removeEventListener("click", deployTable);
     let tableTitleIcon = document.getElementById("spanish-table-title-icon");
     let tableTitleText = document.getElementById("spanish-table-title-text");
     let tableGridContainer = document.getElementById("spanish-table-grid-container");
 
     if (!isTableDeployed) {
 
-      //resetTableDeployment();
+      resetTableDeployment();
       tableTitleIcon?.classList.add("fade-out-info-icon");
       let fadeOutTableIconDuration: number = parseFloat(window.getComputedStyle(tableTitleIcon).animationDuration);
       setTimeout(() => tableTitleIcon.style.display = "none", fadeOutTableIconDuration * 1000);
@@ -66,22 +60,43 @@
       setTimeout(() => tableTitleText.style.display = "initial", expandTableTitleContainerDuration * 1000);
       tableTitleText?.classList.add("fade-in-title-text");
       let fadeInTitleTextDuration: number = parseFloat(window.getComputedStyle(tableTitleText).animationDuration) + expandTableTitleContainerDuration;
-      setTimeout(() => tableGridContainer.classList.add("inflate-table-grid"), fadeInTitleTextDuration * 1000);
+      setTimeout(() => tableGridContainer?.classList.add("inflate-table-grid"), fadeInTitleTextDuration * 1000);
 
       isTableDeployed = !isTableDeployed;
+      setTimeout(() => tableTitleContainer?.addEventListener("click", deployTable), (expandTableTitleContainerDuration + fadeInTitleTextDuration) * 1000);
     }
     else {
+      tableGridContainer.style.opacity = window.getComputedStyle(tableGridContainer).opacity;
+      tableGridContainer?.classList.remove("inflate-table-grid");
+      tableGridContainer?.classList.add("deflate-table-grid");
+      let fadeOutTableGridDuration: number = parseFloat(window.getComputedStyle(tableGridContainer).animationDuration);
+
+      tableTitleText.style.opacity = window.getComputedStyle(tableTitleText).opacity;
+      tableTitleText.classList?.remove("fade-in-title-text");
+      tableTitleText.classList?.add("fade-out-title-text");
+      let fadeOutTitleTextDuration: number = parseFloat(window.getComputedStyle(tableTitleText).animationDelay);
+      setTimeout(() => tableTitleText.style.display = "none", (fadeOutTableGridDuration + fadeOutTitleTextDuration) * 1000);
+
+      tableTitleContainer.style.width = window.getComputedStyle(tableTitleContainer).width;
+      tableTitleContainer?.classList.remove("expand-title-container");
+      tableTitleContainer?.classList.add("shrink-title-container");
+      let shrinkTableTitleContainerDuration: number = parseFloat(window.getComputedStyle(tableTitleContainer).animationDuration)
+        + parseFloat(window.getComputedStyle(tableTitleContainer).animationDelay);
+      setTimeout(() => tableTitleIcon.style.display = "initial", shrinkTableTitleContainerDuration * 1000);
+
+      tableTitleIcon.style.opacity = window.getComputedStyle(tableTitleIcon).opacity;
+      tableTitleIcon?.classList.remove("fade-out-info-icon");
+      tableTitleIcon?.classList.add("fade-in-info-icon");
 
       isTableDeployed = !isTableDeployed;
+      setTimeout(() => tableTitleContainer?.addEventListener("click", deployTable), (fadeOutTitleTextDuration + shrinkTableTitleContainerDuration) * 1000);
     }
   }
-
-  const items = ref(gridItemList);
 </script>
 
 <template>
   <div class="main-content-grid-item">
-    <div id="spanish-table-title-container" class="table-title-container" @click="deployTable">
+    <div id="spanish-table-title-container" class="table-title-container" @click.once="deployTable">
       <p id="spanish-table-title-icon" class="material-symbols-outlined material-icons md-24">info</p>
       <p id="spanish-table-title-text">Frecuencia de las letras en el español</p>
     </div>
@@ -95,6 +110,8 @@
 </template>
 
 <style scoped>
+
+  /* General initial state */
   .main-content-grid-item {
     display: flex;
     flex-direction: column;
@@ -103,71 +120,28 @@
 
   div.table-title-container {
     align-items: center;
-    background-color: var(--base-dark-primary);
-    border: 5px solid var(--base-dark-primary);
+    background-color: var(--color-mono-table-title-background);
+    border: 5px solid var(--color-mono-table-title-border);
     border-radius: 2rem;
-    color: var(--base-very-light-primary);
+    color: var(--color-mono-table-title-text);
+    cursor: pointer;
     display: flex;
     height: 3rem;
     justify-content: center;
     margin: 0 0 1rem;
+    transition: background-color ease 0.2s, border-color ease 0.2s;
     width: 3rem;
-    cursor: pointer;
   }
 
   div.table-title-container:hover {
-    background-color: var(--base-darker-primary);
-    border-color: var(--base-darker-primary);
-    transition: background-color 0.2s, border-color 0.2s;
+    background-color: var(--color-mono-table-title-clickable-hover-background);
+    border-color: var(--color-mono-table-title-clickable-hover-border);
   }
 
   p#spanish-table-title-text {
     display: none;
     opacity: 0;
-  }
-
-  div.expand-title-container {
-    animation-name: title-container-expand;
-    animation-duration: 0.8s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-out;
-    animation-delay: 0.4s;
-  }
-
-  div.inflate-table-grid {
-    animation-name: table-inflate;
-    animation-duration: 1s;
-    animation-delay: 0.2s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-out;
-  }
-
-  p.fade-in-info-icon {
-    animation-name: icon-fade-in;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-  }
-
-  p.fade-out-info-icon {
-    animation-name: icon-fade-out;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-out;
-  }
-
-  p.fade-out-title-text {
-    animation-name: text-fade-out;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-out;
-  }
-
-  p.fade-in-title-text {
-    animation-name: text-fade-in;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-out;
+    position: relative;
   }
 
   div.table-title-container p {
@@ -181,6 +155,8 @@
     grid-template-columns: repeat(9, 11.11111%);
     opacity: 0;
   }
+
+  /* Table grid */
 
   .grid-item {
     display: flex;
@@ -224,59 +200,151 @@
     transition: background ease 0.2s, border-color ease 0.2s;
   }
 
-  .material-icons.md-18 {
-    font-size: 18px;
+  /* Table animation classes and keyframes */
+
+  div.expand-title-container {
+    animation-delay: 0.4s;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+    animation-name: title-container-expand;
+    animation-timing-function: ease-out;
   }
 
-  .material-icons.md-24 {
-    font-size: 24px;
+  div.shrink-title-container {
+    animation-delay: 1.6s;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+    animation-name: title-container-shrink;
+    animation-timing-function: ease-out;
   }
 
-  .material-icons.md-36 {
-    font-size: 36px;
+  div.inflate-table-grid {
+    animation-delay: 0.2s;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-name: table-inflate;
+    animation-timing-function: ease-out;
   }
 
-  .material-icons.md-48 {
-    font-size: 48px;
+  div.deflate-table-grid {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-name: table-deflate;
+    animation-timing-function: ease-out;
   }
 
-   @keyframes icon-fade-out {
-    from {opacity: 1;}
-    to {opacity: 0;}
+  p.fade-in-info-icon {
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-name: icon-fade-in;
+    animation-timing-function: ease;
   }
 
-   @keyframes icon-fade-in {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  p.fade-out-info-icon {
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-name: icon-fade-out;
+    animation-timing-function: ease-out;
+  }
+
+  p.fade-out-title-text {
+    animation-delay: 1s;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-name: text-fade-out;
+    animation-timing-function: ease-out;
+  }
+
+  p.fade-in-title-text {
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-name: text-fade-in;
+    animation-timing-function: ease-out;
+  }
+
+  @keyframes icon-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes icon-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes text-fade-in {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes text-fade-out {
-  from {opacity: 1;}
-  to {opacity: 0;}
-}
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
 
   @keyframes title-container-expand {
-    from {width: 3rem;}
-    to {width: 100%;}
+    from {
+      width: 3rem;
+    }
+
+    to {
+      width: 100%;
+    }
   }
 
   @keyframes title-container-shrink {
-  from {width: 100%;}
-  to {width: 3rem;}
-}
+    from {
+      width: 100%;
+    }
+
+    to {
+      width: 3rem;
+    }
+  }
 
   @keyframes table-inflate {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes table-deflate {
-    from {opacity: 1;}
-    to {opacity: 0;}
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Icon that deploys the table */
+
+  .material-icons.md-24 {
+    font-size: 24px;
   }
 </style>
