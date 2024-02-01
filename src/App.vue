@@ -1,8 +1,9 @@
 ﻿<script setup lang="ts">
-import NavBar from './components/NavBar.vue'
-import TextLetterGrid from './components/TextLetterGrid.vue'
-import DecipherLetterGrid from './components/DecipherLetterGrid.vue'
-import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
+  import NavBar from './components/NavBar.vue'
+  import TextField from './components/TextField.vue'
+  import TextLetterGrid from './components/TextLetterGrid.vue'
+  import DecipherLetterGrid from './components/DecipherLetterGrid.vue'
+  import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
 </script>
 
 <template>
@@ -11,9 +12,11 @@ import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
   </header>
   <main>
     <div class="main-content-grid">
-      <TextLetterGrid/>
-      <DecipherLetterGrid/>
-      <SpanishLetterGrid/>
+      <TextField title="Texto encriptado" textareaId="encrypted-text"/>
+      <TextField title="Texto desencriptado" textareaId="decrypted-text"/>
+      <TextLetterGrid />
+      <DecipherLetterGrid />
+      <SpanishLetterGrid />
     </div>
   </main>
 </template>
