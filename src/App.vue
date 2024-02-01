@@ -24,12 +24,4 @@ import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
     grid-template-columns: 50% 50%;
     width: 100%;
   }
-
-  .table-title {
-    color: var(--base-very-dark-primary);
-    font-weight: 500;
-    margin-bottom: 1rem;
-    margin-left: 0.5rem;
-    text-align: center;
-  }
 </style>
