@@ -17,6 +17,8 @@
     --base-darker-primary: hsla(210, 100%, 30%, 1);
     --base-very-dark-primary: hsla(210, 34%, 13%, 1);
     --base-secondary: hsla(30, 100%, 70%, 1);
+    --base-green: #70FFB8;
+    --base-red: #F47BA7;
 }
 
 /* semantic color variables for this project */
@@ -54,6 +56,8 @@
     --color-mono-table-editable-content-hover-background: var(--base-white);
     --color-mono-table-editable-content-hover-border: var(--base-secondary);
     --color-mono-table-content-text: var(--base-very-dark-primary);
+    --color-mono-table-content-correct-background: var(--base-green);
+    --color-mono-table-content-wrong-background: var(--base-red);
     --section-gap: 160px;
 }
 
