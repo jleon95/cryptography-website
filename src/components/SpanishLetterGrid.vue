@@ -122,7 +122,7 @@
   .main-content-grid-item {
     display: flex;
     flex-direction: column;
-    padding: 2% 10%;
+    padding: 2% 7%;
   }
 
   div.table-title-container {
