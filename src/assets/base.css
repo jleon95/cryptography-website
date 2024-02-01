@@ -35,6 +35,13 @@
     --color-navbar-button-tooltip-text: var(--base-very-light-primary);
     --color-navbar-button-tooltip-background: var(--base-black-mute);
     --color-navbar-button-tooltip-border: var(--base-black-mute);
+    /*Monoalphabetic cipher: text area components*/
+    --color-mono-textarea-title-border: var(--base-dark-primary);
+    --color-mono-textarea-title-background: var(--base-dark-primary);
+    --color-mono-textarea-title-text: var(--base-very-light-primary);
+    --color-mono-textarea-border: var(--base-dark-primary);
+    --color-mono-textarea-background: var(--base-very-light-primary);
+    --color-mono-textarea-text: var(--base-white);
     /*Monoalphabetic cipher: letter grid components*/
     --color-mono-table-title-text: var(--base-very-light-primary);
     --color-mono-table-title-background: var(--base-dark-primary);
@@ -50,7 +57,7 @@
     --color-mono-table-editable-letters-hover-border: var(--base-secondary);
     --color-mono-table-letters-text: var(--base-very-light-primary);
     --color-mono-table-content-border: var(--base-dark-primary);
-    --color-mono-table-content-background: var(--base-very-light-primary);
+    --color-mono-table-content-background: var(--base-white);
     --color-mono-table-content-hover-background: var(--base-white);
     --color-mono-table-content-hover-border: var(--base-primary);
     --color-mono-table-editable-content-hover-background: var(--base-white);
