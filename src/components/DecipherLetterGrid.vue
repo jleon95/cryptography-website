@@ -16,9 +16,11 @@
   const items = ref(gridItemList);
 
   function processKeyDown(e: KeyboardEvent) {
-    if (!allowedInputSet.has(e.key) || e.target.textContent.length > 0 && e.key != "Backspace")
+    if (!allowedInputSet.has(e.key) || (e.target as HTMLElement).textContent!.length > 0 && e.key != "Backspace")
       e.preventDefault()
   }
+
+  function processKeyUp(e: KeyboardEvent) { }
 </script>
 
 <template>
@@ -27,9 +29,9 @@
       <p>Sustituir letras</p>
     </div>
     <div class="table-grid-container">
-      <div v-for="item in items" class="grid-item">
+      <div @click="triggerAnimation" v-for="item in items" class="grid-item">
         <span class="letter">{{ item.letter }}</span>
-        <span @keydown="processKeyDown" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">{{ item.content }}</span>
+        <span @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">{{ item.content }}</span>
       </div>
     </div>
   </div>
@@ -79,13 +81,21 @@
   }
 
   .grid-item:hover .letter {
-    background: var(--color-mono-table-editable-letters-hover-background);
+    background-color: var(--color-mono-table-editable-letters-hover-background);
     border-color: var(--color-mono-table-editable-letters-hover-border);
   }
 
+  .grid-item.correct:hover .letter {
+    background-color: var(--color-mono-table-letters-hover-background);
+    border-color: var(--color-mono-table-letters-hover-background);
+  }
+
   .grid-item:hover .content {
-    background: var(--color-mono-table-editable-content-hover-background);
     border-color: var(--color-mono-table-editable-content-hover-border);
+  }
+
+  .grid-item.correct:hover .content {
+    border-color: var(--color-mono-table-content-hover-border);
   }
 
   .letter, .content {
@@ -94,7 +104,7 @@
   }
 
   .letter {
-    background: var(--color-mono-table-letters-background);
+    background-color: var(--color-mono-table-letters-background);
     border: 0.15rem solid var(--color-mono-table-letters-background);
     border-radius: 0.6rem 0.6rem 0 0;
     color: var(--color-mono-table-letters-text);
@@ -105,12 +115,71 @@
   }
 
   .content {
-    background: var(--color-mono-table-content-background);
+    background-color: var(--color-mono-table-content-background);
     border: 0.15rem solid var(--color-mono-table-content-border);
     border-radius: 0 0 0.6rem 0.6rem;
     color: var(--color-mono-table-content-text);
     font-weight: 500;
     margin: 0 0.1rem 0.1rem 0.1rem;
-    transition: background ease 0.2s, border-color ease 0.2s;
+    transition: all ease 0.2s;
+    transform: rotateY(0deg);
+  }
+
+  .grid-item.wrong > .content {
+    animation-name: reveal-wrong-cell;
+    animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+  }
+
+  .grid-item.correct > .content {
+    animation-name: reveal-correct-cell;
+    animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+  }
+
+  @keyframes reveal-wrong-cell {
+    0% {
+      transform: scale(1, 1);
+      color: var(--color-mono-table-content-background);
+    }
+    20% {
+      transform: scale(1.2, 1.1);
+    }
+    25% {
+      transform: scale(0.6, 0.7) rotateY(0deg);
+    }
+    66.66% {
+      background-color: var(--color-mono-table-content-background);
+    }
+    100% {
+      transform: scale(1, 1) rotateY(1440deg);
+      background-color: var(--color-mono-table-content-wrong-background);
+    }
+  }
+
+  @keyframes reveal-correct-cell {
+    0% {
+      transform: scale(1, 1);
+      color: var(--color-mono-table-content-background);
+    }
+
+    20% {
+      transform: scale(1.2, 1.1);
+    }
+
+    25% {
+      transform: scale(0.6, 0.7) rotateY(0deg);
+    }
+
+    66.66% {
+      background-color: var(--color-mono-table-content-background);
+    }
+
+    100% {
+      transform: scale(1, 1) rotateY(1440deg);
+      background-color: var(--color-mono-table-content-correct-background);
+    }
   }
 </style>
