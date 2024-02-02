@@ -1,4 +1,13 @@
-﻿<template>
+﻿<script setup lang="ts">
+  function deployAboutMono () {
+    let aboutMono: HTMLElement = document.getElementById("about-mono")!;
+    if (aboutMono.classList.contains("deflate-about-mono"))
+      aboutMono.classList.remove("deflate-about-mono");
+    aboutMono.classList.add("inflate-about-mono-container");
+  }
+</script>
+
+<template>
   <div class="toolbar-wrapper">
     <div class="tooltip">
       <span class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">check</span>
@@ -13,7 +22,7 @@
       <span class="tooltiptext">Reiniciar partida</span>
     </div>
     <div class="tooltip">
-      <span class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">question_mark</span>
+      <span @click="deployAboutMono" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">question_mark</span>
       <span class="tooltiptext">Acerca del juego</span>
     </div>
   </div>
@@ -104,7 +113,7 @@
   }
 
   .toolbar-wrapper span.toolbar-icon:active {
-    background-color: var(--base-dark-primary);
+    background-color: var(--color-toolbar-button-active-background);
   }
 
   .material-symbols-outlined {
