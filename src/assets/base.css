@@ -16,6 +16,7 @@
     --base-dark-primary: hsla(210, 100%, 40%, 1);
     --base-darker-primary: hsla(210, 100%, 30%, 1);
     --base-very-dark-primary: hsla(210, 34%, 13%, 1);
+    --base-very-dark-primary-translucent: hsla(210, 34%, 13%, 0.6);
     --base-secondary: hsla(30, 100%, 70%, 1);
     --base-green: #70FFB8;
     --base-red: #F47BA7;
@@ -26,12 +27,13 @@
     --color-background: var(--base-very-light-primary);
     /*NavBar component*/
     --color-navbar-first-background: var(--base-black-mute);
-    --color-navbar-second-background: var(--base-very-light-primary);
+    --color-navbar-second-background: transparent;
     --color-navbar-button-background: var(--base-dark-primary);
     --color-navbar-button-border: var(--base-black-mute);
     --color-navbar-button-text: var(--base-very-light-primary);
     --color-navbar-button-hover-background: var(--base-secondary);
     --color-navbar-button-hover-border: var(--base-very-light-primary);
+    --color-navbar-button-active-background: var(--base-dark-primary);
     --color-navbar-button-tooltip-text: var(--base-very-light-primary);
     --color-navbar-button-tooltip-background: var(--base-black-mute);
     --color-navbar-button-tooltip-border: var(--base-black-mute);
@@ -65,6 +67,17 @@
     --color-mono-table-content-text: var(--base-very-dark-primary);
     --color-mono-table-content-correct-background: var(--base-green);
     --color-mono-table-content-wrong-background: var(--base-red);
+    /*Monoalphabetic cipher: toolbar component*/
+    --color-toolbar-first-background: transparent;
+    --color-toolbar-second-background: var(--base-black-mute);
+    --color-toolbar-button-background: var(--base-dark-primary);
+    --color-toolbar-button-border: var(--base-black-mute);
+    --color-toolbar-button-text: var(--base-very-light-primary);
+    --color-toolbar-button-hover-background: var(--base-secondary);
+    --color-toolbar-button-hover-border: var(--base-very-light-primary);
+    --color-toolbar-button-tooltip-text: var(--base-very-light-primary);
+    --color-toolbar-button-tooltip-background: var(--base-black-mute);
+    --color-toolbar-button-tooltip-border: var(--base-black-mute);
     --section-gap: 160px;
 }
 
@@ -81,12 +94,6 @@
     --color-text: var(--base-white);
   }
 }*/
-
-/* Font related */
-:root {
-  --navbar-base-font-size: 1rem;
-  --navbar-base-font-weight: 500;
-}
 
 *,
 *::before,

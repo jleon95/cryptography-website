@@ -31,7 +31,6 @@
     border: 0.4rem solid var(--color-navbar-button-border);
     border-radius: 50%;
     color: var(--color-navbar-button-text);
-    font-size: var(--navbar-base-font-size);
     font-weight: var(--navbar-base-font-weight);
     margin: 0 0.4rem;
     outline-offset: -1px;
@@ -93,7 +92,7 @@
   }
 
   .navbar-wrapper a:active {
-    background-color: var(--base-dark-primary);
+    background-color: var(--color-navbar-button-active-background);
   }
 
   .material-symbols-outlined {
