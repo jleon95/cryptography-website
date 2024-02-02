@@ -75,6 +75,7 @@
     --color-toolbar-button-text: var(--base-very-light-primary);
     --color-toolbar-button-hover-background: var(--base-secondary);
     --color-toolbar-button-hover-border: var(--base-very-light-primary);
+    --color-toolbar-button-active-background: var(--base-dark-primary);
     --color-toolbar-button-tooltip-text: var(--base-very-light-primary);
     --color-toolbar-button-tooltip-background: var(--base-black-mute);
     --color-toolbar-button-tooltip-border: var(--base-black-mute);
