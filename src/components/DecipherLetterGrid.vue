@@ -29,7 +29,7 @@
       <p>Sustituir letras</p>
     </div>
     <div class="table-grid-container">
-      <div @click="triggerAnimation" v-for="item in items" class="grid-item">
+      <div v-for="item in items" class="grid-item">
         <span class="letter">{{ item.letter }}</span>
         <span @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">{{ item.content }}</span>
       </div>
@@ -146,9 +146,11 @@
     }
     20% {
       transform: scale(1.2, 1.1);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     }
     25% {
       transform: scale(0.6, 0.7) rotateY(0deg);
+      box-shadow: none;
     }
     66.66% {
       background-color: var(--color-mono-table-content-background);
@@ -167,10 +169,12 @@
 
     20% {
       transform: scale(1.2, 1.1);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     }
 
     25% {
       transform: scale(0.6, 0.7) rotateY(0deg);
+      box-shadow: none;
     }
 
     66.66% {
