@@ -4,6 +4,8 @@
   import TextLetterGrid from './components/TextLetterGrid.vue'
   import DecipherLetterGrid from './components/DecipherLetterGrid.vue'
   import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
+  import ToolBar from './components/ToolBar.vue'
+  import AboutMono from './components/AboutMono.vue'
 </script>
 
 <template>
@@ -18,6 +20,8 @@
       <DecipherLetterGrid />
       <SpanishLetterGrid />
     </div>
+    <AboutMono />
+    <ToolBar />
   </main>
 </template>
 
@@ -26,5 +30,6 @@
     display: grid;
     grid-template-columns: 50% 50%;
     width: 100%;
+    margin-bottom: 8rem;
   }
 </style>
