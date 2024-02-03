@@ -1,11 +1,11 @@
 ﻿<script setup lang="ts">
   import NavBar from './components/NavBar.vue'
-  import TextField from './components/TextField.vue'
-  import TextLetterGrid from './components/TextLetterGrid.vue'
-  import DecipherLetterGrid from './components/DecipherLetterGrid.vue'
-  import SpanishLetterGrid from './components/SpanishLetterGrid.vue'
-  import ToolBar from './components/ToolBar.vue'
-  import AboutMono from './components/AboutMono.vue'
+  import TextField from './components/Monoalphabetic/TextField.vue'
+  import TextLetterGrid from './components/Monoalphabetic/TextLetterGrid.vue'
+  import DecipherLetterGrid from './components/Monoalphabetic/DecipherLetterGrid.vue'
+  import SpanishLetterGrid from './components/Monoalphabetic/SpanishLetterGrid.vue'
+  import ToolBar from './components/Monoalphabetic/ToolBar.vue'
+  import AboutMono from './components/Monoalphabetic/AboutMono/AboutMono.vue'
 </script>
 
 <template>
