@@ -10,7 +10,6 @@
     x: "N",
     a: "O",
     e: "U",
-    ", ": ", "
   }
 
   function closeAboutMono() {
@@ -47,7 +46,7 @@
     setTimeout(function () {
       for (const letterContainer of document.getElementById("cipher-example-text")!.children) {
         letterContainer.classList.remove("encrypt-example-letter");
-        if (letterContainer.textContent == letterContainer.textContent!.toLowerCase())
+        if (letterContainer.textContent == letterContainer.textContent!.toLowerCase() && decryptionExampleMapping.hasOwnProperty(letterContainer.textContent))
           letterContainer.textContent = decryptionExampleMapping[letterContainer.textContent];
       }
     }, 700);
@@ -111,7 +110,7 @@
   div.about-mono-container {
     align-items: center;
     backdrop-filter: blur(0.2rem) sepia(30%);
-    background-color: var(--base-very-dark-primary-translucent);
+    background-color: var(--color-aboutthis-general-background);
     display: none;
     grid-column-gap: 2rem;
     grid-template-areas: "one ." ". two" "three .";
@@ -119,7 +118,7 @@
     justify-content: center;
     left: 0;
     opacity: 0;
-    padding: 3rem 10rem;
+    padding: 2rem 10rem;
     position: fixed;
     top: 0;
     width: 100vw;
@@ -127,8 +126,8 @@
   }
 
   button.close-about-mono-container {
-    background: var(--base-dark-primary);
-    border: 0.2rem solid var(--base-dark-primary);
+    background: var(--color-aboutthis-close-background);
+    border: 0.2rem solid var(--color-aboutthis-close-border);
     border-radius: 50%;
     color: white;
     cursor: pointer;
@@ -143,19 +142,19 @@
   }
 
   button.close-about-mono-container:hover {
-    background: var(--base-secondary);
-    border-color: var(--base-secondary);
+    background: var(--color-aboutthis-close-hover-background);
+    border-color: var(--color-aboutthis-close-hover-border);
     transform: scale(1.1, 1.1);
   }
 
   button.close-about-mono-container:active {
-    background-color: var(--base-dark-primary);
-    border-color: white;
+    background-color: var(--color-aboutthis-close-active-background);
+    border-color: var(--color-aboutthis-close-active-border);
   }
 
   .about-mono-text-blob {
-    background: var(--base-dark-primary);
-    border: 0.2rem solid var(--base-dark-primary);
+    background: var(--color-aboutthis-blob-background);
+    border: 0.2rem solid var(--color-aboutthis-blob-border);
     border-radius: 2rem;
     color: white;
     height: fit-content;
@@ -199,12 +198,12 @@
   }
 
   .letter.original {
-    background-color: var(--base-darker-green);
+    background-color: var(--color-aboutthis-example-highlighted-letter-background);
     cursor: pointer;
   }
 
   .letter.encrypted {
-    background-color: var(--base-darker-primary);
+    background-color: var(--color-aboutthis-example-default-letter-background);
   }
 
   .cipher-example-grid-item.arrow {
@@ -223,7 +222,7 @@
   }
 
   #cipher-example-text .cipher-example-letter, #cipher-example-text .cipher-example-comma {
-    background-color: var(--base-darker-primary);
+    background-color: var(--color-aboutthis-example-default-letter-background);
     border: 0.2rem solid white;
     border-radius: 0.5rem;
     height: 3rem;
@@ -248,21 +247,14 @@
     animation-fill-mode: forwards;
     animation-name: encrypt-letter;
     animation-timing-function: linear;
-    background: var(--base-secondary);
   }
 
   @keyframes encrypt-letter {
-    0% {
-      transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
-    }
-
-    75% {
-      background: var(--base-darker-green);
-    }
-
+    0% { transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg); }
+    75% { background: var(--color-aboutthis-example-highlighted-letter-background); }
     100% {
       transform: rotateZ(360deg) rotateX(360deg) rotateY(360deg);
-      background: var(--base-darker-green);
+      background: var(--color-aboutthis-example-highlighted-letter-background);
     }
   }
 
@@ -299,7 +291,10 @@
     animation: gradient-green-to-blue 0.5s linear;
     animation-direction: normal;
     animation-fill-mode: forwards;
-    background: linear-gradient(var(--base-darker-primary) 0%, var(--base-darker-primary) 50%, var(--base-darker-green) 50%, var(--base-darker-green) 100%);
+    background: linear-gradient(var(--color-aboutthis-example-default-letter-background) 0%, 
+                                var(--color-aboutthis-example-default-letter-background) 50%, 
+                                var(--color-aboutthis-example-highlighted-letter-background) 50%, 
+                                var(--color-aboutthis-example-highlighted-letter-background) 100%);
     background-position: 0% 0%;
     background-size: 100% 200%;
     cursor: default;
@@ -310,13 +305,16 @@
     animation-delay: 0.5s;
     animation-direction: normal;
     animation-fill-mode: forwards;
-    background: linear-gradient(var(--base-darker-green) 0%, var(--base-darker-green) 50%, var(--base-darker-primary) 50%, var(--base-darker-primary) 100%);
+    background: linear-gradient(var(--color-aboutthis-example-highlighted-letter-background) 0%, 
+                                var(--color-aboutthis-example-highlighted-letter-background) 50%, 
+                                var(--color-aboutthis-example-default-letter-background) 50%, 
+                                var(--color-aboutthis-example-default-letter-background) 100%);
     background-position: 0% 100%;
     background-size: 100% 200%;
   }
 
   @keyframes gradient-green-to-blue {
-    0% { background-position: 0% 100%; }
-    100% { background-position: 0% 0%; }
+    from { background-position: 0% 100%; }
+    to { background-position: 0% 0%; }
   }
 </style>

@@ -16,9 +16,10 @@
     --base-dark-primary: hsla(210, 100%, 40%, 1);
     --base-darker-primary: hsla(210, 100%, 30%, 1);
     --base-very-dark-primary: hsla(210, 34%, 13%, 1);
-    --base-very-dark-primary-translucent: hsla(210, 34%, 13%, 0.6);
+    --base-very-dark-primary-translucent: hsla(210, 34%, 13%, 0.7);
     --base-secondary: hsla(30, 100%, 70%, 1);
     --base-green: #70FFB8;
+    --base-darker-green: #00CC66;
     --base-red: #F47BA7;
 }
 
@@ -79,6 +80,18 @@
     --color-toolbar-button-tooltip-text: var(--base-very-light-primary);
     --color-toolbar-button-tooltip-background: var(--base-black-mute);
     --color-toolbar-button-tooltip-border: var(--base-black-mute);
+    /*Monoalphabetic cipher: 'about this' component*/
+    --color-aboutthis-general-background: var(--base-very-dark-primary-translucent);
+    --color-aboutthis-close-background: var(--base-dark-primary);
+    --color-aboutthis-close-border: var(--base-dark-primary);
+    --color-aboutthis-close-hover-background: var(--base-secondary);
+    --color-aboutthis-close-hover-border: var(--base-secondary);
+    --color-aboutthis-close-active-background: var(--base-dark-primary);
+    --color-aboutthis-close-active-border: var(--base-white);
+    --color-aboutthis-blob-background: var(--base-dark-primary);
+    --color-aboutthis-blob-border: var(--base-dark-primary);
+    --color-aboutthis-example-default-letter-background: var(--base-darker-primary);
+    --color-aboutthis-example-highlighted-letter-background: var(--base-darker-green);
     --section-gap: 160px;
 }
 
