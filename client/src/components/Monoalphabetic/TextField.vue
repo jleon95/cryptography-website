@@ -23,7 +23,7 @@
 <template>
   <div class="main-content-grid-item">
     <p>{{ title }}</p>
-    <textarea v-bind:id="textareaId"></textarea>
+    <textarea v-bind:id="textareaId" readonly></textarea>
   </div>
 </template>
 
