@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  defineProps<{
+import { onMounted } from "vue";
+
+  const props = defineProps<{
     title: string
     textareaId: string
   }>()
@@ -8,7 +10,7 @@
 <template>
   <div class="main-content-grid-item">
     <p>{{ title }}</p>
-    <textarea id="{{ textareaId }}"></textarea>
+    <textarea v-bind:id="textareaId">A</textarea>
   </div>
 </template>
 
