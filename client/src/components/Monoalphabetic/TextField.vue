@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+  import { onMounted } from 'vue';
+  import { callAPI } from '../../composables/Monoalphabetic/apiCalls';
 
   const props = defineProps<{
     title: string
     textareaId: string
   }>()
+
+  async function populateNewText() {
+    const newText = await callAPI("text");
+    (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newText;
+    (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newText;
+  }
+
+  onMounted(function () {
+    if (props.textareaId == "decrypted-text") {
+      document.getElementById("decrypted-text")!.addEventListener("populate-new-text-event", populateNewText);
+    }
+  });
 </script>
 
 <template>
   <div class="main-content-grid-item">
     <p>{{ title }}</p>
-    <textarea v-bind:id="textareaId">A</textarea>
+    <textarea v-bind:id="textareaId"></textarea>
   </div>
 </template>
 

@@ -1,9 +1,15 @@
 ﻿<script setup lang="ts">
+  import { populateNewTextEvent } from '../../composables/Monoalphabetic/customEvents';
+
   function deployAboutMono () {
     let aboutMono: HTMLElement = document.getElementById("about-mono")!;
     if (aboutMono.classList.contains("deflate-about-mono"))
       aboutMono.classList.remove("deflate-about-mono");
     aboutMono.classList.add("inflate-about-mono-container");
+  }
+
+  function throwNewTextEvent() {
+    document.getElementById("decrypted-text")!.dispatchEvent(populateNewTextEvent);
   }
 </script>
 
@@ -20,6 +26,10 @@
     <div class="tooltip">
       <span class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">restart_alt</span>
       <span class="tooltiptext">Reiniciar partida</span>
+    </div>
+    <div class="tooltip">
+      <span @click="throwNewTextEvent" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">add</span>
+      <span class="tooltiptext">Nueva partida</span>
     </div>
     <div class="tooltip">
       <span @click="deployAboutMono" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">question_mark</span>
