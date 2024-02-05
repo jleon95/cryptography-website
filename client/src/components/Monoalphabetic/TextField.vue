@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import { callAPI } from '../../composables/Monoalphabetic/apiCalls';
+  import type { newTextObject } from '../../composables/Monoalphabetic/apiCalls';
 
   const props = defineProps<{
     title: string
@@ -8,9 +9,9 @@
   }>()
 
   async function populateNewText() {
-    const newText = await callAPI("text");
-    (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newText;
-    (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newText;
+    const newTextData: newTextObject = await callAPI("text");
+    (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newTextData.newText;
+    (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newTextData.newText;
   }
 
   onMounted(function () {

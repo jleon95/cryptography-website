@@ -17,3 +17,7 @@ export async function callAPI(action: string, headers?: any, parameters?: any) {
     }
   }
 }
+
+export interface newTextObject {
+  newText: string
+}
