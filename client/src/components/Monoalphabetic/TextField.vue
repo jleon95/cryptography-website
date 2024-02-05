@@ -1,15 +1,21 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
+  import { useGameDifficultyStore } from '../../composables/Monoalphabetic/gameDifficultyStore';
   import { callAPI } from '../../composables/Monoalphabetic/apiCalls';
-  import type { newTextObject } from '../../composables/Monoalphabetic/apiCalls';
+  import type { NewTextRequestOptions, NewTextResponse } from '../../composables/Monoalphabetic/apiCalls';
 
   const props = defineProps<{
     title: string
     textareaId: string
   }>()
 
+  const gameDifficultyStore = useGameDifficultyStore();
+
   async function populateNewText() {
-    const newTextData: newTextObject = await callAPI("text");
+    const newTextData: NewTextResponse = await callAPI("text", {
+      keepSpaces: gameDifficultyStore.keepSpaces,
+      keepPunctuation: gameDifficultyStore.keepPunctuation
+    } as NewTextRequestOptions);
     (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newTextData.newText;
     (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newTextData.newText;
   }
@@ -54,6 +60,7 @@
     padding: 0.5rem;
     resize: none;
     transition: all ease 0.2s;
+    line-break: anywhere;
   }
 
   .main-content-grid-item > p:hover {
