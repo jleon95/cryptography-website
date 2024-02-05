@@ -37,11 +37,12 @@
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="routes\" />
-    <Folder Include="routes\monoalphabetic\" />
+    <Folder Include="src\" />
+    <Folder Include="src\routes\" />
+    <Folder Include="src\routes\monoalphabetic\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="routes\monoalphabetic\monoalphabetic.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\monoalphabetic.controller.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

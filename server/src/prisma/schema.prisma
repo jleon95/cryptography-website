@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model OriginalText {
+  id					Int					@id @default(autoincrement())
+  content				String				@db.Text
+  textsBeingDecrypted	TextBeingDecrypted[]
+}
+
+model TextBeingDecrypted {
+  id					Int				@id @default(autoincrement())
+  originalText			OriginalText	@relation(fields: [originalTextId], references: [id])
+  originalTextId		Int				
+  sessionId				String
+  encryptionMapping		Json
+}

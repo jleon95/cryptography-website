@@ -3,7 +3,7 @@ import { AddressInfo } from "net";
 import * as path from 'path';
 const cors = require("cors");
 
-import monoalphabetic from './routes/monoalphabetic/monoalphabetic.controller';
+import monoalphabetic from './src/routes/monoalphabetic/monoalphabetic.controller';
 
 const debug = require('debug')('my express app');
 const app = express();
