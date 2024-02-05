@@ -52,9 +52,10 @@
     <Folder Include="src\routes\monoalphabetic\new_text\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\prisma\prisma-client.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
-    <TypeScriptCompile Include="src\routes\monoalphabetic\monoalphabetic.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\routes.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.controller.ts" />
   </ItemGroup>
