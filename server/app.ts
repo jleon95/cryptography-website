@@ -8,7 +8,9 @@ import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
 const debug = require('debug')('my express app');
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173", methods: ["GET","POST"] }));
+app.use(cors({ origin: "http://localhost:5173", methods: ["GET", "POST"] }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(monoalphabeticRoutes);
 
 // catch 404 and forward to error handler
