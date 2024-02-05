@@ -32,17 +32,31 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
+    <Content Include=".env" />
     <Content Include=".gitignore" />
+    <Content Include="src\prisma\migrations\20240205000338_init\migration.sql" />
+    <Content Include="src\prisma\migrations\migration_lock.toml" />
+    <Content Include="src\prisma\schema.prisma" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
+    <Folder Include="src\prisma\" />
+    <Folder Include="src\prisma\migrations\" />
+    <Folder Include="src\prisma\migrations\20240205000338_init\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\routes\monoalphabetic\" />
+    <Folder Include="src\routes\monoalphabetic\hint\" />
+    <Folder Include="src\routes\monoalphabetic\validation\" />
+    <Folder Include="src\routes\monoalphabetic\new_text\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\monoalphabetic.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\routes.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.controller.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

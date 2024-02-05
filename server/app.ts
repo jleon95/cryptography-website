@@ -3,13 +3,13 @@ import { AddressInfo } from "net";
 import * as path from 'path';
 const cors = require("cors");
 
-import monoalphabetic from './src/routes/monoalphabetic/monoalphabetic.controller';
+import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
 
 const debug = require('debug')('my express app');
 const app = express();
 
 app.use(cors({ origin: "http://localhost:5173", methods: ["GET","POST"] }));
-app.use('/monoalphabetic', monoalphabetic);
+app.use(monoalphabeticRoutes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
