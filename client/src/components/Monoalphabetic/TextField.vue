@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
   import { useGameDifficultyStore } from '../../composables/Monoalphabetic/gameDifficultyStore';
-  import { callAPI } from '../../composables/Monoalphabetic/apiCalls';
+  import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
   import type { NewTextRequestOptions, NewTextResponse } from '../../composables/Monoalphabetic/apiCalls';
 
   const props = defineProps<{
@@ -12,12 +12,12 @@
   const gameDifficultyStore = useGameDifficultyStore();
 
   async function populateNewText() {
-    const newTextData: NewTextResponse = await callAPI("text", {
+    const newTextData: NewTextResponse = await callAPI(Action.TEXT, {
       keepSpaces: gameDifficultyStore.keepSpaces,
       keepPunctuation: gameDifficultyStore.keepPunctuation
     } as NewTextRequestOptions);
-    (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newTextData.newText;
-    (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newTextData.newText;
+    (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newTextData.encryptedText;
+    (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newTextData.encryptedText;
   }
 
   onMounted(function () {
