@@ -17,6 +17,14 @@ model TextBeingDecrypted {
   id					Int				@id @default(autoincrement())
   originalText			OriginalText	@relation(fields: [originalTextId], references: [id])
   originalTextId		Int				
-  sessionId				String
+  session				Session			@relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId				String			@unique
   encryptionMapping		Json
+}
+
+model Session {
+  id					String				@id
+  data					Json   
+  expiresAt				DateTime
+  textBeingDecrypted	TextBeingDecrypted?
 }
