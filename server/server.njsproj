@@ -8,7 +8,7 @@
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
     <ScriptArguments>
     </ScriptArguments>
-    <NodeExeArguments>--env-file=.env</NodeExeArguments>
+    <NodeExeArguments>--env-file=.env.development</NodeExeArguments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -36,6 +36,7 @@
   <ItemGroup>
     <None Include="app.ts" />
     <Content Include=".env" />
+    <Content Include=".env.development" />
     <Content Include=".gitignore" />
     <Content Include="src\prisma\schema.prisma" />
     <Content Include="tsconfig.json" />
@@ -51,6 +52,7 @@
     <Folder Include="src\routes\monoalphabetic\new_text\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="logger.ts" />
     <TypeScriptCompile Include="src\prisma\prisma-client.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.controller.ts" />
