@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
+  import { storeToRefs } from 'pinia';
   import { useGameDifficultyStore } from '../../composables/Monoalphabetic/gameDifficultyStore';
+  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
   import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
   import type { NewTextRequestOptions, NewTextResponse } from '../../composables/Monoalphabetic/apiCalls';
 
@@ -10,14 +12,21 @@
   }>()
 
   const gameDifficultyStore = useGameDifficultyStore();
+  const textStore = useTextStore();
 
   async function populateNewText() {
-    const newTextData: NewTextResponse = await callAPI(Action.NEW_TEXT, {
-      keepSpaces: gameDifficultyStore.keepSpaces,
-      keepPunctuation: gameDifficultyStore.keepPunctuation
-    } as NewTextRequestOptions);
-    (document.getElementById("decrypted-text") as HTMLTextAreaElement)!.value = newTextData.encryptedText;
-    (document.getElementById("encrypted-text") as HTMLTextAreaElement)!.value = newTextData.encryptedText;
+    const options: NewTextRequestOptions = {
+      difficultyOptions: {
+        keepSpaces: gameDifficultyStore.keepSpaces,
+        keepPunctuation: gameDifficultyStore.keepPunctuation
+      },
+      sessionData: {
+        sessionId: textStore.sessionId
+      }
+    };
+    const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options);
+    textStore.text = response.encryptedText;
+    textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
   }
 
   onMounted(function () {
@@ -30,7 +39,7 @@
 <template>
   <div class="main-content-grid-item">
     <p>{{ title }}</p>
-    <textarea v-bind:id="textareaId" readonly></textarea>
+    <textarea v-bind:id="textareaId" readonly>{{ textStore.text }}</textarea>
   </div>
 </template>
 
