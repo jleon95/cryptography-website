@@ -1,19 +1,14 @@
 <script setup lang="ts">
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
 
-  const props = defineProps<{
-    title: string
-    textareaId: string
-  }>()
-
   const textStore = useTextStore();
 
 </script>
 
 <template>
   <div class="main-content-grid-item">
-    <p>{{ title }}</p>
-    <textarea v-bind:id="textareaId" readonly>{{ textStore.text }}</textarea>
+    <p>Texto encriptado</p>
+    <textarea readonly>{{ textStore.encryptedText }}</textarea>
   </div>
 </template>
 

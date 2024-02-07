@@ -2,7 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useTextStore = defineStore('text', () => {
-  const text = ref("");
+  const encryptedText = ref("");
+  const decryptedText = ref("");
   const sessionId = ref("");
   const expirationDate = ref(0); // Stored in milliseconds since 1970 blah blah blah.
 
@@ -19,5 +20,5 @@ export const useTextStore = defineStore('text', () => {
   }
 
 
-  return { text, sessionId, expirationDate, setExpirationDate, getExpirationDate, isSessionExpired };
+  return { encryptedText, decryptedText, sessionId, expirationDate, setExpirationDate, getExpirationDate, isSessionExpired };
 })

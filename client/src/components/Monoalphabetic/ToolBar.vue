@@ -18,7 +18,8 @@
       }
     };
     const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options);
-    textStore.text = response.encryptedText;
+    textStore.encryptedText = response.encryptedText;
+    textStore.decryptedText = response.encryptedText;
     textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
   }
 
