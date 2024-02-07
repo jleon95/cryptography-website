@@ -5,9 +5,7 @@ import { chooseNewText } from './new_text.service';
 import type { EncryptedTextInfo } from './new_text.logic';
 import type { ChosenTextInfo } from './new_text.service';
 const logger = require('../../../../logger');
-const cookie = require("cookie");
 const crypto = require("crypto");
-
 const router = Router();
 
 function createExpirationDate() {
@@ -16,7 +14,7 @@ function createExpirationDate() {
 
 function createSession() {
   const sessionId: string = crypto.randomUUID();
-  const expirationDate: Date = createExpirationDate ();
+  const expirationDate: Date = createExpirationDate();
   return { sessionId, expirationDate };
 }
 
@@ -32,6 +30,7 @@ router.post('/new_text', async (req: Request, res: Response) => {
 
   let chosenTextInfo: ChosenTextInfo = await chooseNewText();
   let encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, req.body.difficultyOptions);
+
   if (req.body.sessionData.sessionId === "") {
     let newSession = createSession();
     insertSession(newSession.sessionId, newSession.expirationDate, {});

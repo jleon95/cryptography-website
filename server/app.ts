@@ -5,12 +5,10 @@ import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
 
 const cors = require("cors");
 const debug = require('debug')('my express app');
-const cookieParser = require("cookie-parser");
 const app = express();
 
 app.use(cors({ origin: "http://localhost:5173", methods: ["GET", "POST"], credentials: true }));
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(monoalphabeticRoutes);
 
