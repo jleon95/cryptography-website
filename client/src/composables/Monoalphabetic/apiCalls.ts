@@ -18,7 +18,7 @@ export enum Action {
 }
 
 export interface NewTextResponse {
-  sessionData?: {
+  sessionData: {
     sessionId?: string,
     expirationDate: Date
   },

@@ -1,12 +1,21 @@
 ﻿<script setup lang="ts">
-  import NavBar from './components/NavBar.vue'
-  import EncryptedTextField from './components/Monoalphabetic/EncryptedTextField.vue'
-  import DecryptedTextField from './components/Monoalphabetic/DecryptedTextField.vue'
-  import TextLetterGrid from './components/Monoalphabetic/TextLetterGrid.vue'
-  import DecipherLetterGrid from './components/Monoalphabetic/DecipherLetterGrid.vue'
-  import SpanishLetterGrid from './components/Monoalphabetic/SpanishLetterGrid.vue'
-  import ToolBar from './components/Monoalphabetic/ToolBar.vue'
-  import AboutMono from './components/Monoalphabetic/AboutMono/AboutMono.vue'
+  import NavBar from './components/NavBar.vue';
+  import EncryptedTextField from './components/Monoalphabetic/EncryptedTextField.vue';
+  import DecryptedTextField from './components/Monoalphabetic/DecryptedTextField.vue';
+  import TextLetterGrid from './components/Monoalphabetic/TextLetterGrid.vue';
+  import DecipherLetterGrid from './components/Monoalphabetic/DecipherLetterGrid.vue';
+  import SpanishLetterGrid from './components/Monoalphabetic/SpanishLetterGrid.vue';
+  import ToolBar from './components/Monoalphabetic/ToolBar.vue';
+  import AboutMono from './components/Monoalphabetic/AboutMono/AboutMono.vue';
+  import { useTextStore } from './composables/Monoalphabetic/textStore';
+  import { populateNewText, isSessionExpired } from './composables/Monoalphabetic/populateNewText';
+  import { onBeforeMount } from 'vue';
+
+  onBeforeMount(async () => {
+    const textStore = useTextStore();
+    if (isSessionExpired())
+      await populateNewText();
+  });
 </script>
 
 <template>
