@@ -1,6 +1,7 @@
 import prisma from '../../../prisma/prisma-client';
 import type { LetterMapping } from './new_text.logic';
 import { Prisma } from '@prisma/client';
+const logger = require('../../../../logger');
 
 export interface ChosenTextInfo {
   text: string,
@@ -50,14 +51,23 @@ export async function checkSessionExists(sessionId: string) {
 }
 
 export async function touchSession(sessionId: string, maxAge: number) {
-  await prisma.session.update({
-    where: {
-      id: sessionId
-    },
-    data: {
-      expiresAt: new Date((new Date().getTime()) + maxAge)
+
+  try {
+    await prisma.session.update({
+      where: {
+        id: sessionId
+      },
+      data: {
+        expiresAt: new Date((new Date().getTime()) + maxAge)
+      }
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const childLogger = logger.child({ sessionId });
+      if (e.code == "P2025")
+        childLogger.error("Error when attempting to touch existing Session entry: no entries exist with the provided session ID.");
     }
-  })
+  }
 }
 
 export async function deleteSession(sessionId: string) {
@@ -84,8 +94,9 @@ export async function insertTextToBeDecrypted(letterMapping: LetterMapping, orig
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const childLogger = logger.child({ sessionId });
       if (e.code == "P2025")
-        console.log(`Error when attempting to create new TextBeingDecrypted entry: session ID ${sessionId} does not match any Session entry`);
+        childLogger.error("Error when attempting to create new TextBeingDecrypted entry: session ID does not match any Session entry.");
     }
   }
 }
@@ -99,8 +110,9 @@ export async function deleteTextToBeDecryptedBySessionId(sessionId: string) {
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const childLogger = logger.child({ sessionId });
       if (e.code == "P2025")
-        console.log(`Error when attempting to delete a TextBeingDecrypted entry: session ID ${sessionId} does not match any Session entry`);
+        childLogger.error("Error when attempting to delete TextBeingDecrypted entry: session ID does not match any Session entry.");
     }
     throw e;
   }
