@@ -1,10 +1,10 @@
 import { Request, Response, Router } from 'express';
-import { insertSession, insertTextToBeDecrypted, checkSessionExists } from './new_text.service';
+import { insertSession, touchSession, insertTextToBeDecrypted, checkSessionExists } from './new_text.service';
 import { createNewEncryptedText } from './new_text.logic';
 import { chooseNewText } from './new_text.service';
 import type { EncryptedTextInfo } from './new_text.logic';
 import type { ChosenTextInfo } from './new_text.service';
-import { warn } from 'console';
+const logger = require('../../../../logger');
 const cookie = require("cookie");
 const crypto = require("crypto");
 
@@ -16,7 +16,7 @@ function createSessionCookie() {
     sameSite: 'Strict',
     path: '/monoalphabetic',
     httpOnly: false,
-    maxAge: 60 * 60 * 2 * 1000 // 2 hours in milliseconds
+    maxAge: +process.env["SESSION_DURATION"]
   };
   return {sessionId, options}
 }
@@ -31,15 +31,18 @@ router.post('/new_text', async (req: Request, res: Response) => {
     res.setHeader('Set-Cookie', cookie.serialize("session", newSessionCookie.sessionId, newSessionCookie.options));
     insertSession(newSessionCookie.sessionId, newSessionCookie.options.maxAge, {});
     insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, newSessionCookie.sessionId, false);
-    res.json({ info: "OK", encryptedText: encryptedTextInfo.text });
+    res.json({ encryptedText: encryptedTextInfo.text });
+    logger.trace(`Creating new encrypted text for new session ID ${newSessionCookie.sessionId}.`);
   }
   else if (await checkSessionExists(req.cookies["session"])) {
-    await insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, req.cookies["session"], true);
-    res.json({ info: "OK", encryptedText: encryptedTextInfo.text });
+    touchSession(req.cookies["session"], +process.env["SESSION_DURATION"]);
+    insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, req.cookies["session"], true);
+    res.json({ encryptedText: encryptedTextInfo.text });
+    logger.trace(`Creating new encrypted text for existing session ID ${req.cookies["session"]}.`);
   }
   else {
-    console.log(`Error: Unrecognized session ID: ${req.cookies["session"]}`);
-    res.json({ info: "Unrecognized session ID", encryptedText: "" });
+    res.json({ encryptedText: "" });
+    logger.warn(`Unrecognized session ID ${req.cookies["session"]} in API request for creation of new encrypted text, sending empty text instead.`);
   }
 });
 
