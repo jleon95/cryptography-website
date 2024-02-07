@@ -6,7 +6,6 @@ export async function callAPI(action: Action, parameters: NewTextRequestOptions)
     },
     mode: 'cors',
     method: 'POST',
-    credentials: 'include',
     body: JSON.stringify(parameters)
   })).json();
 }
@@ -19,10 +18,19 @@ export enum Action {
 }
 
 export interface NewTextResponse {
+  sessionData?: {
+    sessionId?: string,
+    expirationDate: Date
+  },
   encryptedText: string
 }
 
 export interface NewTextRequestOptions {
-  keepSpaces: boolean,
-  keepPunctuation: boolean
+  difficultyOptions: {
+    keepSpaces: boolean,
+    keepPunctuation: boolean
+  },
+  sessionData: {
+    sessionId: string,
+  }
 }
