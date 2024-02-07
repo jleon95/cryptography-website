@@ -1,27 +1,5 @@
 ﻿<script setup lang="ts">
-  import { useGameDifficultyStore } from '../../composables/Monoalphabetic/gameDifficultyStore';
-  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
-  import type { NewTextRequestOptions, NewTextResponse } from '../../composables/Monoalphabetic/apiCalls';
-
-  const gameDifficultyStore = useGameDifficultyStore();
-  const textStore = useTextStore();
-
-  async function populateNewText() {
-    const options: NewTextRequestOptions = {
-      difficultyOptions: {
-        keepSpaces: gameDifficultyStore.keepSpaces,
-        keepPunctuation: gameDifficultyStore.keepPunctuation
-      },
-      sessionData: {
-        sessionId: textStore.sessionId
-      }
-    };
-    const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options);
-    textStore.encryptedText = response.encryptedText;
-    textStore.decryptedText = response.encryptedText;
-    textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
-  }
+  import { populateNewText } from '../../composables/Monoalphabetic/populateNewText';
 
   function deployAboutMono() {
     let aboutMono: HTMLElement = document.getElementById("about-mono")!;
