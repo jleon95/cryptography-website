@@ -1,5 +1,6 @@
 import prisma from '../../../prisma/prisma-client';
 import type { LetterMapping } from './new_text.logic';
+import { Prisma } from '@prisma/client';
 
 export interface ChosenTextInfo {
   text: string,
@@ -37,6 +38,17 @@ export async function insertSession(sessionId: string, maxAge: number, data) {
   });
 }
 
+export async function checkSessionExists(sessionId: string) {
+
+  let result = await prisma.session.findUnique({
+    where: {
+      id: sessionId
+    }
+  });
+
+  return result !== null;
+}
+
 export async function touchSession(sessionId: string, maxAge: number) {
   await prisma.session.update({
     where: {
@@ -58,22 +70,38 @@ export async function deleteSession(sessionId: string) {
 
 export async function insertTextToBeDecrypted(letterMapping: LetterMapping, originalTextId: number, sessionId: string, deletePreviousEncryptedText: boolean = false) {
 
-  if (deletePreviousEncryptedText)
-    await deleteTextToBeDecryptedBySessionId(sessionId);
-
-  await prisma.textBeingDecrypted.create({
-    data: {
-      encryptionMapping: letterMapping,
-      originalTextId: originalTextId,
-      sessionId: sessionId
+  try {
+    if (deletePreviousEncryptedText) {
+      await deleteTextToBeDecryptedBySessionId(sessionId);
     }
-  });
+
+    await prisma.textBeingDecrypted.create({
+      data: {
+        encryptionMapping: letterMapping,
+        originalTextId: originalTextId,
+        sessionId: sessionId
+      }
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code == "P2025")
+        console.log(`Error when attempting to create new TextBeingDecrypted entry: session ID ${sessionId} does not match any Session entry`);
+    }
+  }
 }
 
 export async function deleteTextToBeDecryptedBySessionId(sessionId: string) {
-  await prisma.textBeingDecrypted.delete({
-    where: {
-      sessionId: sessionId
+  try {
+    await prisma.textBeingDecrypted.delete({
+      where: {
+        sessionId: sessionId
+      }
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code == "P2025")
+        console.log(`Error when attempting to delete a TextBeingDecrypted entry: session ID ${sessionId} does not match any Session entry`);
     }
-  });
+    throw e;
+  }
 }
