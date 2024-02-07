@@ -12,7 +12,8 @@ export async function callAPI(action: Action, parameters: NewTextRequestOptions)
 }
 
 export enum Action {
-  TEXT = "text",
+  NEW_TEXT = "new_text",
+  CURRENT_TEXT = "current_text",
   HINT = "hint",
   VALIDATION = "validation"
 }

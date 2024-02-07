@@ -12,7 +12,7 @@
   const gameDifficultyStore = useGameDifficultyStore();
 
   async function populateNewText() {
-    const newTextData: NewTextResponse = await callAPI(Action.TEXT, {
+    const newTextData: NewTextResponse = await callAPI(Action.NEW_TEXT, {
       keepSpaces: gameDifficultyStore.keepSpaces,
       keepPunctuation: gameDifficultyStore.keepPunctuation
     } as NewTextRequestOptions);

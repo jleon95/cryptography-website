@@ -9,7 +9,7 @@ const crypto = require("crypto");
 
 const router = Router();
 
-router.post('/text', async (req: Request, res: Response) => {
+router.post('/new_text', async (req: Request, res: Response) => {
 
   let chosenTextInfo: ChosenTextInfo = await chooseNewText();
   let encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, req.body);
