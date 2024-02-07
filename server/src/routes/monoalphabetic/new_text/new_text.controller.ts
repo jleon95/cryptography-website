@@ -33,20 +33,20 @@ router.post('/new_text', async (req: Request, res: Response) => {
 
   if (req.body.sessionData.sessionId === "") {
     let newSession = createSession();
+    logger.trace(`Creating new encrypted text for new session ID <${newSession.sessionId}>.`);
     insertSession(newSession.sessionId, newSession.expirationDate, {});
     insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, newSession.sessionId, false);
-    logger.trace(`Creating new encrypted text for new session ID ${newSession.sessionId}.`);
     let responseBody: NewTextResponse = {
       sessionData: newSession,
       encryptedText: encryptedTextInfo.text
     };
     res.json(responseBody);
   }
-  else if (await checkSessionExists(req.body.sessionData.sessionId)) {
+  else if (typeof req.body.sessionData.sessionId === "string" && await checkSessionExists(req.body.sessionData.sessionId)) {
     let newExpirationDate: Date = createExpirationDate();
+    logger.trace(`Creating new encrypted text for existing session ID <${req.body.sessionData.sessionId}>.`);
     touchSession(req.body.sessionData.sessionId, newExpirationDate);
     insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, req.body.sessionData.sessionId, true);
-    logger.trace(`Creating new encrypted text for existing session ID ${req.body.sessionData.sessionId}.`);
     let responseBody: NewTextResponse = {
       sessionData: {
         expirationDate: newExpirationDate
@@ -56,7 +56,7 @@ router.post('/new_text', async (req: Request, res: Response) => {
     res.json(responseBody);
   }
   else {
-    logger.warn(`Unrecognized session ID ${req.body.sessionData.sessionId} in API request for creation of new encrypted text, sending error 400 instead.`);
+    logger.warn(`Unrecognized session ID <${req.body.sessionData.sessionId}> in API request for creation of new encrypted text, sending error 400 instead.`);
     res.status(400).send("Unrecognized session ID");
   }
 });
