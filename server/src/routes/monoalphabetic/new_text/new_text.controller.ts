@@ -10,39 +10,55 @@ const crypto = require("crypto");
 
 const router = Router();
 
-function createSessionCookie() {
-  const sessionId = crypto.randomUUID();
-  const options = {
-    sameSite: 'Strict',
-    path: '/monoalphabetic',
-    httpOnly: false,
-    maxAge: +process.env["SESSION_DURATION"]
-  };
-  return {sessionId, options}
+function createExpirationDate() {
+  return new Date((new Date().getTime()) + +process.env["SESSION_DURATION"]);
+}
+
+function createSession() {
+  const sessionId: string = crypto.randomUUID();
+  const expirationDate: Date = createExpirationDate ();
+  return { sessionId, expirationDate };
+}
+
+interface NewTextResponse {
+  sessionData: {
+    sessionId?: string,
+    expirationDate: Date
+  },
+  encryptedText: string
 }
 
 router.post('/new_text', async (req: Request, res: Response) => {
 
   let chosenTextInfo: ChosenTextInfo = await chooseNewText();
-  let encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, req.body);
-
-  if (req.cookies["session"] === undefined) {
-    let newSessionCookie = createSessionCookie();
-    res.setHeader('Set-Cookie', cookie.serialize("session", newSessionCookie.sessionId, newSessionCookie.options));
-    insertSession(newSessionCookie.sessionId, newSessionCookie.options.maxAge, {});
-    insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, newSessionCookie.sessionId, false);
-    res.json({ encryptedText: encryptedTextInfo.text });
-    logger.trace(`Creating new encrypted text for new session ID ${newSessionCookie.sessionId}.`);
+  let encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, req.body.difficultyOptions);
+  if (req.body.sessionData.sessionId === "") {
+    let newSession = createSession();
+    insertSession(newSession.sessionId, newSession.expirationDate, {});
+    insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, newSession.sessionId, false);
+    logger.trace(`Creating new encrypted text for new session ID ${newSession.sessionId}.`);
+    let responseBody: NewTextResponse = {
+      sessionData: newSession,
+      encryptedText: encryptedTextInfo.text
+    };
+    res.json(responseBody);
   }
-  else if (await checkSessionExists(req.cookies["session"])) {
-    touchSession(req.cookies["session"], +process.env["SESSION_DURATION"]);
-    insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, req.cookies["session"], true);
-    res.json({ encryptedText: encryptedTextInfo.text });
-    logger.trace(`Creating new encrypted text for existing session ID ${req.cookies["session"]}.`);
+  else if (await checkSessionExists(req.body.sessionData.sessionId)) {
+    let newExpirationDate: Date = createExpirationDate();
+    touchSession(req.body.sessionData.sessionId, newExpirationDate);
+    insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, req.body.sessionData.sessionId, true);
+    logger.trace(`Creating new encrypted text for existing session ID ${req.body.sessionData.sessionId}.`);
+    let responseBody: NewTextResponse = {
+      sessionData: {
+        expirationDate: newExpirationDate
+      },
+      encryptedText: encryptedTextInfo.text
+    };
+    res.json(responseBody);
   }
   else {
-    res.json({ encryptedText: "" });
-    logger.warn(`Unrecognized session ID ${req.cookies["session"]} in API request for creation of new encrypted text, sending empty text instead.`);
+    logger.warn(`Unrecognized session ID ${req.body.sessionData.sessionId} in API request for creation of new encrypted text, sending error 400 instead.`);
+    res.status(400).send("Unrecognized session ID");
   }
 });
 

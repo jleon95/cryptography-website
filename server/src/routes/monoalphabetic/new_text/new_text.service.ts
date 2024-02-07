@@ -29,11 +29,11 @@ export async function chooseNewText(): Promise<ChosenTextInfo> {
   return { text: chosenText, id: chosenId };
 }
 
-export async function insertSession(sessionId: string, maxAge: number, data) {
+export async function insertSession(sessionId: string, expirationDate: Date, data) {
   await prisma.session.create({
     data: {
       id: sessionId,
-      expiresAt: new Date((new Date().getTime()) + maxAge),
+      expiresAt: expirationDate,
       data: data
     }
   });
@@ -50,7 +50,7 @@ export async function checkSessionExists(sessionId: string) {
   return result !== null;
 }
 
-export async function touchSession(sessionId: string, maxAge: number) {
+export async function touchSession(sessionId: string, expirationDate: Date) {
 
   try {
     await prisma.session.update({
@@ -58,7 +58,7 @@ export async function touchSession(sessionId: string, maxAge: number) {
         id: sessionId
       },
       data: {
-        expiresAt: new Date((new Date().getTime()) + maxAge)
+        expiresAt: expirationDate
       }
     });
   } catch (e) {
@@ -97,6 +97,9 @@ export async function insertTextToBeDecrypted(letterMapping: LetterMapping, orig
       const childLogger = logger.child({ sessionId });
       if (e.code == "P2025")
         childLogger.error("Error when attempting to create new TextBeingDecrypted entry: session ID does not match any Session entry.");
+    }
+    else {
+      console.log(e.code);
     }
   }
 }
