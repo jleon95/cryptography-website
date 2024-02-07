@@ -1,39 +1,13 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import { useGameDifficultyStore } from '../../composables/Monoalphabetic/gameDifficultyStore';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
-  import type { NewTextRequestOptions, NewTextResponse } from '../../composables/Monoalphabetic/apiCalls';
 
   const props = defineProps<{
     title: string
     textareaId: string
   }>()
 
-  const gameDifficultyStore = useGameDifficultyStore();
   const textStore = useTextStore();
 
-  async function populateNewText() {
-    const options: NewTextRequestOptions = {
-      difficultyOptions: {
-        keepSpaces: gameDifficultyStore.keepSpaces,
-        keepPunctuation: gameDifficultyStore.keepPunctuation
-      },
-      sessionData: {
-        sessionId: textStore.sessionId
-      }
-    };
-    const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options);
-    textStore.text = response.encryptedText;
-    textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
-  }
-
-  onMounted(function () {
-    if (props.textareaId == "decrypted-text") {
-      document.getElementById("decrypted-text")!.addEventListener("populate-new-text-event", populateNewText);
-    }
-  });
 </script>
 
 <template>

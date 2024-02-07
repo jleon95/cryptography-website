@@ -1,15 +1,32 @@
 ﻿<script setup lang="ts">
-  import { populateNewTextEvent } from '../../composables/Monoalphabetic/customEvents';
+  import { useGameDifficultyStore } from '../../composables/Monoalphabetic/gameDifficultyStore';
+  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
+  import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
+  import type { NewTextRequestOptions, NewTextResponse } from '../../composables/Monoalphabetic/apiCalls';
 
-  function deployAboutMono () {
+  const gameDifficultyStore = useGameDifficultyStore();
+  const textStore = useTextStore();
+
+  async function populateNewText() {
+    const options: NewTextRequestOptions = {
+      difficultyOptions: {
+        keepSpaces: gameDifficultyStore.keepSpaces,
+        keepPunctuation: gameDifficultyStore.keepPunctuation
+      },
+      sessionData: {
+        sessionId: textStore.sessionId
+      }
+    };
+    const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options);
+    textStore.text = response.encryptedText;
+    textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
+  }
+
+  function deployAboutMono() {
     let aboutMono: HTMLElement = document.getElementById("about-mono")!;
     if (aboutMono.classList.contains("deflate-about-mono"))
       aboutMono.classList.remove("deflate-about-mono");
     aboutMono.classList.add("inflate-about-mono-container");
-  }
-
-  function throwNewTextEvent() {
-    document.getElementById("decrypted-text")!.dispatchEvent(populateNewTextEvent);
   }
 </script>
 
@@ -28,7 +45,7 @@
       <span class="tooltiptext">Reiniciar partida</span>
     </div>
     <div class="tooltip">
-      <span @click="throwNewTextEvent" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">add</span>
+      <span @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">add</span>
       <span class="tooltiptext">Nueva partida</span>
     </div>
     <div class="tooltip">
