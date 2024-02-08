@@ -1,21 +1,8 @@
 ﻿<script setup lang="ts">
-  import { ref } from 'vue';
   import { useTextStore, letters } from '../../composables/Monoalphabetic/textStore';
 
   const store = useTextStore();
-  store.letterFrequencies
 
-  /*type GridItem = { letter: string; content: any; };
-
-  let gridItemList: Array<GridItem> = [];
-  let letters: string = "abcdefghijklmnñopqrstuvwxyz";
-
-  for (let i = 0; i < letters.length; i++) {
-    let item: GridItem = { letter: letters[i], content: "" };
-    gridItemList.push(item);
-  }
-
-  const items = ref(gridItemList);*/
 </script>
 
 <template>
