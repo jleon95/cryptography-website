@@ -3,25 +3,33 @@ import { ref, reactive, computed } from 'vue';
 
 export const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
+const defaultState = {
+  encryptedText: "",
+  sessionId: "",
+  expirationDate: 0,
+  assignedLetters: letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: letter }), {}) as { [letter: string]: string }
+}
+
 export const useTextStore = defineStore('text', () => {
-  const encryptedText = ref("");
-  const sessionId = ref("");
-  const expirationDate = ref(0); // Stored in milliseconds since 1970 blah blah blah to circumvent weird Date operations.
-  const assignedLetters: {[letter: string]: string} = reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: letter }), {}));
+  const encryptedText = ref(defaultState.encryptedText);
+  const sessionId = ref(defaultState.sessionId);
+  const expirationDate = ref(defaultState.expirationDate); // Stored in milliseconds since 1970 blah blah blah to circumvent weird Date operations.
+  const assignedLetters: { [letter: string]: string } = reactive(defaultState.assignedLetters);
   const letterFrequencies = computed(() => {
     
     // Initialize all counters to 0
     let total: number = 0;
     const letterFrequencies: { [letter: string]: number } = letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: 0 }), {});
     // Count appearances in text
-    encryptedText.value.split("").map((letter) => {
-      if (letter in letterFrequencies) {
-        letterFrequencies[letter]++;
+    for (const character of encryptedText.value) {
+      if (character in letterFrequencies) {
+        letterFrequencies[character]++;
         total++;
       }
-    });
+    }
     // Percentages rounded to 2 decimal places.
-    letters.split("").map((letter) => letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2)));
+    for (const letter in letterFrequencies)
+      letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2));
 
     return letterFrequencies;
   });
@@ -38,7 +46,7 @@ export const useTextStore = defineStore('text', () => {
   function setExpirationDate(newExpirationDate: Date) {
     expirationDate.value = newExpirationDate.getTime();
     if (isSessionExpired())
-      sessionId.value = "";
+      sessionId.value = defaultState.sessionId;
   }
 
   function getExpirationDate() {
@@ -47,9 +55,17 @@ export const useTextStore = defineStore('text', () => {
 
   function getSessionId() {
     if (isSessionExpired())
-      sessionId.value = "";
+      sessionId.value = defaultState.sessionId;
     return sessionId.value;
   }
 
-  return { encryptedText, decryptedText, assignedLetters, letterFrequencies, sessionId, expirationDate, getSessionId, setExpirationDate, getExpirationDate, isSessionExpired };
+  function resetEncryption() {
+    for (const letter in assignedLetters)
+      assignedLetters[letter] = letter;
+  }
+
+  return {
+    encryptedText, decryptedText, assignedLetters, letterFrequencies, sessionId, expirationDate,
+    getSessionId, setExpirationDate, getExpirationDate, isSessionExpired, resetEncryption
+  };
 })
