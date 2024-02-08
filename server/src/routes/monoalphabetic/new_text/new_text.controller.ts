@@ -34,7 +34,7 @@ router.post('/new_text', async (req: Request, res: Response) => {
   if (req.body.sessionData.sessionId === "") {
     let newSession = createSession();
     logger.trace(`Creating new encrypted text for new session ID <${newSession.sessionId}>.`);
-    insertSession(newSession.sessionId, newSession.expirationDate, {});
+    await insertSession(newSession.sessionId, newSession.expirationDate, {});
     insertTextToBeDecrypted(encryptedTextInfo.letterMapping, chosenTextInfo.id, newSession.sessionId, false);
     let responseBody: NewTextResponse = {
       sessionData: newSession,
