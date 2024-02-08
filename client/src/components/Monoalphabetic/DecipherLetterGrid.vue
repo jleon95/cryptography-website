@@ -1,26 +1,8 @@
 ﻿<script setup lang="ts">
-  import { ref } from 'vue';
+  import { processKeyDown, processKeyUp } from '../../composables/Monoalphabetic/updateDecryptedText';
 
-  type GridItem = { letter: string; content: any; };
+  const letters: string = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
-  let gridItemList: Array<GridItem> = [];
-  const letters: string = "abcdefghijklmnñopqrstuvwxyz";
-  const allowedInputSet: Set<string> = new Set(letters);
-  allowedInputSet.add("Backspace");
-
-  for (let i = 0; i < letters.length; i++) {
-    let item: GridItem = { letter: letters[i], content: "" };
-    gridItemList.push(item);
-  }
-
-  const items = ref(gridItemList);
-
-  function processKeyDown(e: KeyboardEvent) {
-    if (!allowedInputSet.has(e.key) || (e.target as HTMLElement).textContent!.length > 0 && e.key != "Backspace")
-      e.preventDefault()
-  }
-
-  function processKeyUp(e: KeyboardEvent) { }
 </script>
 
 <template>
@@ -29,9 +11,9 @@
       <p>Sustituir letras</p>
     </div>
     <div class="table-grid-container">
-      <div v-for="item in items" class="grid-item">
-        <span class="letter">{{ item.letter }}</span>
-        <span @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">{{ item.content }}</span>
+      <div v-for="letter in letters" class="grid-item">
+        <span class="letter">{{ letter }}</span>
+        <span @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">{{ }}</span>
       </div>
     </div>
   </div>
