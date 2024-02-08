@@ -80,11 +80,11 @@ export async function deleteSession(sessionId: string) {
 
 export async function insertTextToBeDecrypted(letterMapping: LetterMapping, originalTextId: number, sessionId: string, deletePreviousEncryptedText: boolean = false) {
 
-  try {
-    if (deletePreviousEncryptedText) {
-      await deleteTextToBeDecryptedBySessionId(sessionId);
-    }
+  if (deletePreviousEncryptedText) {
+    await deleteTextToBeDecryptedBySessionId(sessionId);
+  }
 
+  try {
     await prisma.textBeingDecrypted.create({
       data: {
         encryptionMapping: letterMapping,
@@ -94,12 +94,9 @@ export async function insertTextToBeDecrypted(letterMapping: LetterMapping, orig
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId });
-      if (e.code == "P2025")
+      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
+      if (e.code == "P2003")
         childLogger.error("Error when attempting to create new TextBeingDecrypted entry: session ID does not match any Session entry.");
-    }
-    else {
-      console.log(e.code);
     }
   }
 }
@@ -113,10 +110,9 @@ export async function deleteTextToBeDecryptedBySessionId(sessionId: string) {
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId });
+      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
       if (e.code == "P2025")
-        childLogger.error("Error when attempting to delete TextBeingDecrypted entry: session ID does not match any Session entry.");
+        childLogger.error("Error when attempting to delete TextBeingDecrypted entry: no entries associated with the given session ID exist.");
     }
-    throw e;
   }
 }
