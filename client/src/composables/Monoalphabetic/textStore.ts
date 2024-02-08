@@ -1,13 +1,13 @@
 ﻿import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 export const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
 export const useTextStore = defineStore('text', () => {
   const encryptedText = ref("");
-  const decryptedText = ref("");
   const sessionId = ref("");
   const expirationDate = ref(0); // Stored in milliseconds since 1970 blah blah blah to circumvent weird Date operations.
+  const assignedLetters: {[letter: string]: string} = reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: letter }), {}));
   const letterFrequencies = computed(() => {
     
     // Initialize all counters to 0
@@ -24,6 +24,11 @@ export const useTextStore = defineStore('text', () => {
     letters.split("").map((letter) => letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2)));
 
     return letterFrequencies;
+  });
+
+  const decryptedText = computed(() => {
+    const newText = encryptedText.value.split("").reduce((text, letter: string) => text+assignedLetters[letter], "");
+    return newText;
   });
 
   function isSessionExpired() {
@@ -46,5 +51,5 @@ export const useTextStore = defineStore('text', () => {
     return sessionId.value;
   }
 
-  return { encryptedText, decryptedText, letterFrequencies, sessionId, expirationDate, getSessionId, setExpirationDate, getExpirationDate, isSessionExpired };
+  return { encryptedText, decryptedText, assignedLetters, letterFrequencies, sessionId, expirationDate, getSessionId, setExpirationDate, getExpirationDate, isSessionExpired };
 })
