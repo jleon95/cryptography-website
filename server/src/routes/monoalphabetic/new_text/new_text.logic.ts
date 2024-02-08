@@ -48,7 +48,8 @@ function encryptText(text: string): EncryptedTextInfo {
 
 export async function createNewEncryptedText(newText: string, options: PreProcessOptions = { keepSpaces: false, keepPunctuation: false }): Promise<EncryptedTextInfo> {
 
-  newText = newText.normalize("NFD").replace(/[\u0301|\u0308]/gu, "").toUpperCase(); // Removes accents and diaeresis
+  newText = newText.normalize("NFD").replace(/[\u0301|\u0308]/gu, "").toUpperCase(); // Remove accents and diaeresis
+  newText = newText.replace(/N\u0303/gu, "\u00D1"); // Swap N + ~ modifier for the proper character
   newText = options.keepSpaces ? newText : newText.replace(/\s/gu, "");
   newText = options.keepPunctuation ? newText : newText.replace(/\p{Punctuation}/gu, "");
   return encryptText(newText);
