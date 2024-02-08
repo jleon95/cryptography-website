@@ -1,7 +1,11 @@
 ﻿<script setup lang="ts">
   import { ref } from 'vue';
+  import { useTextStore, letters } from '../../composables/Monoalphabetic/textStore';
 
-  type GridItem = { letter: string; content: any; };
+  const store = useTextStore();
+  store.letterFrequencies
+
+  /*type GridItem = { letter: string; content: any; };
 
   let gridItemList: Array<GridItem> = [];
   let letters: string = "abcdefghijklmnñopqrstuvwxyz";
@@ -11,7 +15,7 @@
     gridItemList.push(item);
   }
 
-  const items = ref(gridItemList);
+  const items = ref(gridItemList);*/
 </script>
 
 <template>
@@ -20,9 +24,9 @@
       <p>Frecuencia de las letras en el texto</p>
     </div>
     <div class="table-grid-container">
-      <div v-for="item in items" class="grid-item">
-        <span class="letter">{{ item.letter }}</span>
-        <span class="content">{{ item.content }}</span>
+      <div v-for="letter of letters" class="grid-item">
+        <span class="letter">{{ letter }}</span>
+        <span class="content">{{ store.letterFrequencies[letter] }}%</span>
       </div>
     </div>
   </div>
