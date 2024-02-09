@@ -1,7 +1,7 @@
 import { useGameDifficultyStore } from './gameDifficultyStore';
-import { useTextStore, letters } from './textStore';
+import { useTextStore } from './textStore';
 import { callAPI, Action } from './apiCalls';
-import type { NewTextRequestOptions, NewTextResponse } from './apiCalls';
+import type { NewTextRequest, NewTextResponse } from './apiCalls';
 
 export function isSessionExpired() {
   const textStore = useTextStore(); // If put outside it'll run immediately, and thus before the global pinia store has been created.
@@ -11,7 +11,7 @@ export function isSessionExpired() {
 export async function populateNewText() {
   const gameDifficultyStore = useGameDifficultyStore();
   const textStore = useTextStore();
-  const options: NewTextRequestOptions = {
+  const options: NewTextRequest = {
     difficultyOptions: {
       keepSpaces: gameDifficultyStore.keepSpaces,
       keepPunctuation: gameDifficultyStore.keepPunctuation

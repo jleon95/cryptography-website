@@ -1,4 +1,4 @@
-export async function callAPI(action: Action, parameters: NewTextRequestOptions) {
+export async function callAPI(action: Action, parameters: NewTextRequest|ValidationRequest): Promise<NewTextResponse|ValidationResponse> {
 
   return (await fetch(`http://localhost:1337/monoalphabetic/${action}`, {
     headers: {
@@ -25,12 +25,23 @@ export interface NewTextResponse {
   encryptedText: string
 }
 
-export interface NewTextRequestOptions {
+export interface NewTextRequest {
   difficultyOptions: {
     keepSpaces: boolean,
     keepPunctuation: boolean
   },
   sessionData: {
     sessionId: string,
+  }
+}
+
+export interface ValidationResponse {
+  validatedLetterMapping: { [original: string]: boolean }
+}
+
+export interface ValidationRequest {
+  letterMapping: { [letter: string]: string },
+  sessionData: {
+    sessionId: string
   }
 }
