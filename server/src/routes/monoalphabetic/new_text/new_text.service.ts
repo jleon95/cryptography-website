@@ -25,7 +25,7 @@ export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
   return { text: chosenText, id: chosenId };
 }
 
-export async function insertSession(sessionId: string, expirationDate: Date, data) {
+export async function insertSession(sessionId: string, expirationDate: Date, data): Promise<void> {
   await prisma.session.create({
     data: {
       id: sessionId,
@@ -35,7 +35,7 @@ export async function insertSession(sessionId: string, expirationDate: Date, dat
   });
 }
 
-export async function checkSessionExists(sessionId: string) {
+export async function checkSessionExists(sessionId: string): Promise<boolean> {
 
   let result = await prisma.session.findUnique({
     where: {
@@ -46,7 +46,7 @@ export async function checkSessionExists(sessionId: string) {
   return result !== null;
 }
 
-export async function touchSession(sessionId: string, expirationDate: Date) {
+export async function touchSession(sessionId: string, expirationDate: Date): Promise<void> {
 
   try {
     await prisma.session.update({
@@ -66,7 +66,7 @@ export async function touchSession(sessionId: string, expirationDate: Date) {
   }
 }
 
-export async function deleteSession(sessionId: string) {
+export async function deleteSession(sessionId: string): Promise<void> {
   await prisma.session.delete({
     where: {
       id: sessionId
@@ -74,7 +74,7 @@ export async function deleteSession(sessionId: string) {
   });
 }
 
-export async function insertTextToBeDecrypted(letterMapping: LetterMapping, originalTextId: number, sessionId: string, deletePreviousEncryptedText: boolean = false) {
+export async function insertTextToBeDecrypted(letterMapping: LetterMapping, originalTextId: number, sessionId: string, deletePreviousEncryptedText: boolean = false): Promise<void> {
 
   if (deletePreviousEncryptedText) {
     await deleteTextToBeDecryptedBySessionId(sessionId);
@@ -97,7 +97,7 @@ export async function insertTextToBeDecrypted(letterMapping: LetterMapping, orig
   }
 }
 
-export async function deleteTextToBeDecryptedBySessionId(sessionId: string) {
+export async function deleteTextToBeDecryptedBySessionId(sessionId: string): Promise<void> {
   try {
     await prisma.textBeingDecrypted.delete({
       where: {

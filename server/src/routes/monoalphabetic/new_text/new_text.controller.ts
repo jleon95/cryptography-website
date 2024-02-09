@@ -9,7 +9,7 @@ const logger = require('../../../../logger');
 const crypto = require("crypto");
 const router = Router();
 
-function createExpirationDate() {
+function createExpirationDate(): Date {
   return new Date((new Date().getTime()) + +process.env["SESSION_DURATION"]);
 }
 
