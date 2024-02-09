@@ -1,8 +1,10 @@
 ﻿<script setup lang="ts">
   import { processKeyDown, processKeyUp } from '../../composables/Monoalphabetic/updateDecryptedText';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
+  import { useDecipherGridStore } from '../../composables/Monoalphabetic/decipherGridStore';
 
   const textStore = useTextStore();
+  const decipherGridStore = useDecipherGridStore();
 </script>
 
 <template>
@@ -13,7 +15,7 @@
     <div class="table-grid-container">
       <div v-for="(decrypted, original) in textStore.assignedLetters" class="grid-item">
         <span class="letter">{{ original }}</span>
-        <span @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">
+        <span v-bind:class="decipherGridStore.contentCellStyleClasses[original]" @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">
           {{ decrypted }}
         </span>
       </div>
@@ -109,14 +111,14 @@
     transform: rotateY(0deg);
   }
 
-  .grid-item.wrong > .content {
+  .grid-item > .wrong.content {
     animation-name: reveal-wrong-cell;
     animation-duration: 1.2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease;
   }
 
-  .grid-item.correct > .content {
+  .grid-item > .correct.content {
     animation-name: reveal-correct-cell;
     animation-duration: 1.2s;
     animation-fill-mode: forwards;
