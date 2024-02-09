@@ -20,7 +20,7 @@ export async function populateNewText() {
       sessionId: textStore.getSessionId()
     }
   };
-  const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options);
+  const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
   if (textStore.isSessionExpired())
     textStore.sessionId = response.sessionData.sessionId!;
   textStore.encryptedText = response.encryptedText;
