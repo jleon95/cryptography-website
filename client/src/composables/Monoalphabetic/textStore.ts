@@ -20,7 +20,7 @@ export const useTextStore = defineStore('text', () => {
     // Initialize all counters to 0
     let total: number = 0;
     const letterFrequencies: { [letter: string]: number } = letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: 0 }), {});
-    // Count appearances in text
+
     for (const character of encryptedText.value) {
       if (character in letterFrequencies) {
         letterFrequencies[character]++;
@@ -59,13 +59,13 @@ export const useTextStore = defineStore('text', () => {
     return sessionId.value;
   }
 
-  function resetEncryption() {
+  function resetDecryption() {
     for (const letter in assignedLetters)
       assignedLetters[letter] = "";
   }
 
   return {
     encryptedText, decryptedText, assignedLetters, letterFrequencies, sessionId, expirationDate,
-    getSessionId, setExpirationDate, getExpirationDate, isSessionExpired, resetEncryption
+    getSessionId, setExpirationDate, getExpirationDate, isSessionExpired, resetDecryption
   };
 })

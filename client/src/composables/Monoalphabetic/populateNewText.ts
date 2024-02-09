@@ -24,6 +24,6 @@ export async function populateNewText() {
   if (textStore.isSessionExpired())
     textStore.sessionId = response.sessionData.sessionId!;
   textStore.encryptedText = response.encryptedText;
-  textStore.resetEncryption();
+  textStore.resetDecryption();
   textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
 }

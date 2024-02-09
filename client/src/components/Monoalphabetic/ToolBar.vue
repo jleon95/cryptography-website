@@ -1,5 +1,8 @@
 ﻿<script setup lang="ts">
   import { populateNewText } from '../../composables/Monoalphabetic/populateNewText';
+  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
+
+  const textStore = useTextStore();
 
   function deployAboutMono() {
     let aboutMono: HTMLElement = document.getElementById("about-mono")!;
@@ -20,7 +23,7 @@
       <span class="tooltiptext">Usar una pista</span>
     </div>
     <div class="tooltip">
-      <span class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">restart_alt</span>
+      <span @click="textStore.resetDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">restart_alt</span>
       <span class="tooltiptext">Reiniciar partida</span>
     </div>
     <div class="tooltip">
