@@ -25,6 +25,7 @@ export async function validateDecryption() {
   for (const letter in response.validatedLetterMapping) {
     if (response.validatedLetterMapping[letter]) {
       decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
+      decipherGridStore.toggleInputInCell(lettersToValidate[letter]);
     }
     else
       decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);

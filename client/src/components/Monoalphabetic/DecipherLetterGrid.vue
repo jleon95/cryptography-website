@@ -1,4 +1,5 @@
 ﻿<script setup lang="ts">
+  import contenteditable from 'vue-contenteditable';
   import { processKeyDown, processKeyUp } from '../../composables/Monoalphabetic/updateDecryptedText';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
   import { useDecipherGridStore } from '../../composables/Monoalphabetic/decipherGridStore';
@@ -15,7 +16,7 @@
     <div class="table-grid-container">
       <div v-for="(decrypted, original) in textStore.assignedLetters" class="grid-item">
         <span class="letter">{{ original }}</span>
-        <span v-bind:class="decipherGridStore.contentCellStyleClasses[original]" @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">
+        <span v-bind:class="decipherGridStore.contentCellStyleClasses[original]" @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" v-bind:contenteditable="decipherGridStore.cellEditableStatus[original]">
           {{ decrypted }}
         </span>
       </div>
