@@ -1,19 +1,7 @@
-﻿interface PreProcessOptions {
-  keepSpaces: boolean,
-  keepPunctuation: boolean
-}
-
-export interface LetterMapping {
-  [original: string]: string // originalLetter: newLetter
-}
-
-export interface EncryptedTextInfo {
-  text: string,
-  letterMapping: LetterMapping
-}
+﻿import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models';
 
 // Fisher-Yates shuffle
-function shuffle(array: Array<string>) {
+function shuffle(array: Array<string>): Array<string> {
 
   let currentIndex = array.length, randomIndex;
 

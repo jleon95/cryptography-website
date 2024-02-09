@@ -1,14 +1,10 @@
 import prisma from '../../../prisma/prisma-client';
-import type { LetterMapping } from './new_text.logic';
+import type { LetterMapping } from '../logic.models';
+import type { ChosenOriginalTextInfo } from '../service.models';
 import { Prisma } from '@prisma/client';
 const logger = require('../../../../logger');
 
-export interface ChosenTextInfo {
-  text: string,
-  id: number
-}
-
-export async function chooseNewText(): Promise<ChosenTextInfo> {
+export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
   const ids: {id: number}[] = await prisma.originalText.findMany({
     select: {
       id: true,

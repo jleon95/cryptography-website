@@ -2,8 +2,9 @@ import { Request, Response, Router } from 'express';
 import { insertSession, touchSession, insertTextToBeDecrypted, checkSessionExists } from './new_text.service';
 import { createNewEncryptedText } from './new_text.logic';
 import { chooseNewText } from './new_text.service';
-import type { EncryptedTextInfo } from './new_text.logic';
-import type { ChosenTextInfo } from './new_text.service';
+import type { EncryptedTextInfo } from '../logic.models';
+import type { ChosenOriginalTextInfo } from '../service.models';
+import type { NewTextResponse } from '../controller.models'
 const logger = require('../../../../logger');
 const crypto = require("crypto");
 const router = Router();
@@ -18,17 +19,9 @@ function createSession() {
   return { sessionId, expirationDate };
 }
 
-interface NewTextResponse {
-  sessionData: {
-    sessionId?: string,
-    expirationDate: Date
-  },
-  encryptedText: string
-}
-
 router.post('/new_text', async (req: Request, res: Response) => {
 
-  let chosenTextInfo: ChosenTextInfo = await chooseNewText();
+  let chosenTextInfo: ChosenOriginalTextInfo = await chooseNewText();
   let encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, req.body.difficultyOptions);
 
   if (req.body.sessionData.sessionId === "") {

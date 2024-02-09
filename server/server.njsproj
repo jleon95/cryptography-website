@@ -54,12 +54,17 @@
   <ItemGroup>
     <TypeScriptCompile Include="logger.ts" />
     <TypeScriptCompile Include="src\prisma\prisma-client.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\controller.models.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\service.models.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\logic.models.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.logic.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\routes.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.logic.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.service.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
