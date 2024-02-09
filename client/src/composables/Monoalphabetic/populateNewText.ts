@@ -3,11 +3,6 @@ import { useTextStore, letters } from './textStore';
 import { callAPI, Action } from './apiCalls';
 import type { NewTextRequestOptions, NewTextResponse } from './apiCalls';
 
-function resetDecipherLetterGrid() {
-  for (const letter of letters)
-    document.getElementById(`new-letter-${letter}`)!.textContent = "";
-}
-
 export function isSessionExpired() {
   const textStore = useTextStore(); // If put outside it'll run immediately, and thus before the global pinia store has been created.
   return textStore.isSessionExpired();
@@ -31,5 +26,4 @@ export async function populateNewText() {
   textStore.encryptedText = response.encryptedText;
   textStore.resetEncryption();
   textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
-  resetDecipherLetterGrid();
 }

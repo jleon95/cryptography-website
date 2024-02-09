@@ -1,8 +1,8 @@
 ﻿<script setup lang="ts">
   import { processKeyDown, processKeyUp } from '../../composables/Monoalphabetic/updateDecryptedText';
+  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
 
-  const letters: string = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-
+  const textStore = useTextStore();
 </script>
 
 <template>
@@ -11,9 +11,11 @@
       <p>Sustituir letras</p>
     </div>
     <div class="table-grid-container">
-      <div v-for="letter in letters" class="grid-item">
-        <span class="letter">{{ letter }}</span>
-        <span :id="'new-letter-'+letter" @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true"></span>
+      <div v-for="(decrypted, original) in textStore.assignedLetters" class="grid-item">
+        <span class="letter">{{ original }}</span>
+        <span @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" contenteditable="true">
+          {{ decrypted }}
+        </span>
       </div>
     </div>
   </div>

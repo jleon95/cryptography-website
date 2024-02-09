@@ -17,5 +17,5 @@ export function processKeyUp(e: KeyboardEvent) {
   if (allowedLetterInputSet.has(e.key))
     textStore.assignedLetters[originalLetter] = e.key
   else if (e.key == "Backspace")
-    textStore.assignedLetters[originalLetter] = originalLetter;
+    textStore.assignedLetters[originalLetter] = "";
 }

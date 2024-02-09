@@ -7,7 +7,7 @@ const defaultState = {
   encryptedText: "",
   sessionId: "",
   expirationDate: 0,
-  assignedLetters: letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: letter }), {}) as { [letter: string]: string }
+  assignedLetters: letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: "" }), {}) as { [letter: string]: string }
 }
 
 export const useTextStore = defineStore('text', () => {
@@ -35,7 +35,7 @@ export const useTextStore = defineStore('text', () => {
   });
 
   const decryptedText = computed(() => {
-    const newText = encryptedText.value.split("").reduce((text, letter: string) => text+assignedLetters[letter], "");
+    const newText = encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
     return newText;
   });
 
@@ -61,7 +61,7 @@ export const useTextStore = defineStore('text', () => {
 
   function resetEncryption() {
     for (const letter in assignedLetters)
-      assignedLetters[letter] = letter;
+      assignedLetters[letter] = "";
   }
 
   return {
