@@ -14,3 +14,8 @@ export interface PreProcessOptions {
   keepSpaces: boolean,
   keepPunctuation: boolean
 }
+
+// For each letter sent to validation, true/false depending on whether the user was right
+export interface ValidatedLetterMapping {
+  [original: string]: boolean
+}

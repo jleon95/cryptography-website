@@ -1,3 +1,5 @@
+import { LetterMapping, ValidatedLetterMapping } from './logic.models';
+
 // Format of new text requests from the front-end
 export interface NewTextRequest {
   difficultyOptions: {
@@ -16,4 +18,15 @@ export interface NewTextResponse {
     expirationDate: Date
   },
   encryptedText: string
+}
+
+export interface ValidationRequest {
+  sessionData: {
+    sessionId: string
+  }
+  letterMapping: LetterMapping,
+}
+
+export interface ValidationResponse {
+  validatedLetterMapping: ValidatedLetterMapping
 }
