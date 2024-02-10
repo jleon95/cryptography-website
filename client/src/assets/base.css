@@ -19,6 +19,7 @@
     --base-very-dark-primary: hsla(210, 34%, 13%, 1);
     --base-very-dark-primary-translucent: hsla(210, 34%, 13%, 0.7);
     --base-secondary: hsla(30, 100%, 70%, 1);
+    --base-tertiary: hsla(290, 76%, 82%, 1);
     --base-green: #70FFB8;
     --base-darker-green: #00CC66;
     --base-red: #F47BA7;
@@ -72,6 +73,10 @@
     --color-mono-table-letters-disabled-background: var(--base-mute-primary);
     --color-mono-table-letters-disabled-border: var(--base-mute-primary);
     --color-mono-table-content-disabled-border: var(--base-mute-primary);
+    --color-mono-table-letters-hint-background: var(--base-tertiary);
+    --color-mono-table-letters-hint-border: var(--base-tertiary);
+    --color-mono-table-content-hint-background: var(--base-tertiary);
+    --color-mono-table-content-hint-border: var(--base-dark-primary);
     /*Monoalphabetic cipher: toolbar component*/
     --color-toolbar-first-background: transparent;
     --color-toolbar-second-background: var(--base-black-mute);
