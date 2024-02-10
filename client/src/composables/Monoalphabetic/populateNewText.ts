@@ -29,4 +29,5 @@ export async function populateNewText() {
   textStore.resetDecryption();
   textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
   decipherGridStore.$reset();
+  gameDifficultyStore.resetHints();
 }
