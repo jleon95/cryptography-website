@@ -1,4 +1,4 @@
-export async function callAPI(action: Action, parameters: NewTextRequest|ValidationRequest): Promise<NewTextResponse|ValidationResponse> {
+export async function callAPI(action: Action, parameters: NewTextRequest|ValidationRequest|HintRequest): Promise<NewTextResponse|ValidationResponse|HintResponse> {
 
   return (await fetch(`http://localhost:1337/monoalphabetic/${action}`, {
     headers: {
@@ -13,7 +13,7 @@ export async function callAPI(action: Action, parameters: NewTextRequest|Validat
 export enum Action {
   NEW_TEXT = "new_text",
   CURRENT_TEXT = "current_text",
-  HINT = "hint",
+  REQUEST_HINT = "hint",
   VALIDATION = "validation"
 }
 
@@ -41,6 +41,17 @@ export interface ValidationResponse {
 
 export interface ValidationRequest {
   letterMapping: { [letter: string]: string },
+  sessionData: {
+    sessionId: string
+  }
+}
+
+export interface HintResponse {
+  correctLetter: string
+}
+
+export interface HintRequest {
+  requestedLetter: string,
   sessionData: {
     sessionId: string
   }
