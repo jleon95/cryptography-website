@@ -10,24 +10,27 @@ export async function validateDecryption() {
   const lettersToValidate: { [original: string]: string } = {};
   // Be careful!! Mapping in backend is {real: encrypted}, but mapping in frontend is {encrypted: real}.
   for (const letter in textStore.assignedLetters)
-    if (textStore.assignedLetters[letter])
+    if (decipherGridStore.cellEditableStatus[letter] && textStore.assignedLetters[letter])
       lettersToValidate[textStore.assignedLetters[letter].toUpperCase()] = letter;
 
-  const validationRequestBody: ValidationRequest = {
-    sessionData: {
-      sessionId: textStore.getSessionId()
-    },
-    letterMapping: lettersToValidate
-  };
-  const response: ValidationResponse = await callAPI(Action.VALIDATION, validationRequestBody) as ValidationResponse;
+  if (Object.keys(lettersToValidate).length) {
 
-  // Also reverse the mapping here.
-  for (const letter in response.validatedLetterMapping) {
-    if (response.validatedLetterMapping[letter]) {
-      decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
-      decipherGridStore.toggleInputInCell(lettersToValidate[letter]);
+    const validationRequestBody: ValidationRequest = {
+      sessionData: {
+        sessionId: textStore.getSessionId()
+      },
+      letterMapping: lettersToValidate
+    };
+    const response: ValidationResponse = await callAPI(Action.VALIDATION, validationRequestBody) as ValidationResponse;
+
+    // Reverse the letter mapping here too.
+    for (const letter in response.validatedLetterMapping) {
+      if (response.validatedLetterMapping[letter]) {
+        decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
+        decipherGridStore.disableInputInCell(lettersToValidate[letter]);
+      }
+      else
+        decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
     }
-    else
-      decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
   }
 }

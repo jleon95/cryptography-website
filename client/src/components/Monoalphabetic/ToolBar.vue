@@ -2,8 +2,19 @@
   import { populateNewText } from '../../composables/Monoalphabetic/populateNewText';
   import { validateDecryption } from '../../composables/Monoalphabetic/validateDecryption';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
+  import { useDecipherGridStore, CellState } from '../../composables/Monoalphabetic/decipherGridStore';
 
   const textStore = useTextStore();
+  const decipherGridStore = useDecipherGridStore();
+
+  function resetUnconfirmedDecryption() {
+    for (const letter in textStore.assignedLetters) {
+      if (decipherGridStore.cellEditableStatus[letter]) {
+        textStore.assignedLetters[letter] = "";
+        decipherGridStore.updateCellState(letter, CellState.DEFAULT);
+      }
+    }
+  }
 
   function deployAboutMono() {
     let aboutMono: HTMLElement = document.getElementById("about-mono")!;
@@ -24,7 +35,7 @@
       <span class="tooltiptext">Usar una pista</span>
     </div>
     <div class="tooltip">
-      <span @click="textStore.resetDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">restart_alt</span>
+      <span @click="resetUnconfirmedDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">restart_alt</span>
       <span class="tooltiptext">Reiniciar partida</span>
     </div>
     <div class="tooltip">
