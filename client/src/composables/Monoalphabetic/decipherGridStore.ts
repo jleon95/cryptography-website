@@ -41,6 +41,7 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
         contentCellStyleClasses[letter].wrong = false;
         contentCellStyleClasses[letter].hint = false;
         contentCellStyleClasses[letter].disabled = false;
+        cellEditableStatus[letter] = false;
         break;
       }
       case CellState.WRONG: {
@@ -55,6 +56,7 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
         contentCellStyleClasses[letter].wrong = false;
         contentCellStyleClasses[letter].hint = true;
         contentCellStyleClasses[letter].disabled = false;
+        cellEditableStatus[letter] = false;
         break;
       }
       case CellState.DISABLED: {
@@ -62,6 +64,7 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
         contentCellStyleClasses[letter].wrong = false;
         contentCellStyleClasses[letter].hint = false;
         contentCellStyleClasses[letter].disabled = true;
+        cellEditableStatus[letter] = false;
         break;
       }
       case CellState.DEFAULT: {
@@ -74,10 +77,6 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
     }
   }
 
-  function disableInputInCell(letter: string) {
-    cellEditableStatus[letter] = false;
-  }
-
   function $reset() {
     for (const letter in contentCellStyleClasses) {
       contentCellStyleClasses[letter] = { correct: false, wrong: false, hint: false, disabled: false };
@@ -85,5 +84,5 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
     }
   }
 
-  return { contentCellStyleClasses, cellEditableStatus, updateCellState, disableInputInCell, $reset };
+  return { contentCellStyleClasses, cellEditableStatus, updateCellState, $reset };
 });

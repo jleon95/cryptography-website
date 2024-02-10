@@ -25,10 +25,8 @@ export async function validateDecryption() {
 
     // Reverse the letter mapping here too.
     for (const letter in response.validatedLetterMapping) {
-      if (response.validatedLetterMapping[letter]) {
+      if (response.validatedLetterMapping[letter])
         decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
-        decipherGridStore.disableInputInCell(lettersToValidate[letter]);
-      }
       else
         decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
     }

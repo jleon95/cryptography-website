@@ -31,10 +31,8 @@ export const useTextStore = defineStore('text', () => {
     }
     
     for (const letter in letterFrequencies) {
-      if (!letterFrequencies[letter]) {
-        decipherGridStore.cellEditableStatus[letter] = false;
+      if (!letterFrequencies[letter])
         decipherGridStore.updateCellState(letter, CellState.DISABLED);
-      }
       letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2)); // Percentages rounded to 2 decimal places.
     }
 
