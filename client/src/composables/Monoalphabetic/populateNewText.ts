@@ -23,11 +23,15 @@ export async function populateNewText() {
     }
   };
   const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
-  if (textStore.isSessionExpired())
-    textStore.sessionId = response.sessionData.sessionId!;
-  textStore.encryptedText = response.encryptedText;
-  textStore.resetDecryption();
-  textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
-  decipherGridStore.$reset();
-  gameDifficultyStore.resetHints();
+
+  if (response.sessionData.sessionId) {
+    textStore.sessionId = response.sessionData.sessionId;
+    textStore.encryptedText = response.encryptedText;
+    textStore.resetDecryption();
+    textStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
+    decipherGridStore.$reset();
+    gameDifficultyStore.resetHints();
+  }
+  else // If the server responds with an empty sessionId, the new text request was rejected.
+    textStore.resetSessionId();
 }

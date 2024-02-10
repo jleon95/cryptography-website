@@ -40,8 +40,7 @@ export const useTextStore = defineStore('text', () => {
   });
 
   const decryptedText = computed(() => {
-    const newText = encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
-    return newText;
+    return encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
   });
 
   function isSessionExpired() {
@@ -69,8 +68,12 @@ export const useTextStore = defineStore('text', () => {
       assignedLetters[letter] = "";
   }
 
+  function resetSessionId() {
+    sessionId.value = defaultState.sessionId;
+  }
+
   return {
     encryptedText, decryptedText, assignedLetters, letterFrequencies, sessionId, expirationDate,
-    getSessionId, setExpirationDate, getExpirationDate, isSessionExpired, resetDecryption
+    getSessionId, setExpirationDate, getExpirationDate, isSessionExpired, resetDecryption, resetSessionId
   };
 })

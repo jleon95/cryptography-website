@@ -23,12 +23,17 @@ export async function validateDecryption() {
     };
     const response: ValidationResponse = await callAPI(Action.VALIDATION, validationRequestBody) as ValidationResponse;
 
-    // Reverse the letter mapping here too.
-    for (const letter in response.validatedLetterMapping) {
-      if (response.validatedLetterMapping[letter])
-        decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
-      else
-        decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
+    if (Object.keys(response.validatedLetterMapping).length) {
+
+      // Reverse the letter mapping here too.
+      for (const letter in response.validatedLetterMapping) {
+        if (response.validatedLetterMapping[letter])
+          decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
+        else
+          decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
+      }
     }
+    else // If the server responds with an empty sessionId, the new text request was rejected.
+      textStore.resetSessionId();
   }
 }

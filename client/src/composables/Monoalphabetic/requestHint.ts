@@ -28,7 +28,7 @@ function chooseLetterForHint(letterFrequencies: { [letter: string]: number }, ce
   return "";
 }
 
-async function makeHintRequest(chosenLetter: string, sessionId: string) {
+async function sendHintRequest(chosenLetter: string, sessionId: string) {
 
   const hintRequestBody: HintRequest = {
     requestedLetter: chosenLetter,
@@ -54,13 +54,18 @@ export async function requestHint() {
       const decipherGridStore = useDecipherGridStore();
       const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridStore.cellEditableStatus)
 
-      if (chosenLetter) {
+      if (chosenLetter) { // Don't request hints (even if you still have) if there are no letters left to decrypt
 
         gameDifficultyStore.useHint();
-        const correctLetter: string = await makeHintRequest(chosenLetter, textStore.sessionId);
-        textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
-        decipherGridStore.updateCellState(chosenLetter, CellState.HINT);
-        gameDifficultyStore.requestingHint = false;
+        const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
+
+        if (correctLetter) {
+          textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
+          decipherGridStore.updateCellState(chosenLetter, CellState.HINT);
+          gameDifficultyStore.requestingHint = false;
+        }
+        else // If the server responds with an empty sessionId, the new text request was rejected.
+          textStore.resetSessionId();
       }
     }
   }
