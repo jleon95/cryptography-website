@@ -38,6 +38,8 @@
     <Content Include=".env" />
     <Content Include=".env.development" />
     <Content Include=".gitignore" />
+    <Content Include="src\prisma\migrations\20240210213819_monoalphabetic\migration.sql" />
+    <Content Include="src\prisma\migrations\migration_lock.toml" />
     <Content Include="src\prisma\schema.prisma" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
@@ -45,6 +47,8 @@
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\prisma\" />
+    <Folder Include="src\prisma\migrations\" />
+    <Folder Include="src\prisma\migrations\20240210213819_monoalphabetic\" />
     <Folder Include="src\routes\" />
     <Folder Include="src\routes\monoalphabetic\" />
     <Folder Include="src\routes\monoalphabetic\hint\" />

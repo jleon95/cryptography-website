@@ -5,6 +5,7 @@ import { Prisma } from '@prisma/client';
 const logger = require('../../../../logger');
 
 export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
+
   const ids: {id: number}[] = await prisma.originalText.findMany({
     select: {
       id: true,
@@ -25,81 +26,42 @@ export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
   return { text: chosenText, id: chosenId };
 }
 
-export async function insertSession(sessionId: string, expirationDate: Date, data): Promise<void> {
-  await prisma.session.create({
-    data: {
-      id: sessionId,
-      expiresAt: expirationDate,
-      data: data
+export async function insertMonoalphabeticSession(sessionId: string, expirationDate: Date, letterMapping: LetterMapping, originalTextId: number, maxHints: number): Promise<void> {
+
+  try {
+    await prisma.monoalphabeticSession.create({
+      data: {
+        sessionId: sessionId,
+        expirationDate: expirationDate,
+        originalTextId: originalTextId,
+        encryptionMapping: letterMapping,
+        hintsUsed: 0,
+        maxHints: maxHints
+      }
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
+      childLogger.error("Error when attempting to create new MonoalphabeticSession entry.");
     }
-  });
+  }
 }
 
-export async function checkSessionExists(sessionId: string): Promise<boolean> {
+export async function checkMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
 
-  let result = await prisma.session.findUnique({
+  let result = await prisma.monoalphabeticSession.findUnique({
     where: {
-      id: sessionId
+      sessionId: sessionId
     }
   });
 
   return result !== null;
 }
 
-export async function touchSession(sessionId: string, expirationDate: Date): Promise<void> {
+export async function deleteMonoalphabeticSession(sessionId: string): Promise<void> {
 
   try {
-    await prisma.session.update({
-      where: {
-        id: sessionId
-      },
-      data: {
-        expiresAt: expirationDate
-      }
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId });
-      if (e.code == "P2025")
-        childLogger.error("Error when attempting to touch existing Session entry: no entries exist with the provided session ID.");
-    }
-  }
-}
-
-export async function deleteSession(sessionId: string): Promise<void> {
-  await prisma.session.delete({
-    where: {
-      id: sessionId
-    }
-  });
-}
-
-export async function insertTextToBeDecrypted(letterMapping: LetterMapping, originalTextId: number, sessionId: string, deletePreviousEncryptedText: boolean = false): Promise<void> {
-
-  if (deletePreviousEncryptedText) {
-    await deleteTextToBeDecryptedBySessionId(sessionId);
-  }
-
-  try {
-    await prisma.textBeingDecrypted.create({
-      data: {
-        encryptionMapping: letterMapping,
-        originalTextId: originalTextId,
-        sessionId: sessionId
-      }
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      if (e.code == "P2003")
-        childLogger.error("Error when attempting to create new TextBeingDecrypted entry: session ID does not match any Session entry.");
-    }
-  }
-}
-
-export async function deleteTextToBeDecryptedBySessionId(sessionId: string): Promise<void> {
-  try {
-    await prisma.textBeingDecrypted.delete({
+    await prisma.monoalphabeticSession.delete({
       where: {
         sessionId: sessionId
       }
@@ -107,8 +69,7 @@ export async function deleteTextToBeDecryptedBySessionId(sessionId: string): Pro
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      if (e.code == "P2025")
-        childLogger.error("Error when attempting to delete TextBeingDecrypted entry: no entries associated with the given session ID exist.");
+      childLogger.error("Error when attempting to delete existing MonoalphabeticSession entry.");
     }
   }
 }
