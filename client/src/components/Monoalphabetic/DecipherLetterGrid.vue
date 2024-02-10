@@ -15,7 +15,7 @@
     </div>
     <div class="table-grid-container">
       <div v-for="(decrypted, original) in textStore.assignedLetters" class="grid-item">
-        <span class="letter">{{ original }}</span>
+        <span v-bind:class="decipherGridStore.contentCellStyleClasses[original]" class="letter">{{ original }}</span>
         <span v-bind:class="decipherGridStore.contentCellStyleClasses[original]" @keydown="processKeyDown" @keyup="processKeyUp" @cut.prevent @paste.prevent @drop.prevent class="content" v-bind:contenteditable="decipherGridStore.cellEditableStatus[original]">
           {{ decrypted }}
         </span>
@@ -72,7 +72,7 @@
     border-color: var(--color-mono-table-editable-letters-hover-border);
   }
 
-  .grid-item.correct:hover .letter {
+  .grid-item:hover .correct.letter, .grid-item:hover .correct.content {
     background-color: var(--color-mono-table-letters-hover-background);
     border-color: var(--color-mono-table-letters-hover-background);
   }
