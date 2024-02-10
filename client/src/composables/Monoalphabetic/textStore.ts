@@ -1,5 +1,6 @@
 ﻿import { defineStore } from 'pinia';
 import { ref, reactive, computed } from 'vue';
+import { useDecipherGridStore, CellState } from './decipherGridStore';
 
 export const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
@@ -11,6 +12,7 @@ const defaultState = {
 }
 
 export const useTextStore = defineStore('text', () => {
+  const decipherGridStore = useDecipherGridStore();
   const encryptedText = ref(defaultState.encryptedText);
   const sessionId = ref(defaultState.sessionId);
   const expirationDate = ref(defaultState.expirationDate); // Stored in milliseconds since 1970 blah blah blah to circumvent weird Date operations.
@@ -27,9 +29,14 @@ export const useTextStore = defineStore('text', () => {
         total++;
       }
     }
-    // Percentages rounded to 2 decimal places.
-    for (const letter in letterFrequencies)
-      letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2));
+    
+    for (const letter in letterFrequencies) {
+      if (!letterFrequencies[letter]) {
+        decipherGridStore.cellEditableStatus[letter] = false;
+        decipherGridStore.updateCellState(letter, CellState.DISABLED);
+      }
+      letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2)); // Percentages rounded to 2 decimal places.
+    }
 
     return letterFrequencies;
   });

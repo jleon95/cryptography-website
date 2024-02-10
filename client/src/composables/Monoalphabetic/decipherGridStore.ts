@@ -4,20 +4,26 @@ import { reactive } from 'vue';
 export enum CellState {
   CORRECT = "correct",
   WRONG = "wrong",
+  HINT = "hint",
+  DISABLED = "disabled",
   DEFAULT = ""
 }
 
 const defaultState = {
   contentCellStyles: {
     correct: false,
-    wrong: false
+    wrong: false,
+    hint: false,
+    disabled: false
   },
   cellEditableStatus: true
 };
 
 interface CellStyleClasses {
   correct: boolean,
-    wrong: boolean
+  wrong: boolean,
+  hint: boolean,
+  disabled: boolean
 }
 
 const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
@@ -33,16 +39,36 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
       case CellState.CORRECT: {
         contentCellStyleClasses[letter].correct = true;
         contentCellStyleClasses[letter].wrong = false;
+        contentCellStyleClasses[letter].hint = false;
+        contentCellStyleClasses[letter].disabled = false;
         break;
       }
       case CellState.WRONG: {
         contentCellStyleClasses[letter].correct = false;
         contentCellStyleClasses[letter].wrong = true;
+        contentCellStyleClasses[letter].hint = false;
+        contentCellStyleClasses[letter].disabled = false;
+        break;
+      }
+      case CellState.HINT: {
+        contentCellStyleClasses[letter].correct = false;
+        contentCellStyleClasses[letter].wrong = false;
+        contentCellStyleClasses[letter].hint = true;
+        contentCellStyleClasses[letter].disabled = false;
+        break;
+      }
+      case CellState.DISABLED: {
+        contentCellStyleClasses[letter].correct = false;
+        contentCellStyleClasses[letter].wrong = false;
+        contentCellStyleClasses[letter].hint = false;
+        contentCellStyleClasses[letter].disabled = true;
         break;
       }
       case CellState.DEFAULT: {
         contentCellStyleClasses[letter].correct = false;
         contentCellStyleClasses[letter].wrong = false;
+        contentCellStyleClasses[letter].hint = false;
+        contentCellStyleClasses[letter].disabled = false;
         break;
       }
     }
@@ -54,7 +80,7 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
 
   function $reset() {
     for (const letter in contentCellStyleClasses) {
-      contentCellStyleClasses[letter] = { correct: false, wrong: false };
+      contentCellStyleClasses[letter] = { correct: false, wrong: false, hint: false, disabled: false };
       cellEditableStatus[letter] = defaultState.cellEditableStatus;
     }
   }

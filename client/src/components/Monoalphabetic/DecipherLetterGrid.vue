@@ -72,11 +72,6 @@
     border-color: var(--color-mono-table-editable-letters-hover-border);
   }
 
-  .grid-item:hover .correct.letter, .grid-item:hover .correct.content {
-    background-color: var(--color-mono-table-letters-hover-background);
-    border-color: var(--color-mono-table-letters-hover-background);
-  }
-
   .grid-item:hover .content {
     border-color: var(--color-mono-table-editable-content-hover-border);
   }
@@ -85,7 +80,17 @@
     border-color: var(--color-mono-table-content-hover-border);
   }
 
-  .letter, .content {
+  .grid-item:hover .correct.letter,
+  .grid-item:hover .correct.content {
+    border-color: var(--color-mono-table-letters-hover-background);
+  }
+
+  .grid-item:hover .correct.letter {
+    background-color: var(--color-mono-table-letters-hover-background);
+  }
+
+  .letter, 
+  .content {
     min-height: 2rem;
     text-align: center;
   }
@@ -124,6 +129,24 @@
     animation-duration: 1.2s;
     animation-fill-mode: forwards;
     animation-timing-function: ease;
+  }
+
+  .grid-item > .disabled.letter,
+  .grid-item > .disabled.content {
+    border-color: var(--color-mono-table-content-disabled-border);
+  }
+
+  .grid-item > .disabled.letter {
+    background-color: var(--color-mono-table-letters-disabled-background);
+  }
+
+  .grid-item:hover > .disabled.letter {
+    background-color: var(--color-mono-table-letters-hover-background);
+    border-color: var(--color-mono-table-letters-hover-background);
+  }
+
+  .grid-item:hover > .disabled.content {
+    border-color: var(--color-mono-table-content-hover-border);
   }
 
   @keyframes reveal-wrong-cell {
