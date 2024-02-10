@@ -76,13 +76,9 @@
     border-color: var(--color-mono-table-editable-content-hover-border);
   }
 
-  .grid-item.correct:hover .content {
-    border-color: var(--color-mono-table-content-hover-border);
-  }
-
   .grid-item:hover .correct.letter,
   .grid-item:hover .correct.content {
-    border-color: var(--color-mono-table-letters-hover-background);
+    border-color: var(--color-mono-table-letters-hover-border);
   }
 
   .grid-item:hover .correct.letter {
@@ -131,6 +127,13 @@
     animation-timing-function: ease;
   }
 
+  .grid-item > .hint.content {
+    animation-name: reveal-hint-cell;
+    animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+  }
+
   .grid-item > .disabled.letter,
   .grid-item > .disabled.content {
     border-color: var(--color-mono-table-content-disabled-border);
@@ -142,11 +145,24 @@
 
   .grid-item:hover > .disabled.letter {
     background-color: var(--color-mono-table-letters-hover-background);
-    border-color: var(--color-mono-table-letters-hover-background);
+    border-color: var(--color-mono-table-letters-hover-border);
   }
 
   .grid-item:hover > .disabled.content {
     border-color: var(--color-mono-table-content-hover-border);
+  }
+
+  .grid-item > .hint.content {
+    border-color: var(--color-mono-table-content-hint-border);
+  }
+
+  .grid-item:hover > .hint.letter,
+  .grid-item:hover > .hint.content {
+    border-color: var(--color-mono-table-letters-hover-border);
+  }
+
+  .grid-item:hover > .hint.letter {
+    background-color: var(--color-mono-table-letters-hover-background);
   }
 
   @keyframes reveal-wrong-cell {
@@ -194,6 +210,32 @@
     100% {
       transform: scale(1, 1) rotateY(1440deg);
       background-color: var(--color-mono-table-content-correct-background);
+    }
+  }
+
+  @keyframes reveal-hint-cell {
+    0% {
+      transform: scale(1, 1);
+      color: var(--color-mono-table-content-background);
+    }
+
+    20% {
+      transform: scale(1.2, 1.1);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    25% {
+      transform: scale(0.6, 0.7) rotateY(0deg);
+      box-shadow: none;
+    }
+
+    66.66% {
+      background-color: var(--color-mono-table-content-background);
+    }
+
+    100% {
+      transform: scale(1, 1) rotateY(1440deg);
+      background-color: var(--color-mono-table-content-hint-background);
     }
   }
 </style>
