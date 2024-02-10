@@ -8,23 +8,17 @@ generator client {
 }
 
 model OriginalText {
-  id					Int					@id @default(autoincrement())
-  content				String				@db.Text
-  textsBeingDecrypted	TextBeingDecrypted[]
+  id						Int						@id @default(autoincrement())
+  content					String					@db.Text
+  monoalphabeticSessions	MonoalphabeticSession[]
 }
 
-model TextBeingDecrypted {
-  id					Int				@id @default(autoincrement())
-  originalText			OriginalText	@relation(fields: [originalTextId], references: [id])
-  originalTextId		Int				
-  session				Session			@relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  sessionId				String			@unique
-  encryptionMapping		Json
-}
-
-model Session {
-  id					String				@id
-  data					Json   
-  expiresAt				DateTime
-  textBeingDecrypted	TextBeingDecrypted?
+model MonoalphabeticSession {
+  sessionId			String			@id
+  maxHints			Int
+  hintsUsed			Int
+  originalText		OriginalText	@relation(fields: [originalTextId], references: [id], onDelete: Cascade)
+  originalTextId	Int
+  expirationDate	DateTime
+  encryptionMapping	Json
 }
