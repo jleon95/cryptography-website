@@ -1,25 +1,50 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-export const useGameDifficultyStore = defineStore('gameDifficulty', () => {
-  const keepSpaces = ref(false);
-  const keepPunctuation = ref(false);
+const defaultValues = {
+  keepSpaces: false,
+  keepPunctuation: false,
+  allowedHints: 3,
+  usedHints: 0,
+  requestingHint: false
+}
 
-  function activateSpaces() {
+export const useGameDifficultyStore = defineStore('gameDifficulty', () => {
+  const keepSpaces = ref(defaultValues.keepSpaces);
+  const keepPunctuation = ref(defaultValues.keepPunctuation);
+  const allowedHints = ref(defaultValues.allowedHints);
+  const usedHints = ref(defaultValues.usedHints);
+  const requestingHint = ref(defaultValues.requestingHint);
+
+  function enableSpaces() {
     keepSpaces.value = true;
   }
 
-  function deactivateSpaces() {
+  function disableSpaces() {
     keepSpaces.value = false;
   }
 
-  function activatePunctuation() {
+  function enablePunctuation() {
     keepPunctuation.value = true;
   }
 
-  function deactivatePunctuation() {
+  function disablePunctuation() {
     keepPunctuation.value = false;
   }
 
-  return { keepSpaces, keepPunctuation, activateSpaces, deactivateSpaces, activatePunctuation, deactivatePunctuation };
+  function useHint() {
+    if (usedHints.value < allowedHints.value)
+      usedHints.value++;
+  }
+
+  function hintsLeft() {
+    return allowedHints.value - usedHints.value;
+  }
+
+  function resetHints() {
+    usedHints.value = defaultValues.usedHints;
+    requestingHint.value = defaultValues.requestingHint;
+  }
+
+  return { keepSpaces, keepPunctuation, requestingHint, enableSpaces, disableSpaces, enablePunctuation, disablePunctuation, useHint, hintsLeft, resetHints };
 })
