@@ -1,6 +1,7 @@
 ﻿<script setup lang="ts">
   import { populateNewText } from '../../composables/Monoalphabetic/populateNewText';
   import { validateDecryption } from '../../composables/Monoalphabetic/validateDecryption';
+  import { requestHint } from '../../composables/Monoalphabetic/requestHint';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
   import { useDecipherGridStore, CellState } from '../../composables/Monoalphabetic/decipherGridStore';
 
@@ -31,7 +32,7 @@
       <span class="tooltiptext">Validar progreso</span>
     </div>
     <div class="tooltip">
-      <span class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">search</span>
+      <span @click="requestHint" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">search</span>
       <span class="tooltiptext">Usar una pista</span>
     </div>
     <div class="tooltip">
