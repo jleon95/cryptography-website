@@ -55,6 +55,8 @@
     <TypeScriptCompile Include="logger.ts" />
     <TypeScriptCompile Include="src\prisma\prisma-client.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\controller.models.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.logic.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\service.models.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\logic.models.ts" />

@@ -11,7 +11,7 @@ router.post('/validation', async (req: Request, res: Response) => {
   const requestBody: ValidationRequest = req.body;
   const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
   const responseBody: ValidationResponse = {
-    validatedLetterMapping: validateLetterMapping(requestBody.letterMapping, correctEncryptionMapping)
+    validatedLetterMapping: validateLetterMapping(requestBody.letterMapping, correctEncryptionMapping) as ValidatedLetterMapping
   };
   res.json(responseBody);
 });
