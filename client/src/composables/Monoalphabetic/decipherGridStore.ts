@@ -52,5 +52,12 @@ export const useDecipherGridStore = defineStore("decipherGrid", () => {
     cellEditableStatus[letter] = false;
   }
 
-  return { contentCellStyleClasses, cellEditableStatus, updateCellState, disableInputInCell };
+  function $reset() {
+    for (const letter in contentCellStyleClasses) {
+      contentCellStyleClasses[letter] = { correct: false, wrong: false };
+      cellEditableStatus[letter] = defaultState.cellEditableStatus;
+    }
+  }
+
+  return { contentCellStyleClasses, cellEditableStatus, updateCellState, disableInputInCell, $reset };
 });

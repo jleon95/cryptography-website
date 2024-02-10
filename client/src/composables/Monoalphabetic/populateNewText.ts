@@ -1,5 +1,6 @@
 import { useGameDifficultyStore } from './gameDifficultyStore';
 import { useTextStore } from './textStore';
+import { useDecipherGridStore } from './decipherGridStore';
 import { callAPI, Action } from './apiCalls';
 import type { NewTextRequest, NewTextResponse } from './apiCalls';
 
@@ -11,6 +12,7 @@ export function isSessionExpired() {
 export async function populateNewText() {
   const gameDifficultyStore = useGameDifficultyStore();
   const textStore = useTextStore();
+  const decipherGridStore = useDecipherGridStore();
   const options: NewTextRequest = {
     difficultyOptions: {
       keepSpaces: gameDifficultyStore.keepSpaces,
@@ -26,4 +28,5 @@ export async function populateNewText() {
   textStore.encryptedText = response.encryptedText;
   textStore.resetDecryption();
   textStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
+  decipherGridStore.$reset();
 }
