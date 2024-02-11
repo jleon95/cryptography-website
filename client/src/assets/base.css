@@ -52,6 +52,7 @@
     --color-mono-textarea-info-icon-text: var(--base-white);
     --color-mono-textarea-info-icon-hover-background: var(--base-primary);
     --color-mono-textarea-info-data-background: transparent;
+    --color-mono-textarea-info-data-text: black;
     /*Monoalphabetic cipher: letter grid components*/
     --color-mono-table-title-text: var(--base-very-light-primary);
     --color-mono-table-title-background: var(--base-dark-primary);

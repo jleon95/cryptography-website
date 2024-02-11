@@ -77,22 +77,16 @@
   .show-validations,
   .show-hints {
     align-content: center;
-    background-color: var(--color-mono-textarea-info-icon-background);
-    border-radius: 50%;
-    color: var(--color-mono-textarea-info-icon-text);
-    display: inline-flex;
+    display: flex;
+    flex-direction: row-reverse;
     margin-bottom: 0.2rem;
-    padding: 0.1rem 0.3rem;
-    position: relative;
-    transition: all ease 0.2s;
   }
 
   .show-validations {
-    margin-right: 2.5rem;
+    margin-right: 0.7rem;
   }
 
-  .show-validations:hover,
-  .show-hints:hover {
+  .icon:hover {
     background-color: var(--color-mono-textarea-info-icon-hover-background);
   }
 
@@ -102,38 +96,27 @@
   }
 
   .icon {
+    background-color: var(--color-mono-textarea-info-icon-background);
     border-radius: 50%;
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
+    color: var(--color-mono-textarea-info-icon-text);
+    margin: 0 0.2rem 0.2rem;
+    padding: 0.3rem 0.5rem;
     transition: all ease 0.5s;
-    margin: 0.2rem;
   }
 
   .number {
     font-weight: 500;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
+    margin: 0 0.3rem 0.2rem;
   }
 
   .data-container-validations,
   .data-container-hints {
+    align-items: center;
     background-color: var(--color-mono-textarea-info-data-background);
     border: 0;
-    bottom: 0;
-    color: black;
-    height: 100%;
-    left: -105%;
-    overflow: hidden;
-    position: absolute;
-    text-align: center;
+    color: var(--color-mono-textarea-info-data-text);
+    display: inline-flex; /*Just to center text vertically*/
     transition: all ease 0.5s;
-    white-space: nowrap;
-    width: 100%;
   }
 
   .main-content-grid-item > textarea {
