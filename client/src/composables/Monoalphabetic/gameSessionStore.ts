@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { computed, reactive } from 'vue';
-import { useDecipherGridStore } from './decipherGridStore';
+import { computed, reactive, ref } from 'vue';
+import { useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
 
 const defaultValues = {
   textDifficultySettings: {
@@ -12,17 +12,19 @@ const defaultValues = {
     usedHints: 0,
     requestingHint: false
   },
-  totalLetters: 27 // In Spanish
+  totalLetters: 27, // In Spanish
+  validationCounter: 0
 }
 
 export const useGameSessionStore = defineStore('gameSession', () => {
-  const decipherGridStore = useDecipherGridStore();
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const textDifficultySettings = reactive({ ...defaultValues.textDifficultySettings })
   const hintManagement = reactive({ ...defaultValues.hintManagement })
+  const validationCounter = ref(defaultValues.validationCounter);
   const lettersConfirmed = computed(() => {
     let sum: number = 0;
-    for (const letter in decipherGridStore.cellEditableStatus)
-      sum += +!decipherGridStore.cellEditableStatus[letter];
+    for (const letter in decipherGridDOMStatesStore.cellEditableStatus)
+      sum += +!decipherGridDOMStatesStore.cellEditableStatus[letter]; // Non-editable letter means "completed letter" in practice.
 
     return sum;
   });
@@ -41,6 +43,13 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     hintManagement.requestingHint = defaultValues.hintManagement.requestingHint;
   }
 
+  function incrementValidationCounter() {
+    validationCounter.value++;
+  }
 
-  return { textDifficultySettings, hintManagement, lettersConfirmed, useHint, hintsLeft, resetHints };
+  function resetValidationCounter() {
+    validationCounter.value = defaultValues.validationCounter;
+  }
+
+  return { textDifficultySettings, hintManagement, lettersConfirmed, useHint, hintsLeft, resetHints, incrementValidationCounter, resetValidationCounter };
 })
