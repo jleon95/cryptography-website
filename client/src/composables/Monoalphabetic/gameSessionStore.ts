@@ -51,5 +51,5 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     validationCounter.value = defaultValues.validationCounter;
   }
 
-  return { textDifficultySettings, hintManagement, lettersConfirmed, useHint, hintsLeft, resetHints, incrementValidationCounter, resetValidationCounter };
+  return { textDifficultySettings, hintManagement, lettersConfirmed, validationCounter, useHint, hintsLeft, resetHints, incrementValidationCounter, resetValidationCounter };
 })
