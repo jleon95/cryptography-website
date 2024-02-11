@@ -1,5 +1,5 @@
 ﻿import { useTextStore } from './textStore';
-import { useDecipherGridStore, CellState } from './decipherGridStore';
+import { useDecipherGridDOMStatesStore, CellState } from './decipherGridDOMStatesStore';
 
 const allowedLetterInputSet: Set<string> = new Set("abcdefghijklmnñopqrstuvwxyz");
 const allowedInputSet: Set<string> = new Set("abcdefghijklmnñopqrstuvwxyz");
@@ -13,13 +13,13 @@ export function processKeyDown(e: KeyboardEvent) {
 export function processKeyUp(e: KeyboardEvent) {
 
   const textStore = useTextStore();
-  const decipherGridStore = useDecipherGridStore();
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const originalLetter: string = (e.currentTarget as HTMLElement).previousSibling!.textContent!;
 
   if (allowedLetterInputSet.has(e.key))
     textStore.assignedLetters[originalLetter] = e.key
   else if (e.key == "Backspace") {
     textStore.assignedLetters[originalLetter] = "";
-    decipherGridStore.updateCellState(originalLetter, CellState.DEFAULT);
+    decipherGridDOMStatesStore.updateCellState(originalLetter, CellState.DEFAULT);
   }
 }

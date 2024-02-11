@@ -1,6 +1,6 @@
 import { useGameSessionStore } from './gameSessionStore';
 import { useTextStore } from './textStore';
-import { useDecipherGridStore } from './decipherGridStore';
+import { useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
 import { callAPI, Action } from './apiCalls';
 import type { NewTextRequest, NewTextResponse } from './apiCalls';
 
@@ -12,7 +12,7 @@ export function isSessionExpired() {
 export async function populateNewText() {
   const gameSessionStore = useGameSessionStore();
   const textStore = useTextStore();
-  const decipherGridStore = useDecipherGridStore();
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const options: NewTextRequest = {
     difficultyOptions: gameSessionStore.textDifficultySettings,
     sessionData: {
@@ -26,9 +26,10 @@ export async function populateNewText() {
     textStore.encryptedText = response.encryptedText;
     textStore.resetDecryption();
     textStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
-    decipherGridStore.$reset();
-    gameSessionStore.resetHints();
   }
   else // If the server responds with an empty sessionId, the new text request was rejected.
     textStore.resetSessionId();
+  decipherGridDOMStatesStore.$reset();
+  gameSessionStore.resetHints();
+  gameSessionStore.resetValidationCounter();
 }

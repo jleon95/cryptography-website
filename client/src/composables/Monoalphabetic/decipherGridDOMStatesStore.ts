@@ -28,7 +28,7 @@ interface CellStyleClasses {
 
 const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
-export const useDecipherGridStore = defineStore("decipherGrid", () => {
+export const useDecipherGridDOMStatesStore = defineStore("decipherGridDOMStates", () => {
 
   const contentCellStyleClasses: { [letter: string]: CellStyleClasses } = reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: { ...defaultState.contentCellStyles } }), {}));
   const cellEditableStatus: { [letter: string]: boolean } = reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: defaultState.cellEditableStatus }), {}));

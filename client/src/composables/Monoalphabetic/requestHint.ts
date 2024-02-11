@@ -1,5 +1,5 @@
 import { useGameSessionStore } from './gameSessionStore';
-import { CellState, useDecipherGridStore } from './decipherGridStore';
+import { CellState, useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
 import { useTextStore } from './textStore';
 import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
 import type { HintRequest, HintResponse } from '../../composables/Monoalphabetic/apiCalls';
@@ -51,8 +51,8 @@ export async function requestHint() {
     if (gameSessionStore.hintsLeft()) {
 
       const textStore = useTextStore();
-      const decipherGridStore = useDecipherGridStore();
-      const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridStore.cellEditableStatus)
+      const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+      const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)
 
       if (chosenLetter) { // Don't request hints (even if you still have) if there are no letters left to decrypt
 
@@ -61,7 +61,7 @@ export async function requestHint() {
 
         if (correctLetter) {
           textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
-          decipherGridStore.updateCellState(chosenLetter, CellState.HINT);
+          decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
           gameSessionStore.hintManagement.requestingHint = false;
         }
         else // If the server responds with an empty sessionId, the new text request was rejected.

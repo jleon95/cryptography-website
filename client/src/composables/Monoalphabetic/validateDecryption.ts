@@ -1,16 +1,17 @@
 import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-import { useDecipherGridStore, CellState } from '../../composables/Monoalphabetic/decipherGridStore';
+import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
+import { useDecipherGridDOMStatesStore, CellState } from './decipherGridDOMStatesStore';
 import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
 import type { ValidationRequest, ValidationResponse } from '../../composables/Monoalphabetic/apiCalls';
 
 export async function validateDecryption() {
 
   const textStore = useTextStore();
-  const decipherGridStore = useDecipherGridStore();
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const lettersToValidate: { [original: string]: string } = {};
   // Be careful!! Mapping in backend is {real: encrypted}, but mapping in frontend is {encrypted: real}.
   for (const letter in textStore.assignedLetters)
-    if (decipherGridStore.cellEditableStatus[letter] && textStore.assignedLetters[letter])
+    if (decipherGridDOMStatesStore.cellEditableStatus[letter] && textStore.assignedLetters[letter])
       lettersToValidate[textStore.assignedLetters[letter].toUpperCase()] = letter;
 
   if (Object.keys(lettersToValidate).length) {
@@ -28,10 +29,12 @@ export async function validateDecryption() {
       // Reverse the letter mapping here too.
       for (const letter in response.validatedLetterMapping) {
         if (response.validatedLetterMapping[letter])
-          decipherGridStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
+          decipherGridDOMStatesStore.updateCellState(lettersToValidate[letter], CellState.CORRECT);
         else
-          decipherGridStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
+          decipherGridDOMStatesStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
       }
+      const gameSessionStore = useGameSessionStore();
+      gameSessionStore.incrementValidationCounter();
     }
     else // If the server responds with an empty sessionId, the new text request was rejected.
       textStore.resetSessionId();

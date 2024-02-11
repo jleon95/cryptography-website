@@ -3,16 +3,16 @@
   import { validateDecryption } from '../../composables/Monoalphabetic/validateDecryption';
   import { requestHint } from '../../composables/Monoalphabetic/requestHint';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { useDecipherGridStore, CellState } from '../../composables/Monoalphabetic/decipherGridStore';
+  import { useDecipherGridDOMStatesStore, CellState } from '../../composables/Monoalphabetic/decipherGridDOMStatesStore';
 
   const textStore = useTextStore();
-  const decipherGridStore = useDecipherGridStore();
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
 
   function resetUnconfirmedDecryption() {
     for (const letter in textStore.assignedLetters) {
-      if (decipherGridStore.cellEditableStatus[letter]) {
+      if (decipherGridDOMStatesStore.cellEditableStatus[letter]) {
         textStore.assignedLetters[letter] = "";
-        decipherGridStore.updateCellState(letter, CellState.DEFAULT);
+        decipherGridDOMStatesStore.updateCellState(letter, CellState.DEFAULT);
       }
     }
   }
