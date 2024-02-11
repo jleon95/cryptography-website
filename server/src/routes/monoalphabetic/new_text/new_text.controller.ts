@@ -1,17 +1,14 @@
-import { Request, Response, Router, response } from 'express';
+import { Request, Response, Router } from 'express';
 import { insertMonoalphabeticSession, checkMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service';
 import { createNewEncryptedText } from './new_text.logic';
 import { chooseNewText } from './new_text.service';
+import { createExpirationDate } from '../utils';
 import type { EncryptedTextInfo } from '../logic.models';
 import type { ChosenOriginalTextInfo } from '../service.models';
 import type { NewTextRequest, NewTextResponse } from '../controller.models';
 const logger = require('../../../../logger');
 const crypto = require("crypto");
 const router = Router();
-
-function createExpirationDate(): Date {
-  return new Date((new Date().getTime()) + +process.env["SESSION_DURATION"]);
-}
 
 async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {
   const chosenTextInfo: ChosenOriginalTextInfo = await chooseNewText();

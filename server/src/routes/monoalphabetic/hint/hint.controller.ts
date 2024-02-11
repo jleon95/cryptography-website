@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
-import { getEncryptionMapping, checkMonoalphabeticSessionExists } from './hint.service';
+import { getEncryptionMapping, checkMonoalphabeticSessionExists, touchMonoalphabeticSession } from './hint.service';
 import { findCorrectLetterFromMapping } from './hint.logic';
+import { createExpirationDate } from '../utils';
 import type { HintRequest, HintResponse } from '../controller.models';
 import type { LetterMapping } from '../logic.models';
 const logger = require('../../../../logger');
@@ -14,6 +15,7 @@ router.post('/hint', async (req: Request, res: Response) => {
 
   if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
+    touchMonoalphabeticSession(requestBody.sessionData.sessionId, createExpirationDate());
     const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
     const responseBody: HintResponse = {
       correctLetter: findCorrectLetterFromMapping(requestBody.requestedLetter, correctEncryptionMapping)
