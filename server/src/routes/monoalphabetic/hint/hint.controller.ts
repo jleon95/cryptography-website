@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { getEncryptionMapping, checkMonoalphabeticSessionExists, touchMonoalphabeticSession } from './hint.service';
+import { getEncryptionMapping, checkMonoalphabeticSessionExists, touchMonoalphabeticSession, getRemainingHints, consumeHint } from './hint.service';
 import { findCorrectLetterFromMapping } from './hint.logic';
 import { createExpirationDate } from '../utils';
 import type { HintRequest, HintResponse } from '../controller.models';
@@ -16,11 +16,14 @@ router.post('/hint', async (req: Request, res: Response) => {
   if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
     touchMonoalphabeticSession(requestBody.sessionData.sessionId, createExpirationDate());
-    const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
-    const responseBody: HintResponse = {
-      correctLetter: findCorrectLetterFromMapping(requestBody.requestedLetter, correctEncryptionMapping)
-    };
-    res.json(responseBody);
+    if ((await getRemainingHints(requestBody.sessionData.sessionId)) > 0) {
+      consumeHint(requestBody.sessionData.sessionId);
+      const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
+      const responseBody: HintResponse = {
+        correctLetter: findCorrectLetterFromMapping(requestBody.requestedLetter, correctEncryptionMapping)
+      };
+      res.json(responseBody);
+    }
   }
   else {
     const responseBody: HintResponse = { correctLetter: "" };

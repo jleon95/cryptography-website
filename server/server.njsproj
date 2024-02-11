@@ -68,6 +68,7 @@
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.logic.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\routes.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\utils.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.logic.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.service.ts" />

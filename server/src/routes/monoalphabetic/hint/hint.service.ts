@@ -16,7 +16,7 @@ export async function getEncryptionMapping(sessionId: string): Promise<LetterMap
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      childLogger.error("Error when attempting to access MonoalphabeticSession entry.");
+      childLogger.error("Error when attempting to access existing MonoalphabeticSession entry.");
     }
   }
 }
@@ -47,6 +47,44 @@ export async function touchMonoalphabeticSession(sessionId: string, expirationDa
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
       childLogger.error("Error when attempting to touch existing MonoalphabeticSession entry.");
+    }
+  }
+}
+
+export async function getRemainingHints(sessionId: string): Promise<number> {
+  try {
+    const result = await prisma.monoalphabeticSession.findUnique({
+      where: {
+        sessionId: sessionId
+      },
+      select: {
+        maxHints: true,
+        hintsUsed: true
+      }
+    });
+    return result.maxHints - result.hintsUsed;
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
+      childLogger.error("Error when attempting to access existing MonoalphabeticSession entry.");
+    }
+  }
+}
+
+export async function consumeHint(sessionId: string): Promise<void> {
+  try {
+    await prisma.monoalphabeticSession.update({
+      where: {
+        sessionId: sessionId
+      },
+      data: {
+        hintsUsed: { increment: 1 }
+      }
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
+      childLogger.error("Error when attempting to update existing MonoalphabeticSession entry.");
     }
   }
 }
