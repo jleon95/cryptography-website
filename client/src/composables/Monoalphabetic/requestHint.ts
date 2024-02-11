@@ -1,4 +1,4 @@
-import { useGameDifficultyStore } from './gameDifficultyStore';
+import { useGameSessionStore } from './gameSessionStore';
 import { CellState, useDecipherGridStore } from './decipherGridStore';
 import { useTextStore } from './textStore';
 import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
@@ -41,14 +41,14 @@ async function sendHintRequest(chosenLetter: string, sessionId: string) {
 
 export async function requestHint() {
 
-  const gameDifficultyStore = useGameDifficultyStore();
+  const gameSessionStore = useGameSessionStore();
 
   // Guard against requesting the same letter twice when clicking very fast because the state hasn't been updated yet at that point.
-  if (!gameDifficultyStore.requestingHint) {
+  if (!gameSessionStore.hintManagement.requestingHint) {
 
-    gameDifficultyStore.requestingHint = true;
+    gameSessionStore.hintManagement.requestingHint = true;
 
-    if (gameDifficultyStore.hintsLeft()) {
+    if (gameSessionStore.hintsLeft()) {
 
       const textStore = useTextStore();
       const decipherGridStore = useDecipherGridStore();
@@ -56,13 +56,13 @@ export async function requestHint() {
 
       if (chosenLetter) { // Don't request hints (even if you still have) if there are no letters left to decrypt
 
-        gameDifficultyStore.useHint();
+        gameSessionStore.useHint();
         const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
 
         if (correctLetter) {
           textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
           decipherGridStore.updateCellState(chosenLetter, CellState.HINT);
-          gameDifficultyStore.requestingHint = false;
+          gameSessionStore.hintManagement.requestingHint = false;
         }
         else // If the server responds with an empty sessionId, the new text request was rejected.
           textStore.resetSessionId();
