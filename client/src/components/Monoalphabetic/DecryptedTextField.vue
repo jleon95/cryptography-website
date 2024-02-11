@@ -4,8 +4,6 @@
 
   const textStore = useTextStore();
   const gameSessionStore = useGameSessionStore();
-  
-
 </script>
 
 <template>
@@ -75,13 +73,13 @@
     justify-content: space-between;
   }
 
-  /*The containers for the circles with the overlays initially hidden*/
+  /*The containers for the icons*/
   .show-validations,
   .show-hints {
     align-content: center;
-    background-color: var(--color-mono-textarea-title-background);
+    background-color: var(--color-mono-textarea-info-icon-background);
     border-radius: 50%;
-    color: var(--color-mono-textarea-title-text);
+    color: var(--color-mono-textarea-info-icon-text);
     display: inline-flex;
     margin-bottom: 0.2rem;
     padding: 0.1rem 0.3rem;
@@ -93,9 +91,9 @@
     margin-right: 2.5rem;
   }
 
-  .show-validations:hover, 
+  .show-validations:hover,
   .show-hints:hover {
-    background-color: var(--base-primary);
+    background-color: var(--color-mono-textarea-info-icon-hover-background);
   }
 
   .show-validations > .icon:hover ~ .data-container-validations,
@@ -124,7 +122,7 @@
 
   .data-container-validations,
   .data-container-hints {
-    background-color: transparent;
+    background-color: var(--color-mono-textarea-info-data-background);
     border: 0;
     bottom: 0;
     color: black;

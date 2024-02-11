@@ -47,6 +47,11 @@
     --color-mono-textarea-border: var(--base-dark-primary);
     --color-mono-textarea-background: var(--base-very-light-primary);
     --color-mono-textarea-text: var(--base-white);
+    /*Monoalphabetic cipher: decrypted text area-specific components*/
+    --color-mono-textarea-info-icon-background: var(--base-dark-primary);
+    --color-mono-textarea-info-icon-text: var(--base-white);
+    --color-mono-textarea-info-icon-hover-background: var(--base-primary);
+    --color-mono-textarea-info-data-background: transparent;
     /*Monoalphabetic cipher: letter grid components*/
     --color-mono-table-title-text: var(--base-very-light-primary);
     --color-mono-table-title-background: var(--base-dark-primary);
