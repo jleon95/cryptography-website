@@ -82,10 +82,6 @@
     margin-bottom: 0.2rem;
   }
 
-  .show-validations {
-    margin-right: 0.7rem;
-  }
-
   .icon:hover {
     background-color: var(--color-mono-textarea-info-icon-hover-background);
   }
@@ -99,8 +95,8 @@
     background-color: var(--color-mono-textarea-info-icon-background);
     border-radius: 50%;
     color: var(--color-mono-textarea-info-icon-text);
-    margin: 0 0.2rem 0.2rem;
-    padding: 0.3rem 0.5rem;
+    margin: 0 0.4rem 0.2rem;
+    padding: 0.35rem 0.5rem;
     transition: all ease 0.5s;
   }
 

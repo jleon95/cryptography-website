@@ -26,6 +26,7 @@
     color: var(--color-mono-textarea-title-text);
     font-weight: 500;
     padding: 0.2rem 0.5rem;
+    text-align: center;
     transition: all ease 0.2s;
     width: 33%;
   }
@@ -35,10 +36,10 @@
     border: 0.2rem solid var(--color-mono-textarea-border);
     border-radius: 0 1rem 1rem 1rem;
     height: 25rem;
+    line-break: anywhere;
     padding: 0.5rem;
     resize: none;
     transition: all ease 0.2s;
-    line-break: anywhere;
   }
 
   .main-content-grid-item > p:hover {
