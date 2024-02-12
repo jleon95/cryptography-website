@@ -13,7 +13,7 @@
       <div class="info-group">
 
         <div class="show-validations">
-          <div class="icon material-symbols-outlined material-icons md-20">
+          <div class="icon material-symbols-outlined material-icons">
             check
           </div>
           <div class="number">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="show-hints">
-          <div class="icon material-symbols-outlined material-icons md-20">
+          <div class="icon material-symbols-outlined material-icons">
             search
           </div>
           <div class="number">
@@ -69,6 +69,11 @@
   .info-group {
     display: inline-flex;
     justify-content: space-between;
+    margin-bottom: 0.2rem;
+  }
+
+  .info-group div:last-child {
+    margin-left: 0.2rem;
   }
 
   /*The containers for the icons*/
@@ -77,34 +82,31 @@
     align-content: center;
     display: flex;
     flex-direction: row-reverse;
-    margin-bottom: 0.2rem;
   }
 
   .icon {
     background-color: var(--color-mono-textarea-info-icon-background);
     border-radius: 50%;
     color: var(--color-mono-textarea-info-icon-text);
-    margin: 0 0.4rem 0.2rem;
-    padding: 0.35rem 0.5rem;
+    margin-left: 0.4rem;
+    padding: 0.5rem;
     transition: all ease 0.5s;
   }
 
   .number {
     align-items: center;
-    background-color: var(--color-mono-textarea-info-data-background);
+    background-color: var(--color-mono-decrypted-textarea-info-data-background);
     border: 0;
-    color: var(--color-mono-textarea-info-data-text);
+    color: var(--color-mono-decrypted-textarea-info-data-text);
     display: inline-flex; /*Just to center text vertically*/
     font-weight: 500;
-    line-height: 2rem;
-    margin: 0 0.2rem 0.3rem 0.2rem;
     transition: all ease 0.5s;
   }
 
   .main-content-grid-item > textarea {
     background-color: var(--color-mono-textarea-text);
     border: 0.2rem solid var(--color-mono-textarea-border);
-    border-radius: 0 0rem 1rem 1rem;
+    border-radius: 0 1rem 1rem 1rem;
     height: 25rem;
     line-break: anywhere;
     padding: 0.5rem;
@@ -113,7 +115,7 @@
   }
 
   .icon:hover {
-    background-color: var(--color-mono-textarea-info-icon-hover-background);
+    background-color: var(--color-mono-decrypted-textarea-info-icon-hover-background);
   }
 
   .show-validations > .icon:hover ~ .number,
@@ -123,10 +125,5 @@
 
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 40;
-  }
-
-  .material-icons.md-20 {
-    font-size: 20px;
-    line-height: initial;
   }
 </style>
