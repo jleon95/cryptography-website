@@ -27,22 +27,37 @@
   }
 
   async function updateTextFromNewSettings() {
-    gameSessionStore.textDifficultySettings.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
-    gameSessionStore.textDifficultySettings.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
-    const updateTextRequestBody: UpdateTextRequest = {
-      sessionData: {
-        sessionId: textStore.getSessionId()
-      },
-      difficultyOptions: {
-        keepSpaces: gameSessionStore.textDifficultySettings.keepSpaces,
-        keepPunctuation: gameSessionStore.textDifficultySettings.keepPunctuation
-      }
-    };
-    const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
-    if (response.encryptedText)
-      textStore.encryptedText = response.encryptedText;
-    else
-      textStore.resetSessionId();
+
+    let areThereChanges = false;
+
+    if (gameSessionStore.textDifficultySettings.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
+      gameSessionStore.textDifficultySettings.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
+      areThereChanges = true;
+    }
+    if (gameSessionStore.textDifficultySettings.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
+      gameSessionStore.textDifficultySettings.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
+      areThereChanges = true;
+    }
+
+    // I could've just linked gameSessionStore.textDifficultySettings with the two checkbox elements,
+    // but then I would've had no way to prevent unnecessary API calls in case the user didn't make any changes.
+    if (areThereChanges) {
+
+      const updateTextRequestBody: UpdateTextRequest = {
+        sessionData: {
+          sessionId: textStore.getSessionId()
+        },
+        difficultyOptions: {
+          keepSpaces: gameSessionStore.textDifficultySettings.keepSpaces,
+          keepPunctuation: gameSessionStore.textDifficultySettings.keepPunctuation
+        }
+      };
+      const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
+      if (response.encryptedText)
+        textStore.encryptedText = response.encryptedText;
+      else
+        textStore.resetSessionId();
+    }
   }
 
   function closeTextSettings() {
