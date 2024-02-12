@@ -3,10 +3,12 @@
   import { validateDecryption } from '../../composables/Monoalphabetic/validateDecryption';
   import { requestHint } from '../../composables/Monoalphabetic/requestHint';
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
+  import { useToolbarButtonStatesStore } from '../../composables/Monoalphabetic/toolbarButtonStatesStore'; 
   import { useDecipherGridDOMStatesStore, CellState } from '../../composables/Monoalphabetic/decipherGridDOMStatesStore';
 
   const textStore = useTextStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+  const toolbarButtonStatesStore = useToolbarButtonStatesStore();
 
   function resetUnconfirmedDecryption() {
     for (const letter in textStore.assignedLetters) {
@@ -28,23 +30,23 @@
 <template>
   <div class="toolbar-wrapper">
     <div class="tooltip">
-      <span @click="validateDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">check</span>
+      <span :class="toolbarButtonStatesStore['validateDecryptionButton']" @click="validateDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24">check</span>
       <span class="tooltiptext">Validar progreso</span>
     </div>
     <div class="tooltip">
-      <span @click="requestHint" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">search</span>
+      <span :class="toolbarButtonStatesStore['requestHintButton']" @click="requestHint" class="toolbar-icon material-symbols-outlined material-icons md-24">search</span>
       <span class="tooltiptext">Usar una pista</span>
     </div>
     <div class="tooltip">
-      <span @click="resetUnconfirmedDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">restart_alt</span>
+      <span :class="toolbarButtonStatesStore['resetUnconfirmedDecryptionButton']" @click="resetUnconfirmedDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24">restart_alt</span>
       <span class="tooltiptext">Reiniciar partida</span>
     </div>
     <div class="tooltip">
-      <span @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">add</span>
+      <span @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
       <span class="tooltiptext">Nueva partida</span>
     </div>
     <div class="tooltip">
-      <span @click="deployAboutMono" class="toolbar-icon material-symbols-outlined material-icons md-24" href="#">question_mark</span>
+      <span @click="deployAboutMono" class="toolbar-icon material-symbols-outlined material-icons md-24">question_mark</span>
       <span class="tooltiptext">Acerca del juego</span>
     </div>
   </div>
@@ -136,6 +138,11 @@
 
   .toolbar-wrapper span.toolbar-icon:active {
     background-color: var(--color-toolbar-button-active-background);
+  }
+
+  .toolbar-wrapper .toolbar-icon.disabled {
+    background-color: var(--base-mute-primary);
+    pointer-events: none;
   }
 
   .material-symbols-outlined {
