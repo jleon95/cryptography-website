@@ -11,16 +11,16 @@
     let textSettingsContainer: HTMLElement = document.getElementById("text-settings-container")!;
     let closeTextSettingsButton: HTMLElement = document.getElementById("close-text-settings-button")!;
     textSettingsContainer.style.setProperty("opacity", window.getComputedStyle(textSettingsContainer).getPropertyValue("opacity"));
-    closeTextSettingsButton.style.setProperty("opacity", window.getComputedStyle(closeTextSettingsButton).getPropertyValue("opacity"));
     textSettingsContainer.classList.remove("inflate-text-settings");
-    closeTextSettingsButton.classList.remove("inflate-text-settings");
     textSettingsContainer.classList.add("deflate-text-settings");
-    closeTextSettingsButton.classList.add("deflate-text-settings");
+    closeTextSettingsButton.style.setProperty("opacity", window.getComputedStyle(closeTextSettingsButton).getPropertyValue("opacity"));
+    closeTextSettingsButton.classList.remove("inflate-button");
+    closeTextSettingsButton.classList.add("deflate-button");
     setTimeout(function () {
       textSettingsContainer.classList.remove("deflate-text-settings");
       textSettingsContainer.style.removeProperty("display");
       textSettingsContainer.style.removeProperty("opacity");
-      closeTextSettingsButton.classList.remove("deflate-text-settings");
+      closeTextSettingsButton.classList.remove("deflate-button");
       closeTextSettingsButton.style.removeProperty("display");
       closeTextSettingsButton.style.removeProperty("opacity");
     }, 700);
@@ -49,8 +49,6 @@
     resetTextSettingsStyles();
     updateTextFromNewSettings();
   }
-
-
 </script>
 
 <template>
@@ -73,44 +71,44 @@
 
 <style scoped>
   .text-settings-container {
-    position: fixed;
-    top: 50%;
+    backdrop-filter: blur(0.2rem);
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    display: none;
+    height: 21%;
     left: 50%;
+    overflow: hidden;
+    position: fixed;
+    text-align: center;
+    top: 50%;
     transform: translate(-50%,-50%);
     width: 17%;
-    height: 21%;
-    text-align: center;
-    backdrop-filter: blur(0.2rem);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    border-radius: 1rem;
-    overflow: hidden;
-    display: none;
   }
 
   .text-settings-title {
-    background-color: hsla(210, 100%, 40%, 0.9);
-    height: 30%;
-    display: flex;
     align-items: center;
-    justify-content: center;
+    background-color: hsla(210, 100%, 40%, 0.9);
     color: white;
-    font-weight: 500;
+    display: flex;
     font-size: 1.2rem;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    font-weight: 500;
+    height: 30%;
+    justify-content: center;
     overflow: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 100%;
   }
 
   .text-settings-form {
+    align-content: center;
     background-color: rgba(255,255,255,0.9);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-content: center;
     height: 70%;
-    width: 100%;
+    justify-content: center;
     padding: 0 10% 0;
+    width: 100%;
   }
 
   .text-settings-checkbox-container {
@@ -120,16 +118,16 @@
   }
 
   .text-settings-checkbox {
-    margin-right: 1rem;
     appearance: none;
-    cursor: pointer;
-    min-width: 1.9rem;
-    min-height: 1.9rem;
-    border-radius: 25%;
-    margin-top: auto;
-    margin-bottom: auto;
-    transition: all ease 0.5s;
     background-color: var(--base-lighter-primary);
+    border-radius: 25%;
+    cursor: pointer;
+    margin-bottom: auto;
+    margin-right: 1rem;
+    margin-top: auto;
+    min-height: 1.9rem;
+    min-width: 1.9rem;
+    transition: all ease 0.5s;
   }
 
   .text-settings-checkbox:hover {
@@ -141,9 +139,9 @@
   }
 
   .text-settings-checkbox-label {
+    font-size: 1.1rem;
     overflow: clip;
     text-overflow: ellipsis;
-    font-size: 1.1rem;
     white-space: nowrap;
   }
 
@@ -151,14 +149,14 @@
     background: var(--base-dark-primary);
     border: 0.2rem solid var(--base--dark-primary);
     border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
     color: white;
     cursor: pointer;
     display: none;
     font-weight: 500;
     height: 3.2rem;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
-    position: fixed;
     left: 50%;
+    position: fixed;
     top: 62%;
     transform: translateX(-50%);
     transition: all ease 0.2s;
@@ -176,28 +174,91 @@
     border-color: var(--color-aboutthis-close-active-border);
   }
 
-  div.inflate-text-settings, button.inflate-text-settings {
+  div.inflate-text-settings {
     animation-duration: 0.7s;
     animation-fill-mode: forwards;
     animation-name: inflate-text-settings;
-    animation-timing-function: ease;
     display: unset;
   }
 
-  div.deflate-text-settings, button.deflate-text-settings {
+  button.inflate-button {
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+    animation-name: inflate-button;
+    display: unset;
+  }
+
+  div.deflate-text-settings {
     animation-duration: 0.7s;
     animation-fill-mode: forwards;
     animation-name: deflate-text-settings;
     display: unset;
   }
 
+  button.deflate-button {
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+    animation-name: deflate-button;
+    display: unset;
+  }
+
   @keyframes inflate-text-settings {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    0% {
+      left: 50%;
+      opacity: 0;
+      top: 0%;
+      transform: translate(-50%,-50%) scale(0,0);
+    }
+    100% {
+      left: 50%;
+      opacity: 1;
+      top: 50%;
+      transform: translate(-50%,-50%) scale(1,1);
+    }
   }
 
   @keyframes deflate-text-settings {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    0% {
+      left: 50%;
+      opacity: 1;
+      top: 50%;
+      transform: translate(-50%,-50%) scale(1,1);
+    }
+    100% {
+      left: 0%;
+      opacity: 0;
+      top: 50%;
+      transform: translate(-50%,-50%) scale(1,1);
+    }
+  }
+
+  @keyframes inflate-button {
+    0% {
+      left: 50%;
+      opacity: 0;
+      top: 0%;
+      transform: translateX(-50%) scale(0,0);
+    }
+    100% {
+      left: 50%;
+      opacity: 1;
+      top: 62%;
+      transform: translateX(-50%) scale(1,1);
+    }
+  }
+
+  @keyframes deflate-button {
+    0% {
+      left: 50%;
+      opacity: 1;
+      top: 62%;
+      transform: translateX(-50%) scale(1,1);
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+      top: 62%;
+      transform: translateX(-50%) scale(1,1);
+    }
   }
 </style>

@@ -20,9 +20,9 @@
     if (textSettingsContainer.classList.contains("deflate-text-settings"))
       textSettingsContainer.classList.remove("deflate-text-settings");
     textSettingsContainer.classList.add("inflate-text-settings");
-    if (closeTextSettingsButton.classList.contains("deflate-text-settings"))
-      closeTextSettingsButton.classList.remove("deflate-text-settings");
-    closeTextSettingsButton.classList.add("inflate-text-settings");
+    if (closeTextSettingsButton.classList.contains("deflate-button"))
+      closeTextSettingsButton.classList.remove("deflate-button");
+    closeTextSettingsButton.classList.add("inflate-button");
   }
 </script>
 
