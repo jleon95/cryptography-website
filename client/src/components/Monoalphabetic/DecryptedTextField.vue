@@ -16,16 +16,17 @@
           <div class="icon material-symbols-outlined material-icons md-20">
             check
           </div>
-          <div class="data-container-validations">
-            <div class="number">{{ gameSessionStore.validationCounter }}</div>
+          <div class="number">
+            {{ gameSessionStore.validationCounter }}
           </div>
         </div>
+
         <div class="show-hints">
           <div class="icon material-symbols-outlined material-icons md-20">
             search
           </div>
-          <div class="data-container-hints">
-            <div class="number">{{ gameSessionStore.hintManagement.usedHints }}/{{ gameSessionStore.hintManagement.allowedHints }}</div>
+          <div class="number">
+            {{ gameSessionStore.hintManagement.usedHints }}/{{ gameSessionStore.hintManagement.allowedHints }}
           </div>
         </div>
         
@@ -45,9 +46,6 @@
   .decrypted-text-header-info {
     align-items: center;
     display: flex;
-  }
-
-  .decrypted-text-header-info {
     justify-content: space-between;
   }
 
@@ -82,15 +80,6 @@
     margin-bottom: 0.2rem;
   }
 
-  .icon:hover {
-    background-color: var(--color-mono-textarea-info-icon-hover-background);
-  }
-
-  .show-validations > .icon:hover ~ .data-container-validations,
-  .show-hints > .icon:hover ~ .data-container-hints {
-    transform: rotate(360deg);
-  }
-
   .icon {
     background-color: var(--color-mono-textarea-info-icon-background);
     border-radius: 50%;
@@ -101,17 +90,14 @@
   }
 
   .number {
-    font-weight: 500;
-    margin: 0 0.3rem 0.2rem;
-  }
-
-  .data-container-validations,
-  .data-container-hints {
     align-items: center;
     background-color: var(--color-mono-textarea-info-data-background);
     border: 0;
     color: var(--color-mono-textarea-info-data-text);
     display: inline-flex; /*Just to center text vertically*/
+    font-weight: 500;
+    line-height: 2rem;
+    margin: 0 0.2rem 0.3rem 0.2rem;
     transition: all ease 0.5s;
   }
 
@@ -124,6 +110,15 @@
     padding: 0.5rem;
     resize: none;
     transition: all ease 0.2s;
+  }
+
+  .icon:hover {
+    background-color: var(--color-mono-textarea-info-icon-hover-background);
+  }
+
+  .show-validations > .icon:hover ~ .number,
+  .show-hints > .icon:hover ~ .number {
+    transform: rotate(360deg);
   }
 
   .material-symbols-outlined {
