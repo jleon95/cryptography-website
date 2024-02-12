@@ -18,13 +18,6 @@
       }
     }
   }
-
-  function deployAboutMono() {
-    let aboutMono: HTMLElement = document.getElementById("about-mono")!;
-    if (aboutMono.classList.contains("deflate-about-mono"))
-      aboutMono.classList.remove("deflate-about-mono");
-    aboutMono.classList.add("inflate-about-mono-container");
-  }
 </script>
 
 <template>
@@ -44,10 +37,6 @@
     <div class="tooltip">
       <span @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
       <span class="tooltiptext">Nueva partida</span>
-    </div>
-    <div class="tooltip">
-      <span @click="deployAboutMono" class="toolbar-icon material-symbols-outlined material-icons md-24">question_mark</span>
-      <span class="tooltiptext">Acerca del juego</span>
     </div>
   </div>
 </template>
