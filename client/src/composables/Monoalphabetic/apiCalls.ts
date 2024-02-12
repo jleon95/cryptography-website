@@ -1,4 +1,4 @@
-export async function callAPI(action: Action, parameters: NewTextRequest|ValidationRequest|HintRequest): Promise<NewTextResponse|ValidationResponse|HintResponse> {
+export async function callAPI(action: Action, parameters: NewTextRequest|UpdateTextRequest|ValidationRequest|HintRequest): Promise<NewTextResponse|UpdateTextResponse|ValidationResponse|HintResponse> {
 
   return (await fetch(`http://localhost:1337/monoalphabetic/${action}`, {
     headers: {
@@ -12,7 +12,7 @@ export async function callAPI(action: Action, parameters: NewTextRequest|Validat
 
 export enum Action {
   NEW_TEXT = "new_text",
-  CURRENT_TEXT = "current_text",
+  UPDATE_TEXT = "update_text",
   REQUEST_HINT = "hint",
   VALIDATION = "validation"
 }
@@ -26,6 +26,20 @@ export interface NewTextResponse {
 }
 
 export interface NewTextRequest {
+  difficultyOptions: {
+    keepSpaces: boolean,
+    keepPunctuation: boolean
+  },
+  sessionData: {
+    sessionId: string,
+  }
+}
+
+export interface UpdateTextResponse {
+  encryptedText: string
+}
+
+export interface UpdateTextRequest {
   difficultyOptions: {
     keepSpaces: boolean,
     keepPunctuation: boolean
