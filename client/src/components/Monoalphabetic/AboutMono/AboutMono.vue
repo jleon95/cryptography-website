@@ -1,5 +1,4 @@
 ﻿<script setup lang="ts">
-  import { ref } from 'vue';
   import EncryptionExample from './EncryptionExample.vue';
 
   function closeAboutMono() {
@@ -32,7 +31,7 @@
   }
 
   function resetEncryptionTextAnimation () {
-    const decryptionExampleMapping = {
+    const decryptionExampleMapping: {[letter: string] : string} = {
       z: "A",
       m: "D",
       t: "H",
@@ -56,19 +55,19 @@
 <template>
   <div id="about-mono" class="about-mono-container">
     <button @click="closeAboutMono" class="close-about-mono-container material-symbols-outlined material-icons md-24">close</button>
-  <div class="about-mono-text-blob" id="text-blob-one">
-    <p>El <b>cifrado por sustitución</b> consiste en cambiar los caracteres dentro del mensaje original por otros distintos.</p>
-  </div>
-  <div class="about-mono-text-blob" id="text-blob-two">
-    <p>
-      El <b>cifrado monoalfabético</b> es un tipo de cifrado por sustitución que consiste en reordenar el alfabeto de forma que
-      cada letra sea reemplazada en el mensaje por otra letra, pero siempre la misma.
-    </p>
-  </div>
-  <div class="about-mono-text-blob" id="text-blob-three">
-    <p>Veamos un ejemplo. Haz clic en las letras de la primera fila para encriptar el mensaje:</p>
-    <EncryptionExample />
-  </div>
+    <div class="about-mono-text-blob" id="text-blob-one">
+      <p>El <b>cifrado por sustitución</b> consiste en cambiar los caracteres dentro del mensaje original por otros distintos.</p>
+    </div>
+    <div class="about-mono-text-blob" id="text-blob-two">
+      <p>
+        El <b>cifrado monoalfabético</b> es un tipo de cifrado por sustitución que consiste en reordenar el alfabeto de forma que
+        cada letra sea reemplazada en el mensaje por otra letra, pero siempre la misma.
+      </p>
+    </div>
+    <div class="about-mono-text-blob" id="text-blob-three">
+      <p>Veamos un ejemplo. Haz clic en las letras de la primera fila para encriptar el mensaje:</p>
+      <EncryptionExample />
+    </div>
   </div>
 </template>
 
