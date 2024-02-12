@@ -20,6 +20,22 @@ export interface NewTextResponse {
   encryptedText: string
 }
 
+// Format of updated text requests from the front-end
+export interface UpdateTextResponse {
+  encryptedText: string
+}
+
+// JSONify-able response body for updated text requests from the front-end
+export interface UpdateTextRequest {
+  difficultyOptions: {
+    keepSpaces: boolean,
+    keepPunctuation: boolean
+  },
+  sessionData: {
+    sessionId: string,
+  }
+}
+
 // Format of validation requests from the front-end
 export interface ValidationRequest {
   sessionData: {

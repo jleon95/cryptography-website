@@ -52,6 +52,7 @@
     <Folder Include="src\routes\" />
     <Folder Include="src\routes\monoalphabetic\" />
     <Folder Include="src\routes\monoalphabetic\hint\" />
+    <Folder Include="src\routes\monoalphabetic\update_text\" />
     <Folder Include="src\routes\monoalphabetic\validation\" />
     <Folder Include="src\routes\monoalphabetic\new_text\" />
   </ItemGroup>
@@ -68,6 +69,9 @@
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.logic.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\new_text\new_text.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\routes.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\update_text\update_text.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\update_text\update_text.logic.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\update_text\update_text.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\utils.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\validation\validation.logic.ts" />
