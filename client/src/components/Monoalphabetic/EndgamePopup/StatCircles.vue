@@ -1,7 +1,13 @@
+<script setup lang="ts">
+  import { useGameSessionStore } from '../../../composables/Monoalphabetic/gameSessionStore';
+
+  const gameSessionStore = useGameSessionStore();
+</script>
+
 <template>
   <div id="endgame-validations-circle" class="endgame-stats-circle stats-validations">
     <p class="name material-symbols-outlined material-icons">check</p>
-    <p class="value">33</p>
+    <p class="value">{{ gameSessionStore.validationCounter }}</p>
   </div>
   <div id="endgame-time-circle" class="endgame-stats-circle stats-time">
     <p class="name material-symbols-outlined material-icons">timer</p>
@@ -9,7 +15,7 @@
   </div>
   <div id="endgame-hints-circle" class="endgame-stats-circle stats-hints">
     <p class="name material-symbols-outlined material-icons">search</p>
-    <p class="value">3/3</p>
+    <p class="value">{{ gameSessionStore.hintManagement.usedHints }}/{{ gameSessionStore.hintManagement.allowedHints }}</p>
   </div>
 </template>
 
