@@ -1,15 +1,15 @@
 ﻿<template>
   <div class="navbar-wrapper">
     <div class="tooltip">
-      <a class="material-symbols-outlined material-icons md-24" href="#">home</a>
+      <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">home</a>
       <span class="tooltiptext">Inicio</span>
     </div>
     <div class="tooltip">
-      <a class="material-symbols-outlined material-icons md-24" href="#">swap_horiz</a>
+      <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">swap_horiz</a>
       <span class="tooltiptext">Cifrado monoalfabético</span>
     </div>
     <div class="tooltip">
-      <a class="material-symbols-outlined material-icons md-24" href="#">donut_large</a>
+      <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">donut_large</a>
       <span class="tooltiptext">Cifrado por transposición</span>
     </div>
   </div>
@@ -93,6 +93,11 @@
 
   .navbar-wrapper a:active {
     background-color: var(--color-navbar-button-active-background);
+  }
+
+  .navbar-wrapper .navbar-icon.disabled {
+    background-color: var(--base-mute-primary);
+    pointer-events: none;
   }
 
   .material-symbols-outlined {
