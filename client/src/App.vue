@@ -7,6 +7,7 @@
   import SpanishLetterGrid from './components/Monoalphabetic/SpanishLetterGrid.vue';
   import ToolBar from './components/Monoalphabetic/ToolBar.vue';
   import AboutMono from './components/Monoalphabetic/AboutMono/AboutMono.vue';
+  import EndgamePopup from './components/Monoalphabetic/EndgamePopup/EndgamePopup.vue';
   import TextSettings from './components/Monoalphabetic/TextSettings.vue';
   import { useTextStore } from './composables/Monoalphabetic/textStore';
   import { populateNewText, isSessionExpired } from './composables/Monoalphabetic/populateNewText';
@@ -33,6 +34,7 @@
     </div>
     <AboutMono />
     <TextSettings />
+    <EndgamePopup />
     <ToolBar />
   </main>
 </template>
