@@ -1,37 +1,31 @@
+
+function resetAnimationsOfElement(element: HTMLElement, classToRemove: string, classToAdd: string) {
+  if (element.classList.contains(classToRemove))
+    element.classList.remove(classToRemove);
+  element.classList.add(classToAdd);
+}
 function deployEndgameStatCircles() {
   const validationsCircle: HTMLElement = document.getElementById("endgame-validations-circle")!;
   const timeCircle: HTMLElement = document.getElementById("endgame-time-circle")!;
   const hintsCircle: HTMLElement = document.getElementById("endgame-hints-circle")!;
 
-  if (validationsCircle.classList.contains("roll-out-validations"))
-    validationsCircle.classList.remove("roll-out-validations");
-  validationsCircle.classList.add("roll-in-validations");
-  if (timeCircle.classList.contains("roll-out-time"))
-    timeCircle.classList.remove("roll-out-time");
-  timeCircle.classList.add("roll-in-time");
-  if (hintsCircle.classList.contains("roll-out-hints"))
-    hintsCircle.classList.remove("roll-out-hints");
-  hintsCircle.classList.add("roll-in-hints");
+  resetAnimationsOfElement(validationsCircle, "roll-out-validations", "roll-in-validations");
+  resetAnimationsOfElement(timeCircle, "roll-out-time", "roll-in-time");
+  resetAnimationsOfElement(hintsCircle, "roll-out-hints", "roll-in-hints");
 }
 
 function deployBlurBackground() {
   const blurBackground: HTMLElement = document.getElementById("endgame-background")!;
 
-  if (blurBackground.classList.contains("fade-out-background"))
-    blurBackground.classList.remove("fade-out-background");
-  blurBackground.classList.add("fade-in-background");
+  resetAnimationsOfElement(blurBackground, "fade-out-background", "fade-in-background");
 }
 
 function deployInfoBars() {
   const infoBarSpaces: HTMLElement = document.getElementById("endgame-horizontal-bar-spaces")!;
   const infoBarPunctuation: HTMLElement = document.getElementById("endgame-horizontal-bar-punctuation")!;
 
-  if (infoBarSpaces.classList.contains("roll-out-info-bar"))
-    infoBarSpaces.classList.remove("roll-out-info-bar");
-  infoBarSpaces.classList.add("roll-in-info-bar");
-  if (infoBarPunctuation.classList.contains("roll-out-info-bar"))
-    infoBarPunctuation.classList.remove("roll-out-info-bar");
-  infoBarPunctuation.classList.add("roll-in-info-bar");
+  resetAnimationsOfElement(infoBarSpaces, "roll-out-info-bar", "roll-in-info-bar");
+  resetAnimationsOfElement(infoBarPunctuation, "roll-out-info-bar", "roll-in-info-bar");
 }
 
 export function deployEndGameScreen() {
