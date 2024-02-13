@@ -34,6 +34,11 @@ export function deployEndGameScreen() {
   deployInfoBars();
 }
 
+function setClosingAnimationOfElement(element: HTMLElement, classToRemove: string, classToAdd: string) {
+  element.classList.remove(classToRemove);
+  element.classList.add(classToAdd);
+}
+
 export function removeEndgameScreen() {
   const blurBackground: HTMLElement = document.getElementById("endgame-background")!;
   const validationsCircle: HTMLElement = document.getElementById("endgame-validations-circle")!;
@@ -41,20 +46,16 @@ export function removeEndgameScreen() {
   const hintsCircle: HTMLElement = document.getElementById("endgame-hints-circle")!;
   const infoBarSpaces: HTMLElement = document.getElementById("endgame-horizontal-bar-spaces")!;
   const infoBarPunctuation: HTMLElement = document.getElementById("endgame-horizontal-bar-punctuation")!;
+
   blurBackground.style.setProperty("opacity", window.getComputedStyle(blurBackground).getPropertyValue("opacity"));
-  blurBackground.classList.remove("fade-in-background");
-  blurBackground.classList.add("fade-out-background");
-  validationsCircle.classList.remove("roll-in-validations");
-  validationsCircle.classList.add("roll-out-validations");
-  timeCircle.classList.remove("roll-in-time");
-  timeCircle.classList.add("roll-out-time");
-  hintsCircle.classList.remove("roll-in-hints");
-  hintsCircle.classList.add("roll-out-hints");
-  infoBarSpaces.classList.remove("roll-in-info-bar");
-  infoBarSpaces.classList.add("roll-out-info-bar");
-  infoBarPunctuation.classList.remove("roll-in-info-bar");
-  infoBarPunctuation.classList.add("roll-out-info-bar");
-  setTimeout(function () {
+  setClosingAnimationOfElement(blurBackground, "fade-in-background", "fade-out-background");
+  setClosingAnimationOfElement(validationsCircle, "roll-in-validations", "roll-out-validations");
+  setClosingAnimationOfElement(timeCircle, "roll-in-time", "roll-out-time");
+  setClosingAnimationOfElement(hintsCircle, "roll-in-hints", "roll-out-hints");
+  setClosingAnimationOfElement(infoBarSpaces, "roll-in-info-bar", "roll-out-info-bar");
+  setClosingAnimationOfElement(infoBarPunctuation, "roll-in-info-bar", "roll-out-info-bar");
+
+  setTimeout(function () { // Reset state once they're out of sight.
     blurBackground.classList.remove("fade-out-background");
     blurBackground.style.removeProperty("display");
     blurBackground.style.removeProperty("opacity");
