@@ -1,73 +1,9 @@
 ﻿<script setup lang="ts">
-  import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
-  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
-  import type { UpdateTextRequest, UpdateTextResponse } from '../../composables/Monoalphabetic/apiCalls';
-
-  const gameSessionStore = useGameSessionStore();
-  const textStore = useTextStore();
-
-  function resetTextSettingsStyles() {
-    let textSettingsContainer: HTMLElement = document.getElementById("text-settings-container")!;
-    let closeTextSettingsButton: HTMLElement = document.getElementById("close-text-settings-button")!;
-    textSettingsContainer.style.setProperty("opacity", window.getComputedStyle(textSettingsContainer).getPropertyValue("opacity"));
-    textSettingsContainer.classList.remove("inflate-text-settings");
-    textSettingsContainer.classList.add("deflate-text-settings");
-    closeTextSettingsButton.style.setProperty("opacity", window.getComputedStyle(closeTextSettingsButton).getPropertyValue("opacity"));
-    closeTextSettingsButton.classList.remove("inflate-button");
-    closeTextSettingsButton.classList.add("deflate-button");
-    setTimeout(function () {
-      textSettingsContainer.classList.remove("deflate-text-settings");
-      textSettingsContainer.style.removeProperty("display");
-      textSettingsContainer.style.removeProperty("opacity");
-      closeTextSettingsButton.classList.remove("deflate-button");
-      closeTextSettingsButton.style.removeProperty("display");
-      closeTextSettingsButton.style.removeProperty("opacity");
-    }, 700);
-  }
-
-  async function updateTextFromNewSettings() {
-
-    let areThereChanges = false;
-
-    if (gameSessionStore.textDifficultySettings.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
-      gameSessionStore.textDifficultySettings.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
-      areThereChanges = true;
-    }
-    if (gameSessionStore.textDifficultySettings.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
-      gameSessionStore.textDifficultySettings.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
-      areThereChanges = true;
-    }
-
-    // I could've just linked gameSessionStore.textDifficultySettings with the two checkbox elements,
-    // but then I would've had no way to prevent unnecessary API calls in case the user didn't make any changes.
-    if (areThereChanges) {
-
-      const updateTextRequestBody: UpdateTextRequest = {
-        sessionData: {
-          sessionId: textStore.getSessionId()
-        },
-        difficultyOptions: {
-          keepSpaces: gameSessionStore.textDifficultySettings.keepSpaces,
-          keepPunctuation: gameSessionStore.textDifficultySettings.keepPunctuation
-        }
-      };
-      const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
-      if (response.encryptedText)
-        textStore.encryptedText = response.encryptedText;
-      else
-        textStore.resetSessionId();
-    }
-  }
-
-  function closeTextSettings() {
-    resetTextSettingsStyles();
-    updateTextFromNewSettings();
-  }
+  import { updateTextSettings } from '../../composables/Monoalphabetic/changeTextSettings';
 </script>
 
 <template>
-  <button id="close-text-settings-button" @click="closeTextSettings" class="close-text-settings material-symbols-outlined material-icons md-24">close</button>
+  <button id="close-text-settings-button" @click="updateTextSettings" class="close-text-settings material-symbols-outlined material-icons md-24">close</button>
   <div id="text-settings-container" class="text-settings-container">
     <div class="text-settings-title">Configuración del texto</div>
     <form class="text-settings-form" action="">

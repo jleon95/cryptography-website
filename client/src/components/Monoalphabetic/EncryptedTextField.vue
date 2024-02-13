@@ -1,28 +1,14 @@
 <script setup lang="ts">
   import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
+  import { deployTextSettings } from '../../composables/Monoalphabetic/changeTextSettings';
 
   const textStore = useTextStore();
-  const gameSessionStore = useGameSessionStore();
 
   function deployAboutMono() {
     let aboutMono: HTMLElement = document.getElementById("about-mono")!;
     if (aboutMono.classList.contains("deflate-about-mono"))
       aboutMono.classList.remove("deflate-about-mono");
     aboutMono.classList.add("inflate-about-mono-container");
-  }
-
-  function deployTextSettings() {
-    let textSettingsContainer: HTMLElement = document.getElementById("text-settings-container")!;
-    let closeTextSettingsButton: HTMLElement = document.getElementById("close-text-settings-button")!;
-    (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked = gameSessionStore.textDifficultySettings.keepSpaces;
-    (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked = gameSessionStore.textDifficultySettings.keepPunctuation;
-    if (textSettingsContainer.classList.contains("deflate-text-settings"))
-      textSettingsContainer.classList.remove("deflate-text-settings");
-    textSettingsContainer.classList.add("inflate-text-settings");
-    if (closeTextSettingsButton.classList.contains("deflate-button"))
-      closeTextSettingsButton.classList.remove("deflate-button");
-    closeTextSettingsButton.classList.add("inflate-button");
   }
 </script>
 
