@@ -26,6 +26,7 @@ export async function populateNewText() {
     textStore.encryptedText = response.encryptedText;
     textStore.resetDecryption();
     textStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
+    gameSessionStore.textDifficultySettingsUsed = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
   }
   else // If the server responds with an empty sessionId, the new text request was rejected.
     textStore.resetSessionId();

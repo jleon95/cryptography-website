@@ -13,13 +13,18 @@ const defaultValues = {
     requestingHint: false
   },
   totalLetters: 27, // In Spanish
-  validationCounter: 0
+  validationCounter: 0,
+  textDifficultySettingsUsed: {
+    keepSpaces: false,
+    keepPunctuation: false
+  }
 }
 
 export const useGameSessionStore = defineStore('gameSession', () => {
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  const textDifficultySettings = reactive({ ...defaultValues.textDifficultySettings })
-  const hintManagement = reactive({ ...defaultValues.hintManagement })
+  const textDifficultySettings = reactive({ ...defaultValues.textDifficultySettings });
+  const textDifficultySettingsUsed = reactive({ ...defaultValues.textDifficultySettingsUsed });
+  const hintManagement = reactive({ ...defaultValues.hintManagement });
   const validationCounter = ref(defaultValues.validationCounter);
   const lettersConfirmed = computed(() => {
     let sum: number = 0;
@@ -56,7 +61,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   }
 
   return {
-    textDifficultySettings, hintManagement, lettersConfirmed, validationCounter, useHint, hintsLeft, resetHints,
+    textDifficultySettings, textDifficultySettingsUsed, hintManagement, lettersConfirmed, validationCounter, useHint, hintsLeft, resetHints,
     incrementValidationCounter, resetValidationCounter, isDecryptionSolved
   };
 })
