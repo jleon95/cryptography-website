@@ -3,6 +3,16 @@ import { computed, reactive, ref } from 'vue';
 import { useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
 
 const defaultValues = {
+  textSettings: {
+    current: {
+      keepSpaces: false,
+      keepPunctuation: false
+    },
+    used: {
+      keepSpaces: false,
+      keepPunctuation: false
+    }
+  },
   textDifficultySettings: {
     keepSpaces: false,
     keepPunctuation: false,
@@ -26,8 +36,12 @@ const defaultValues = {
 
 export const useGameSessionStore = defineStore('gameSession', () => {
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  const textDifficultySettings = reactive({ ...defaultValues.textDifficultySettings });
-  const textDifficultySettingsUsed = reactive({ ...defaultValues.textDifficultySettingsUsed });
+  const textSettings = reactive({
+    current: { ...defaultValues.textSettings.current },
+    used: { ...defaultValues.textSettings.used }
+  });
+  //const textDifficultySettings = reactive({ ...defaultValues.textDifficultySettings });
+  //const textDifficultySettingsUsed = reactive({ ...defaultValues.textDifficultySettingsUsed });
   const hintManagement = reactive({ ...defaultValues.hintManagement });
   const validationCounter = ref(defaultValues.validationCounter);
   const sessionTiming = reactive({ ...defaultValues.sessionTiming });
@@ -72,7 +86,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   }
 
   return {
-    textDifficultySettings, textDifficultySettingsUsed, hintManagement, lettersConfirmed, validationCounter, sessionTiming, getPrintableSessionDuration,
+    textSettings, hintManagement, lettersConfirmed, validationCounter, sessionTiming, getPrintableSessionDuration,
     useHint, hintsLeft, resetHints, incrementValidationCounter, resetValidationCounter, isDecryptionSolved
   };
 })

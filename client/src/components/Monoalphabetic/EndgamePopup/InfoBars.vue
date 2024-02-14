@@ -2,18 +2,17 @@
   import { useGameSessionStore } from '../../../composables/Monoalphabetic/gameSessionStore';
 
   const gameSessionStore = useGameSessionStore();
-  gameSessionStore.textDifficultySettingsUsed.keepSpaces
 </script>
 
 <template>
   <div id="endgame-horizontal-bar-punctuation" class="endgame-horizontal-container kept-punctuation">
     <div class="endgame-horizontal-container-title">
-      ¿Utilizando signos de puntuación? {{ gameSessionStore.textDifficultySettingsUsed.keepPunctuation ? "Sí": "No" }}
+      ¿Utilizando signos de puntuación? {{ gameSessionStore.textSettings.used.keepPunctuation ? "Sí": "No" }}
     </div>
   </div>
   <div id="endgame-horizontal-bar-spaces" class="endgame-horizontal-container kept-spaces">
     <div class="endgame-horizontal-container-title">
-      ¿Utilizando espacios? {{ gameSessionStore.textDifficultySettingsUsed.keepSpaces ? "Sí": "No" }}
+      ¿Utilizando espacios? {{ gameSessionStore.textSettings.used.keepSpaces ? "Sí": "No" }}
     </div>
   </div>
 </template>

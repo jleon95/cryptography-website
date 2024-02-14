@@ -14,7 +14,7 @@ export async function populateNewText() {
   const textStore = useTextStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const options: NewTextRequest = {
-    difficultyOptions: gameSessionStore.textDifficultySettings,
+    difficultyOptions: gameSessionStore.textSettings.current,
     sessionData: {
       sessionId: textStore.getSessionId()
     }
@@ -26,7 +26,7 @@ export async function populateNewText() {
     textStore.encryptedText = response.encryptedText;
     textStore.resetDecryption();
     textStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
-    gameSessionStore.textDifficultySettingsUsed = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
+    gameSessionStore.textSettings.used = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
     gameSessionStore.sessionTiming.start = (new Date).getTime();
   }
   else // If the server responds with an empty sessionId, the new text request was rejected.

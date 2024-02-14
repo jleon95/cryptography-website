@@ -27,17 +27,17 @@ async function updateTextFromNewSettings() {
   const gameSessionStore = useGameSessionStore();
   let areThereChanges = false;
 
-  if (gameSessionStore.textDifficultySettings.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
-    gameSessionStore.textDifficultySettings.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
+  if (gameSessionStore.textSettings.current.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
+    gameSessionStore.textSettings.current.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
     areThereChanges = true;
-    if (gameSessionStore.textDifficultySettings.keepSpaces) // Keep track of which settings were used at any point during the session to show it at the end.
-      gameSessionStore.textDifficultySettingsUsed.keepSpaces = true;
+    if (gameSessionStore.textSettings.current.keepSpaces) // Keep track of which settings were used at any point during the session to show it at the end.
+      gameSessionStore.textSettings.used.keepSpaces = true;
   }
-  if (gameSessionStore.textDifficultySettings.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
-    gameSessionStore.textDifficultySettings.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
+  if (gameSessionStore.textSettings.current.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
+    gameSessionStore.textSettings.current.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
     areThereChanges = true;
-    if (gameSessionStore.textDifficultySettings.keepPunctuation)
-      gameSessionStore.textDifficultySettingsUsed.keepPunctuation = true;
+    if (gameSessionStore.textSettings.current.keepPunctuation)
+      gameSessionStore.textSettings.used.keepPunctuation = true;
   }
 
   // I could've just linked gameSessionStore.textDifficultySettings with the two checkbox elements,
@@ -50,8 +50,8 @@ async function updateTextFromNewSettings() {
         sessionId: textStore.getSessionId()
       },
       difficultyOptions: {
-        keepSpaces: gameSessionStore.textDifficultySettings.keepSpaces,
-        keepPunctuation: gameSessionStore.textDifficultySettings.keepPunctuation
+        keepSpaces: gameSessionStore.textSettings.current.keepSpaces,
+        keepPunctuation: gameSessionStore.textSettings.current.keepPunctuation
       }
     };
     const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
@@ -71,8 +71,8 @@ export function deployTextSettings() {
   const gameSessionStore = useGameSessionStore();
   const textSettingsContainer: HTMLElement = document.getElementById("text-settings-container")!;
   const closeTextSettingsButton: HTMLElement = document.getElementById("close-text-settings-button")!;
-  (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked = gameSessionStore.textDifficultySettings.keepSpaces;
-  (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked = gameSessionStore.textDifficultySettings.keepPunctuation;
+  (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked = gameSessionStore.textSettings.current.keepSpaces;
+  (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked = gameSessionStore.textSettings.current.keepPunctuation;
   if (textSettingsContainer.classList.contains("deflate-text-settings"))
     textSettingsContainer.classList.remove("deflate-text-settings");
   textSettingsContainer.classList.add("inflate-text-settings");
