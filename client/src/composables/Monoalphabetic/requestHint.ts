@@ -45,34 +45,34 @@ export async function requestHint() {
   const gameSessionStore = useGameSessionStore();
 
   // Guard against requesting the same letter twice when clicking very fast because the state hasn't been updated yet at that point.
-  if (!gameSessionStore.hintManagement.requestingHint) {
+  if (gameSessionStore.hintManagement.requestingHint)
+    return;
 
-    gameSessionStore.hintManagement.requestingHint = true;
+  gameSessionStore.hintManagement.requestingHint = true;
 
-    if (gameSessionStore.hintsLeft()) {
+  if (gameSessionStore.hintsLeft()) {
 
-      const textStore = useTextStore();
-      const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-      const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)
+    const textStore = useTextStore();
+    const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+    const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)
 
-      if (chosenLetter) { // Don't request hints (even if you still have) if there are no letters left to decrypt
+    if (chosenLetter) { // Don't request hints (even if you still have) if there are no letters left to decrypt
 
-        gameSessionStore.useHint();
-        const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
+      gameSessionStore.useHint();
+      const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
 
-        if (correctLetter) { // If the server responds what I'm expecting
-          textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
-          decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
-          gameSessionStore.hintManagement.requestingHint = false;
+      if (correctLetter) { // If the server responds what I'm expecting
+        textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
+        decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
+        gameSessionStore.hintManagement.requestingHint = false;
 
-          if (gameSessionStore.isDecryptionSolved()) { // If the game is finished with this letter
-            gameSessionStore.sessionTiming.finish = (new Date).getTime();
-            setTimeout(() => deployEndGameScreen(), 1000);
-          }
+        if (gameSessionStore.isDecryptionSolved()) { // If the game is finished with this letter
+          gameSessionStore.sessionTiming.finish = (new Date).getTime();
+          setTimeout(() => deployEndGameScreen(), 1000);
         }
-        else // If the server responds with an empty sessionId, the new text request was rejected.
-          textStore.resetSessionId();
       }
+      else // If the server responds with an empty sessionId, the new text request was rejected.
+        textStore.resetSessionId();
     }
   }
 }
