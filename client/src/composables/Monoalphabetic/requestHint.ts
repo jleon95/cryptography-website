@@ -5,6 +5,14 @@ import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
 import { deployEndGameScreen } from './EndgamePopup/deployEndgamePopup';
 import type { HintRequest, HintResponse } from '../../composables/Monoalphabetic/apiCalls';
 
+function areThereLettersLeftToSolve(cellEditableStatus: { [letter: string]: boolean }) {
+  for (const letter in cellEditableStatus)
+    if (cellEditableStatus[letter])
+      return true;
+
+  return false;
+}
+
 function chooseLetterForHint(letterFrequencies: { [letter: string]: number }, cellEditableStatus: { [letter: string]: boolean }) {
 
   let sum: number = 0;
@@ -12,21 +20,17 @@ function chooseLetterForHint(letterFrequencies: { [letter: string]: number }, ce
   const probabilityIntervals: Array<number> = [];
 
   for (const letter in letterFrequencies) {
-    if (letterFrequencies[letter] > 0 && cellEditableStatus[letter]) {
+    if (cellEditableStatus[letter]) {
       candidateLetters.push(letter);
-      probabilityIntervals.push(sum + Math.round(letterFrequencies[letter] * 100));
       sum += Math.round(letterFrequencies[letter] * 100);
+      probabilityIntervals.push(sum);
     }
   }
 
-  if (sum) {
-    const chosenIntervalPoint = Math.random() * sum;
-    for (let i = 0; i < candidateLetters.length; i++)
-      if (chosenIntervalPoint <= probabilityIntervals[i])
-        return candidateLetters[i];
-  }
-
-  return "";
+  const chosenIntervalPoint = Math.random() * sum;
+  for (let i = 0; i < candidateLetters.length; i++)
+    if (chosenIntervalPoint <= probabilityIntervals[i])
+      return candidateLetters[i];
 }
 
 async function sendHintRequest(chosenLetter: string, sessionId: string) {
@@ -49,30 +53,27 @@ export async function requestHint() {
     return;
 
   gameSessionStore.hintManagement.requestingHint = true;
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
 
-  if (gameSessionStore.hintsLeft()) {
+  // Don't request hints (even if you still have) if there are no letters left to decrypt
+  if (gameSessionStore.hintsLeft() && areThereLettersLeftToSolve(decipherGridDOMStatesStore.cellEditableStatus)) {
 
+    gameSessionStore.useHint();
     const textStore = useTextStore();
-    const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-    const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)
+    const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)!
+    const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
 
-    if (chosenLetter) { // Don't request hints (even if you still have) if there are no letters left to decrypt
+    if (correctLetter) {
+      textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
+      decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
 
-      gameSessionStore.useHint();
-      const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
-
-      if (correctLetter) { // If the server responds what I'm expecting
-        textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
-        decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
-        gameSessionStore.hintManagement.requestingHint = false;
-
-        if (gameSessionStore.isDecryptionSolved()) { // If the game is finished with this letter
-          gameSessionStore.sessionTiming.finish = (new Date).getTime();
-          setTimeout(() => deployEndGameScreen(), 1000);
-        }
+      if (gameSessionStore.isDecryptionSolved()) {
+        gameSessionStore.sessionTiming.finish = (new Date).getTime();
+        setTimeout(() => deployEndGameScreen(), 1000);
       }
-      else // If the server responds with an empty sessionId, the new text request was rejected.
-        textStore.resetSessionId();
     }
+    else // If the server responds with an empty sessionId, the new text request was rejected.
+      textStore.resetSessionId();
   }
+  gameSessionStore.hintManagement.requestingHint = false;
 }
