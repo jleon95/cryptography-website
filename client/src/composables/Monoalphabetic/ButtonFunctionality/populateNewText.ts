@@ -1,8 +1,8 @@
-import { useGameSessionStore } from './gameSessionStore';
-import { useTextStore } from './textStore';
-import { useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
-import { callAPI, Action } from './apiCalls';
-import type { NewTextRequest, NewTextResponse } from './apiCalls';
+import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { useTextStore } from '../Stores/textStore';
+import { useDecipherGridDOMStatesStore } from '../Stores/decipherGridDOMStatesStore';
+import { callAPI, Action } from '../apiCalls';
+import type { NewTextRequest, NewTextResponse } from '../apiCalls';
 
 export function isSessionExpired() {
   const textStore = useTextStore(); // If put outside it'll run immediately, and thus before the global pinia store has been created.

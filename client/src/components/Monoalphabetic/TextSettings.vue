@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-  import { updateTextSettings } from '../../composables/Monoalphabetic/changeTextSettings';
+  import { updateTextSettings } from '../../composables/Monoalphabetic/ButtonFunctionality/changeTextSettings';
 </script>
 
 <template>

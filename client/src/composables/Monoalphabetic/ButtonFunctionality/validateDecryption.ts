@@ -1,9 +1,9 @@
-import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
-import { useDecipherGridDOMStatesStore, CellState } from './decipherGridDOMStatesStore';
-import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
-import { deployEndGameScreen } from './EndgamePopup/deployEndgamePopup';
-import type { ValidationRequest, ValidationResponse } from '../../composables/Monoalphabetic/apiCalls';
+import { useTextStore } from '../Stores/textStore';
+import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { useDecipherGridDOMStatesStore, CellState } from '../Stores/decipherGridDOMStatesStore';
+import { deployEndGameScreen } from '../deployEndgamePopup';
+import { callAPI, Action } from '../apiCalls';
+import type { ValidationRequest, ValidationResponse } from '../apiCalls';
 
 export async function validateDecryption() {
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
+  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
+  import { useGameSessionStore } from '../../composables/Monoalphabetic/Stores/gameSessionStore';
 
   const textStore = useTextStore();
   const gameSessionStore = useGameSessionStore();

@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-  import { removeEndgameScreen } from '../../../composables/Monoalphabetic/EndgamePopup/deployEndgamePopup';
+  import { removeEndgameScreen } from '../../../composables/Monoalphabetic/deployEndgamePopup';
   import StatCircles from './StatCircles.vue';
   import InfoBars from './InfoBars.vue';
 </script>

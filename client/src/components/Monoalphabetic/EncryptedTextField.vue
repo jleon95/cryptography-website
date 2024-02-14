@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { deployTextSettings } from '../../composables/Monoalphabetic/changeTextSettings';
+  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
+  import { deployTextSettings } from '../../composables/Monoalphabetic/ButtonFunctionality/changeTextSettings';
 
   const textStore = useTextStore();
 

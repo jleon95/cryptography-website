@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useGameSessionStore } from '../../../composables/Monoalphabetic/gameSessionStore';
+  import { useGameSessionStore } from '../../../composables/Monoalphabetic/Stores/gameSessionStore';
 
   const gameSessionStore = useGameSessionStore();
 </script>

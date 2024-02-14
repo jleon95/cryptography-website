@@ -1,9 +1,9 @@
-import { useGameSessionStore } from './gameSessionStore';
-import { CellState, useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
-import { useTextStore } from './textStore';
-import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
-import { deployEndGameScreen } from './EndgamePopup/deployEndgamePopup';
-import type { HintRequest, HintResponse } from '../../composables/Monoalphabetic/apiCalls';
+import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { CellState, useDecipherGridDOMStatesStore } from '../Stores/decipherGridDOMStatesStore';
+import { useTextStore } from '../Stores/textStore';
+import { deployEndGameScreen } from '../deployEndgamePopup';
+import { callAPI, Action } from '../apiCalls';
+import type { HintRequest, HintResponse } from '../apiCalls';
 
 function areThereLettersLeftToSolve(cellEditableStatus: { [letter: string]: boolean }) {
   for (const letter in cellEditableStatus)

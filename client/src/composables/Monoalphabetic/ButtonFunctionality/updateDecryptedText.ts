@@ -1,5 +1,5 @@
-﻿import { useTextStore } from './textStore';
-import { useDecipherGridDOMStatesStore, CellState } from './decipherGridDOMStatesStore';
+﻿import { useTextStore } from '../Stores/textStore';
+import { useDecipherGridDOMStatesStore, CellState } from '../Stores/decipherGridDOMStatesStore';
 
 const allowedLetterInputSet: Set<string> = new Set("abcdefghijklmnñopqrstuvwxyz");
 const allowedInputSet: Set<string> = new Set("abcdefghijklmnñopqrstuvwxyz");

@@ -1,10 +1,11 @@
 ﻿<script setup lang="ts">
-  import { populateNewText } from '../../composables/Monoalphabetic/populateNewText';
-  import { validateDecryption } from '../../composables/Monoalphabetic/validateDecryption';
-  import { requestHint } from '../../composables/Monoalphabetic/requestHint';
-  import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-  import { useToolbarButtonStatesStore } from '../../composables/Monoalphabetic/toolbarButtonStatesStore'; 
-  import { useDecipherGridDOMStatesStore, CellState } from '../../composables/Monoalphabetic/decipherGridDOMStatesStore';
+  import { populateNewText } from '../../composables/Monoalphabetic/ButtonFunctionality/populateNewText';
+  import { validateDecryption } from '../../composables/Monoalphabetic/ButtonFunctionality/validateDecryption';
+  import { requestHint } from '../../composables/Monoalphabetic/ButtonFunctionality/requestHint';
+  import { deployEndGameScreen } from '../../composables/Monoalphabetic/deployEndgamePopup';
+  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
+  import { useToolbarButtonStatesStore } from '../../composables/Monoalphabetic/Stores/toolbarButtonStatesStore'; 
+  import { useDecipherGridDOMStatesStore, CellState } from '../../composables/Monoalphabetic/Stores/decipherGridDOMStatesStore';
 
   const textStore = useTextStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();

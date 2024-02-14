@@ -1,7 +1,7 @@
-import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
-import { useTextStore } from '../../composables/Monoalphabetic/textStore';
-import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
-import type { UpdateTextRequest, UpdateTextResponse } from '../../composables/Monoalphabetic/apiCalls';
+import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { useTextStore } from '../Stores/textStore';
+import { callAPI, Action } from '../apiCalls';
+import type { UpdateTextRequest, UpdateTextResponse } from '../apiCalls';
 
 function resetTextSettingsStyles() {
   const textSettingsContainer: HTMLElement = document.getElementById("text-settings-container")!;
