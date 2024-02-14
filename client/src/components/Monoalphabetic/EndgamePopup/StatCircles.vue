@@ -11,7 +11,9 @@
   </div>
   <div id="endgame-time-circle" class="endgame-stats-circle stats-time">
     <p class="name material-symbols-outlined material-icons">timer</p>
-    <p class="value">33:42</p>
+    <p class="value">
+      {{ gameSessionStore.getPrintableSessionDuration() }}
+    </p>
   </div>
   <div id="endgame-hints-circle" class="endgame-stats-circle stats-hints">
     <p class="name material-symbols-outlined material-icons">search</p>

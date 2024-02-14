@@ -14,6 +14,10 @@ const defaultValues = {
   },
   totalLetters: 27, // In Spanish
   validationCounter: 0,
+  sessionTiming: {
+    start: 0,
+    finish: 1
+  },
   textDifficultySettingsUsed: {
     keepSpaces: false,
     keepPunctuation: false
@@ -26,6 +30,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   const textDifficultySettingsUsed = reactive({ ...defaultValues.textDifficultySettingsUsed });
   const hintManagement = reactive({ ...defaultValues.hintManagement });
   const validationCounter = ref(defaultValues.validationCounter);
+  const sessionTiming = reactive({ ...defaultValues.sessionTiming });
   const lettersConfirmed = computed(() => {
     let sum: number = 0;
     for (const letter in decipherGridDOMStatesStore.cellEditableStatus)
@@ -33,6 +38,12 @@ export const useGameSessionStore = defineStore('gameSession', () => {
 
     return sum;
   });
+
+  function getPrintableSessionDuration() {
+    const minutes = Math.floor((sessionTiming.finish - sessionTiming.start) / 60000);
+    const seconds = Math.floor(((sessionTiming.finish - sessionTiming.start) % 60000) / 1000);
+    return minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+  }
 
   function useHint() {
     if (hintManagement.usedHints < hintManagement.allowedHints)
@@ -61,7 +72,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   }
 
   return {
-    textDifficultySettings, textDifficultySettingsUsed, hintManagement, lettersConfirmed, validationCounter, useHint, hintsLeft, resetHints,
-    incrementValidationCounter, resetValidationCounter, isDecryptionSolved
+    textDifficultySettings, textDifficultySettingsUsed, hintManagement, lettersConfirmed, validationCounter, sessionTiming, getPrintableSessionDuration,
+    useHint, hintsLeft, resetHints, incrementValidationCounter, resetValidationCounter, isDecryptionSolved
   };
 })

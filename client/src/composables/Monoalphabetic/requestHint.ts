@@ -2,6 +2,7 @@ import { useGameSessionStore } from './gameSessionStore';
 import { CellState, useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
 import { useTextStore } from './textStore';
 import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
+import { deployEndGameScreen } from './EndgamePopup/deployEndgamePopup';
 import type { HintRequest, HintResponse } from '../../composables/Monoalphabetic/apiCalls';
 
 function chooseLetterForHint(letterFrequencies: { [letter: string]: number }, cellEditableStatus: { [letter: string]: boolean }) {
@@ -59,10 +60,15 @@ export async function requestHint() {
         gameSessionStore.useHint();
         const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
 
-        if (correctLetter) {
+        if (correctLetter) { // If the server responds what I'm expecting
           textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
           decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
           gameSessionStore.hintManagement.requestingHint = false;
+
+          if (gameSessionStore.isDecryptionSolved()) { // If the game is finished with this letter
+            gameSessionStore.sessionTiming.finish = (new Date).getTime();
+            setTimeout(() => deployEndGameScreen(), 1000);
+          }
         }
         else // If the server responds with an empty sessionId, the new text request was rejected.
           textStore.resetSessionId();

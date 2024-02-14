@@ -2,6 +2,7 @@ import { useTextStore } from '../../composables/Monoalphabetic/textStore';
 import { useGameSessionStore } from '../../composables/Monoalphabetic/gameSessionStore';
 import { useDecipherGridDOMStatesStore, CellState } from './decipherGridDOMStatesStore';
 import { callAPI, Action } from '../../composables/Monoalphabetic/apiCalls';
+import { deployEndGameScreen } from './EndgamePopup/deployEndgamePopup';
 import type { ValidationRequest, ValidationResponse } from '../../composables/Monoalphabetic/apiCalls';
 
 export async function validateDecryption() {
@@ -35,6 +36,11 @@ export async function validateDecryption() {
       }
       const gameSessionStore = useGameSessionStore();
       gameSessionStore.incrementValidationCounter();
+
+      if (gameSessionStore.isDecryptionSolved()) {
+        gameSessionStore.sessionTiming.finish = (new Date).getTime();
+        setTimeout(() => deployEndGameScreen(), 1000);
+      }
     }
     else // If the server responds with an empty sessionId, the new text request was rejected.
       textStore.resetSessionId();
