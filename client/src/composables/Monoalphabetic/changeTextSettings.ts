@@ -30,14 +30,10 @@ async function updateTextFromNewSettings() {
   if (gameSessionStore.textSettings.current.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
     gameSessionStore.textSettings.current.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
     areThereChanges = true;
-    if (gameSessionStore.textSettings.current.keepSpaces) // Keep track of which settings were used at any point during the session to show it at the end.
-      gameSessionStore.textSettings.used.keepSpaces = true;
   }
   if (gameSessionStore.textSettings.current.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
     gameSessionStore.textSettings.current.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
     areThereChanges = true;
-    if (gameSessionStore.textSettings.current.keepPunctuation)
-      gameSessionStore.textSettings.used.keepPunctuation = true;
   }
 
   // I could've just linked gameSessionStore.textDifficultySettings with the two checkbox elements,

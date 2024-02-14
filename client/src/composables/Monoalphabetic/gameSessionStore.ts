@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
 
 const defaultValues = {
@@ -13,10 +13,6 @@ const defaultValues = {
       keepPunctuation: false
     }
   },
-  textDifficultySettings: {
-    keepSpaces: false,
-    keepPunctuation: false,
-  },
   hintManagement: {
     allowedHints: 3,
     usedHints: 0,
@@ -28,10 +24,6 @@ const defaultValues = {
     start: 0,
     finish: 1
   },
-  textDifficultySettingsUsed: {
-    keepSpaces: false,
-    keepPunctuation: false
-  }
 }
 
 export const useGameSessionStore = defineStore('gameSession', () => {
@@ -40,8 +32,6 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     current: { ...defaultValues.textSettings.current },
     used: { ...defaultValues.textSettings.used }
   });
-  //const textDifficultySettings = reactive({ ...defaultValues.textDifficultySettings });
-  //const textDifficultySettingsUsed = reactive({ ...defaultValues.textDifficultySettingsUsed });
   const hintManagement = reactive({ ...defaultValues.hintManagement });
   const validationCounter = ref(defaultValues.validationCounter);
   const sessionTiming = reactive({ ...defaultValues.sessionTiming });
@@ -84,6 +74,14 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   function isDecryptionSolved() {
     return lettersConfirmed.value == defaultValues.totalLetters;
   }
+
+  watch(() => textSettings.current.keepSpaces, (keepSpaces) => {
+    textSettings.used.keepSpaces = textSettings.used.keepSpaces || keepSpaces;
+  });
+
+  watch(() => textSettings.current.keepPunctuation, (keepPunctuation) => {
+    textSettings.used.keepPunctuation = textSettings.used.keepPunctuation || keepPunctuation;
+  });
 
   return {
     textSettings, hintManagement, lettersConfirmed, validationCounter, sessionTiming, getPrintableSessionDuration,
