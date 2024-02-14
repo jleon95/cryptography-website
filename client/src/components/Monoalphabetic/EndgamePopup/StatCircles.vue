@@ -47,17 +47,17 @@
 
   .stats-validations {
     left: -26%;
-    top: 60%;
+    top: 58%;
   }
 
   .stats-time {
     left: -18%;
-    top: 60%;
+    top: 58%;
   }
 
   .stats-hints {
     left: -10%;
-    top: 60%;
+    top: 58%;
   }
 
   .name {

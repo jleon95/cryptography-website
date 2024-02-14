@@ -38,7 +38,7 @@
     position: fixed;
     text-align: center;
     text-shadow: 0.3rem 0.3rem 0.4rem rgba(0,0,0,1);
-    top: 45%;
+    top: 40%;
     transform: translate(-50%, -50%);
   }
 
