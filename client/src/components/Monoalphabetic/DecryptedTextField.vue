@@ -14,7 +14,7 @@
 
         <div class="show-validations">
           <div class="icon material-symbols-outlined material-icons">
-            check
+            done_all
           </div>
           <div class="number">
             {{ gameSessionStore.validationCounter }}

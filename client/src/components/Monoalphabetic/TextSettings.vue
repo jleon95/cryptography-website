@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <button id="close-text-settings-button" @click="updateTextSettings" class="close-text-settings material-symbols-outlined material-icons md-24">close</button>
+  <button id="close-text-settings-button" @click="updateTextSettings" class="close-text-settings material-symbols-outlined material-icons md-24">check</button>
   <div id="text-settings-container" class="text-settings-container">
     <div class="text-settings-title">Configuración del texto</div>
     <form class="text-settings-form" action="">

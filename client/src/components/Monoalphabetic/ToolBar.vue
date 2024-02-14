@@ -24,7 +24,7 @@
 <template>
   <div class="toolbar-wrapper">
     <div class="tooltip">
-      <span :class="toolbarButtonStatesStore['validateDecryptionButton']" @click="validateDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24">check</span>
+      <span :class="toolbarButtonStatesStore['validateDecryptionButton']" @click="validateDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24">done_all</span>
       <span class="tooltiptext">Validar progreso</span>
     </div>
     <div class="tooltip">
