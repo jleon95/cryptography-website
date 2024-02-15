@@ -46,12 +46,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   function getPrintableSessionDuration() {
     const minutes = Math.floor((sessionTiming.finish - sessionTiming.start) / 60000);
     const seconds = Math.floor(((sessionTiming.finish - sessionTiming.start) % 60000) / 1000);
-    return minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
-  }
-
-  function useHint() {
-    if (hintManagement.usedHints < hintManagement.allowedHints)
-      hintManagement.usedHints++;
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   }
 
   function hintsLeft() {
@@ -61,10 +56,6 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   function resetHints() {
     hintManagement.usedHints = defaultValues.hintManagement.usedHints;
     hintManagement.requestingHint = defaultValues.hintManagement.requestingHint;
-  }
-
-  function incrementValidationCounter() {
-    validationCounter.value++;
   }
 
   function resetValidationCounter() {
@@ -84,7 +75,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   });
 
   return {
-    textSettings, hintManagement, lettersConfirmed, validationCounter, sessionTiming, getPrintableSessionDuration,
-    useHint, hintsLeft, resetHints, incrementValidationCounter, resetValidationCounter, isDecryptionSolved
+    textSettings, hintManagement, lettersConfirmed, validationCounter, sessionTiming,
+    hintsLeft, resetHints, resetValidationCounter, isDecryptionSolved, getPrintableSessionDuration
   };
 })

@@ -35,7 +35,7 @@ export async function validateDecryption() {
           decipherGridDOMStatesStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
       }
       const gameSessionStore = useGameSessionStore();
-      gameSessionStore.incrementValidationCounter();
+      gameSessionStore.validationCounter++;
 
       if (gameSessionStore.isDecryptionSolved()) {
         gameSessionStore.sessionTiming.finish = (new Date).getTime();

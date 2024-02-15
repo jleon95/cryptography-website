@@ -14,7 +14,6 @@
   import { onBeforeMount } from 'vue';
 
   onBeforeMount(async () => {
-    const textStore = useTextStore();
     if (isSessionExpired())
       await populateNewText();
   });

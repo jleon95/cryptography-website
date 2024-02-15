@@ -58,12 +58,12 @@ export async function requestHint() {
   // Don't request hints (even if you still have) if there are no letters left to decrypt
   if (gameSessionStore.hintsLeft() && areThereLettersLeftToSolve(decipherGridDOMStatesStore.cellEditableStatus)) {
 
-    gameSessionStore.useHint();
     const textStore = useTextStore();
     const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)!
     const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
 
     if (correctLetter) {
+      gameSessionStore.hintManagement.usedHints++;
       textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
       decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
 
