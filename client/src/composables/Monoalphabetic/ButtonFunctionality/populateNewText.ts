@@ -24,13 +24,13 @@ export async function populateNewText() {
   const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
   decipherGridDOMStatesStore.$reset();
   gameProgressStore.$reset();
+  textStore.$reset();
 
   if (response.sessionData.sessionId) {
-    
+
     sessionStore.sessionId = response.sessionData.sessionId;
-    textStore.$reset();
-    textStore.encryptedText = response.encryptedText;
     sessionStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
+    textStore.encryptedText = response.encryptedText;
     gameProgressStore.usedTextSettings = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
     gameProgressStore.sessionDuration.start = (new Date).getTime();
   }
