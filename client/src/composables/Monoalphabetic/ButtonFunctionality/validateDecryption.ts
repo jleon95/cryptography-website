@@ -45,6 +45,6 @@ export async function validateDecryption() {
       }
     }
     else // If the server responds with an empty sessionId, the new text request was rejected.
-      sessionStore.resetSessionId();
+      sessionStore.$reset();
   }
 }

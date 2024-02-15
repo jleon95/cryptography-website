@@ -45,16 +45,17 @@ export const useGameProgressStore = defineStore("gameProgress", () => {
     return hintManagement.allowedHints - hintManagement.usedHints;
   }
 
-  function resetHints() {
-    hintManagement.usedHints = defaultValues.hintManagement.usedHints;
-  }
-
-  function resetValidationCounter() {
-    validationCounter.value = defaultValues.validationCounter;
-  }
-
   function isDecryptionSolved() {
     return lettersConfirmed.value == defaultValues.totalLetters;
+  }
+
+  function $reset() {
+    hintManagement.usedHints = defaultValues.hintManagement.usedHints;
+    validationCounter.value = defaultValues.validationCounter;
+    usedTextSettings.keepSpaces = defaultValues.usedTextSettings.keepSpaces;
+    usedTextSettings.keepSpaces = defaultValues.usedTextSettings.keepPunctuation;
+    sessionDuration.start = defaultValues.sessionDuration.start;
+    sessionDuration.finish = defaultValues.sessionDuration.finish;
   }
 
   watch(() => sessionStore.activeTextSettings.keepSpaces, (keepSpaces) => {
@@ -67,6 +68,6 @@ export const useGameProgressStore = defineStore("gameProgress", () => {
 
   return {
     usedTextSettings, hintManagement, lettersConfirmed, validationCounter, sessionDuration,
-    hintsLeft, resetHints, resetValidationCounter, isDecryptionSolved, getPrintableSessionDuration
+    hintsLeft, isDecryptionSolved, getPrintableSessionDuration, $reset
   };
 })

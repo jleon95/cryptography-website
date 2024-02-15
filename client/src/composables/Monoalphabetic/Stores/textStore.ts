@@ -39,12 +39,13 @@ export const useTextStore = defineStore('text', () => {
     return encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
   });
 
-  function resetDecryption() {
+  function $reset() {
+    encryptedText.value = defaultState.encryptedText;
     for (const letter in assignedLetters)
       assignedLetters[letter] = "";
   }
 
   return {
-    encryptedText, decryptedText, assignedLetters, letterFrequencies, resetDecryption
+    encryptedText, decryptedText, assignedLetters, letterFrequencies, $reset
   };
 })

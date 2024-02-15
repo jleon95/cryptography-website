@@ -37,10 +37,14 @@ export const useSessionStore = defineStore('session', () => {
     return sessionId.value;
   }
 
-  function resetSessionId() {
+  function $reset() {
     sessionId.value = defaultState.sessionId;
+    expirationDate.value = defaultState.expirationDate;
+    activeTextSettings.keepSpaces = defaultState.activeTextSettings.keepSpaces;
+    activeTextSettings.keepPunctuation = defaultState.activeTextSettings.keepPunctuation;
+    requestingHint.value = defaultState.requestingHint;
   }
 
-  return { sessionId, getSessionIdCheckedForExpiration, resetSessionId, isSessionExpired, requestingHint, getExpirationDate, setExpirationDate, activeTextSettings };
+  return { sessionId, getSessionIdCheckedForExpiration, isSessionExpired, requestingHint, getExpirationDate, setExpirationDate, activeTextSettings, $reset };
 
 });

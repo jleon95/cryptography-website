@@ -76,7 +76,7 @@ export async function requestHint() {
       }
     }
     else // If the server responds with an empty sessionId, the new text request was rejected.
-      sessionStore.resetSessionId();
+      sessionStore.$reset();
   }
   sessionStore.requestingHint = false;
 }

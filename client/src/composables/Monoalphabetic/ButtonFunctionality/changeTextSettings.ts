@@ -55,7 +55,7 @@ async function updateTextFromNewSettings() {
     if (response.encryptedText)
       textStore.encryptedText = response.encryptedText;
     else
-      sessionStore.resetSessionId();
+      sessionStore.$reset();
   }
 }
 

@@ -22,19 +22,18 @@ export async function populateNewText() {
     }
   };
   const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
+  decipherGridDOMStatesStore.$reset();
+  gameProgressStore.$reset();
 
   if (response.sessionData.sessionId) {
     
     sessionStore.sessionId = response.sessionData.sessionId;
+    textStore.$reset();
     textStore.encryptedText = response.encryptedText;
-    textStore.resetDecryption();
     sessionStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
     gameProgressStore.usedTextSettings = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
     gameProgressStore.sessionDuration.start = (new Date).getTime();
   }
   else // If the server responds with an empty sessionId, the new text request was rejected.
-    sessionStore.resetSessionId();
-  decipherGridDOMStatesStore.$reset();
-  gameProgressStore.resetHints();
-  gameProgressStore.resetValidationCounter();
+    sessionStore.$reset();
 }
