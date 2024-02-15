@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
-  import { useGameSessionStore } from '../../composables/Monoalphabetic/Stores/gameSessionStore';
+  import { useGameProgressStore } from '../../composables/Monoalphabetic/Stores/gameProgressStore';
 
   const textStore = useTextStore();
-  const gameSessionStore = useGameSessionStore();
+  const gameProgressStore = useGameProgressStore();
 </script>
 
 <template>
@@ -17,7 +17,7 @@
             done_all
           </div>
           <div class="number">
-            {{ gameSessionStore.validationCounter }}
+            {{ gameProgressStore.validationCounter }}
           </div>
         </div>
 
@@ -26,7 +26,7 @@
             search
           </div>
           <div class="number">
-            {{ gameSessionStore.hintManagement.usedHints }}/{{ gameSessionStore.hintManagement.allowedHints }}
+            {{ gameProgressStore.hintManagement.usedHints }}/{{ gameProgressStore.hintManagement.allowedHints }}
           </div>
         </div>
         

@@ -1,9 +1,10 @@
-import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { useSessionStore } from '../Stores/sessionStore';
 import { CellState, useDecipherGridDOMStatesStore } from '../Stores/decipherGridDOMStatesStore';
 import { useTextStore } from '../Stores/textStore';
 import { deployEndGameScreen } from '../deployEndgamePopup';
 import { callAPI, Action } from '../apiCalls';
 import type { HintRequest, HintResponse } from '../apiCalls';
+import { useGameProgressStore } from '../Stores/gameProgressStore';
 
 function areThereLettersLeftToSolve(cellEditableStatus: { [letter: string]: boolean }) {
   for (const letter in cellEditableStatus)
@@ -46,34 +47,36 @@ async function sendHintRequest(chosenLetter: string, sessionId: string) {
 
 export async function requestHint() {
 
-  const gameSessionStore = useGameSessionStore();
+  const sessionStore = useSessionStore();
 
   // Guard against requesting the same letter twice when clicking very fast because the state hasn't been updated yet at that point.
-  if (gameSessionStore.hintManagement.requestingHint)
+  if (sessionStore.requestingHint)
     return;
 
-  gameSessionStore.hintManagement.requestingHint = true;
+  sessionStore.requestingHint = true;
+  const gameProgressStore = useGameProgressStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
 
   // Don't request hints (even if you still have) if there are no letters left to decrypt
-  if (gameSessionStore.hintsLeft() && areThereLettersLeftToSolve(decipherGridDOMStatesStore.cellEditableStatus)) {
+  if (gameProgressStore.hintsLeft() && areThereLettersLeftToSolve(decipherGridDOMStatesStore.cellEditableStatus)) {
 
     const textStore = useTextStore();
+    
     const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)!
-    const correctLetter: string = await sendHintRequest(chosenLetter, textStore.sessionId);
+    const correctLetter: string = await sendHintRequest(chosenLetter, sessionStore.sessionId);
 
     if (correctLetter) {
-      gameSessionStore.hintManagement.usedHints++;
+      gameProgressStore.hintManagement.usedHints++;
       textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
       decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
 
-      if (gameSessionStore.isDecryptionSolved()) {
-        gameSessionStore.sessionTiming.finish = (new Date).getTime();
+      if (gameProgressStore.isDecryptionSolved()) {
+        gameProgressStore.sessionDuration.finish = (new Date).getTime();
         setTimeout(() => deployEndGameScreen(), 1000);
       }
     }
     else // If the server responds with an empty sessionId, the new text request was rejected.
-      textStore.resetSessionId();
+      sessionStore.resetSessionId();
   }
-  gameSessionStore.hintManagement.requestingHint = false;
+  sessionStore.requestingHint = false;
 }

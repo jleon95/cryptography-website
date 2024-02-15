@@ -1,5 +1,6 @@
+import { useSessionStore } from '../Stores/sessionStore';
 import { useTextStore } from '../Stores/textStore';
-import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { useGameProgressStore } from '../Stores/gameProgressStore';
 import { useDecipherGridDOMStatesStore, CellState } from '../Stores/decipherGridDOMStatesStore';
 import { deployEndGameScreen } from '../deployEndgamePopup';
 import { callAPI, Action } from '../apiCalls';
@@ -7,6 +8,7 @@ import type { ValidationRequest, ValidationResponse } from '../apiCalls';
 
 export async function validateDecryption() {
 
+  const sessionStore = useSessionStore();
   const textStore = useTextStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const lettersToValidate: { [original: string]: string } = {};
@@ -19,7 +21,7 @@ export async function validateDecryption() {
 
     const validationRequestBody: ValidationRequest = {
       sessionData: {
-        sessionId: textStore.getSessionId()
+        sessionId: sessionStore.getSessionIdCheckedForExpiration()
       },
       letterMapping: lettersToValidate
     };
@@ -34,15 +36,15 @@ export async function validateDecryption() {
         else
           decipherGridDOMStatesStore.updateCellState(lettersToValidate[letter], CellState.WRONG);
       }
-      const gameSessionStore = useGameSessionStore();
-      gameSessionStore.validationCounter++;
+      const gameProgressStore = useGameProgressStore();
+      gameProgressStore.validationCounter++;
 
-      if (gameSessionStore.isDecryptionSolved()) {
-        gameSessionStore.sessionTiming.finish = (new Date).getTime();
+      if (gameProgressStore.isDecryptionSolved()) {
+        gameProgressStore.sessionDuration.finish = (new Date).getTime();
         setTimeout(() => deployEndGameScreen(), 1000);
       }
     }
     else // If the server responds with an empty sessionId, the new text request was rejected.
-      textStore.resetSessionId();
+      sessionStore.resetSessionId();
   }
 }

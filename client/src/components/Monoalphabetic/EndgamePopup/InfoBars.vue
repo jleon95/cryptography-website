@@ -1,18 +1,18 @@
 ﻿<script setup lang="ts">
-  import { useGameSessionStore } from '../../../composables/Monoalphabetic/Stores/gameSessionStore';
+  import { useGameProgressStore } from '../../../composables/Monoalphabetic/Stores/gameProgressStore';
 
-  const gameSessionStore = useGameSessionStore();
+  const gameProgressStore = useGameProgressStore();
 </script>
 
 <template>
   <div id="endgame-horizontal-bar-punctuation" class="endgame-horizontal-container kept-punctuation">
     <div class="endgame-horizontal-container-title">
-      ¿Utilizando signos de puntuación? {{ gameSessionStore.textSettings.used.keepPunctuation ? "Sí": "No" }}
+      ¿Utilizando signos de puntuación? {{ gameProgressStore.usedTextSettings.keepPunctuation ? "Sí": "No" }}
     </div>
   </div>
   <div id="endgame-horizontal-bar-spaces" class="endgame-horizontal-container kept-spaces">
     <div class="endgame-horizontal-container-title">
-      ¿Utilizando espacios? {{ gameSessionStore.textSettings.used.keepSpaces ? "Sí": "No" }}
+      ¿Utilizando espacios? {{ gameProgressStore.usedTextSettings.keepSpaces ? "Sí": "No" }}
     </div>
   </div>
 </template>

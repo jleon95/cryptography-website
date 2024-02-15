@@ -1,23 +1,23 @@
 <script setup lang="ts">
-  import { useGameSessionStore } from '../../../composables/Monoalphabetic/Stores/gameSessionStore';
+  import { useGameProgressStore } from '../../../composables/Monoalphabetic/Stores/gameProgressStore';
 
-  const gameSessionStore = useGameSessionStore();
+  const gameProgressStore = useGameProgressStore();
 </script>
 
 <template>
   <div id="endgame-validations-circle" class="endgame-stats-circle stats-validations">
     <p class="name material-symbols-outlined material-icons">check</p>
-    <p class="value">{{ gameSessionStore.validationCounter }}</p>
+    <p class="value">{{ gameProgressStore.validationCounter }}</p>
   </div>
   <div id="endgame-time-circle" class="endgame-stats-circle stats-time">
     <p class="name material-symbols-outlined material-icons">timer</p>
     <p class="value">
-      {{ gameSessionStore.getPrintableSessionDuration() }}
+      {{ gameProgressStore.getPrintableSessionDuration() }}
     </p>
   </div>
   <div id="endgame-hints-circle" class="endgame-stats-circle stats-hints">
     <p class="name material-symbols-outlined material-icons">search</p>
-    <p class="value">{{ gameSessionStore.hintManagement.usedHints }}/{{ gameSessionStore.hintManagement.allowedHints }}</p>
+    <p class="value">{{ gameProgressStore.hintManagement.usedHints }}/{{ gameProgressStore.hintManagement.allowedHints }}</p>
   </div>
 </template>
 

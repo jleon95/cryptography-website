@@ -1,4 +1,4 @@
-import { useGameSessionStore } from '../Stores/gameSessionStore';
+import { useSessionStore } from '../Stores/sessionStore';
 import { useTextStore } from '../Stores/textStore';
 import { callAPI, Action } from '../apiCalls';
 import type { UpdateTextRequest, UpdateTextResponse } from '../apiCalls';
@@ -24,15 +24,15 @@ function resetTextSettingsStyles() {
 
 async function updateTextFromNewSettings() {
 
-  const gameSessionStore = useGameSessionStore();
+  const sessionStore = useSessionStore();
   let areThereChanges = false;
 
-  if (gameSessionStore.textSettings.current.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
-    gameSessionStore.textSettings.current.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
+  if (sessionStore.activeTextSettings.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
+    sessionStore.activeTextSettings.keepSpaces = (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked;
     areThereChanges = true;
   }
-  if (gameSessionStore.textSettings.current.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
-    gameSessionStore.textSettings.current.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
+  if (sessionStore.activeTextSettings.keepPunctuation !== (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked) {
+    sessionStore.activeTextSettings.keepPunctuation = (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked;
     areThereChanges = true;
   }
 
@@ -40,21 +40,22 @@ async function updateTextFromNewSettings() {
   // but then I would've had no way to prevent unnecessary API calls in case the user didn't make any changes.
   if (areThereChanges) {
 
+    const sessionStore = useSessionStore();
     const textStore = useTextStore();
     const updateTextRequestBody: UpdateTextRequest = {
       sessionData: {
-        sessionId: textStore.getSessionId()
+        sessionId: sessionStore.getSessionIdCheckedForExpiration()
       },
       difficultyOptions: {
-        keepSpaces: gameSessionStore.textSettings.current.keepSpaces,
-        keepPunctuation: gameSessionStore.textSettings.current.keepPunctuation
+        keepSpaces: sessionStore.activeTextSettings.keepSpaces,
+        keepPunctuation: sessionStore.activeTextSettings.keepPunctuation
       }
     };
     const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
     if (response.encryptedText)
       textStore.encryptedText = response.encryptedText;
     else
-      textStore.resetSessionId();
+      sessionStore.resetSessionId();
   }
 }
 
@@ -64,11 +65,11 @@ export function updateTextSettings() {
 }
 
 export function deployTextSettings() {
-  const gameSessionStore = useGameSessionStore();
+  const sessionStore = useSessionStore();
   const textSettingsContainer: HTMLElement = document.getElementById("text-settings-container")!;
   const closeTextSettingsButton: HTMLElement = document.getElementById("close-text-settings-button")!;
-  (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked = gameSessionStore.textSettings.current.keepSpaces;
-  (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked = gameSessionStore.textSettings.current.keepPunctuation;
+  (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked = sessionStore.activeTextSettings.keepSpaces;
+  (document.getElementById("keep-punctuation-checkbox") as HTMLInputElement).checked = sessionStore.activeTextSettings.keepPunctuation;
   if (textSettingsContainer.classList.contains("deflate-text-settings"))
     textSettingsContainer.classList.remove("deflate-text-settings");
   textSettingsContainer.classList.add("inflate-text-settings");
