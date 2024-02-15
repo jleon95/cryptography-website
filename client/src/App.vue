@@ -9,7 +9,6 @@
   import AboutMono from './components/Monoalphabetic/AboutMono/AboutMono.vue';
   import EndgamePopup from './components/Monoalphabetic/EndgamePopup/EndgamePopup.vue';
   import TextSettings from './components/Monoalphabetic/TextSettings.vue';
-  import { useTextStore } from './composables/Monoalphabetic//Stores/textStore';
   import { populateNewText, isSessionExpired } from './composables/Monoalphabetic/ButtonFunctionality/populateNewText';
   import { onBeforeMount } from 'vue';
 

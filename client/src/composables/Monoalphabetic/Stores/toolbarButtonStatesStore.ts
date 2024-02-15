@@ -1,18 +1,18 @@
 import { defineStore } from 'pinia';
 import { computed } from 'vue';
-import { useGameSessionStore } from './gameSessionStore';
+import { useGameProgressStore } from './gameProgressStore';
 
 export const useToolbarButtonStatesStore = defineStore("toolbarButtonStates", () => {
 
-  const gameSessionStore = useGameSessionStore();
+  const gameProgressStore = useGameProgressStore();
   const validateDecryptionButton = computed(() => {
-    return { disabled: gameSessionStore.isDecryptionSolved() }
+    return { disabled: gameProgressStore.isDecryptionSolved() }
   });
   const requestHintButton = computed(() => {
-    return { disabled: gameSessionStore.isDecryptionSolved() || !gameSessionStore.hintsLeft() }
+    return { disabled: gameProgressStore.isDecryptionSolved() || !gameProgressStore.hintsLeft() }
   });
   const resetUnconfirmedDecryptionButton = computed(() => {
-    return { disabled: gameSessionStore.isDecryptionSolved() }
+    return { disabled: gameProgressStore.isDecryptionSolved() }
   });
 
   return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton };

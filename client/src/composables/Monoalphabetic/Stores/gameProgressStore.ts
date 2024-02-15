@@ -1,40 +1,32 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref, watch } from 'vue';
 import { useDecipherGridDOMStatesStore } from './decipherGridDOMStatesStore';
+import { useSessionStore } from './sessionStore';
 
 const defaultValues = {
-  textSettings: {
-    current: {
-      keepSpaces: false,
-      keepPunctuation: false
-    },
-    used: {
-      keepSpaces: false,
-      keepPunctuation: false
-    }
+  usedTextSettings: {
+    keepSpaces: false,
+    keepPunctuation: false
   },
   hintManagement: {
     allowedHints: 3,
     usedHints: 0,
-    requestingHint: false
   },
   totalLetters: 27, // In Spanish
   validationCounter: 0,
-  sessionTiming: {
+  sessionDuration: {
     start: 0,
     finish: 1
   },
 }
 
-export const useGameSessionStore = defineStore('gameSession', () => {
+export const useGameProgressStore = defineStore("gameProgress", () => {
+  const sessionStore = useSessionStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  const textSettings = reactive({
-    current: { ...defaultValues.textSettings.current },
-    used: { ...defaultValues.textSettings.used }
-  });
+  const usedTextSettings = reactive({ ...defaultValues.usedTextSettings });
   const hintManagement = reactive({ ...defaultValues.hintManagement });
   const validationCounter = ref(defaultValues.validationCounter);
-  const sessionTiming = reactive({ ...defaultValues.sessionTiming });
+  const sessionDuration = reactive({ ...defaultValues.sessionDuration });
   const lettersConfirmed = computed(() => {
     let sum: number = 0;
     for (const letter in decipherGridDOMStatesStore.cellEditableStatus)
@@ -44,8 +36,8 @@ export const useGameSessionStore = defineStore('gameSession', () => {
   });
 
   function getPrintableSessionDuration() {
-    const minutes = Math.floor((sessionTiming.finish - sessionTiming.start) / 60000);
-    const seconds = Math.floor(((sessionTiming.finish - sessionTiming.start) % 60000) / 1000);
+    const minutes = Math.floor((sessionDuration.finish - sessionDuration.start) / 60000);
+    const seconds = Math.floor(((sessionDuration.finish - sessionDuration.start) % 60000) / 1000);
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   }
 
@@ -55,7 +47,6 @@ export const useGameSessionStore = defineStore('gameSession', () => {
 
   function resetHints() {
     hintManagement.usedHints = defaultValues.hintManagement.usedHints;
-    hintManagement.requestingHint = defaultValues.hintManagement.requestingHint;
   }
 
   function resetValidationCounter() {
@@ -66,16 +57,16 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     return lettersConfirmed.value == defaultValues.totalLetters;
   }
 
-  watch(() => textSettings.current.keepSpaces, (keepSpaces) => {
-    textSettings.used.keepSpaces = textSettings.used.keepSpaces || keepSpaces;
+  watch(() => sessionStore.activeTextSettings.keepSpaces, (keepSpaces) => {
+    usedTextSettings.keepSpaces = sessionStore.activeTextSettings.keepSpaces || keepSpaces;
   });
 
-  watch(() => textSettings.current.keepPunctuation, (keepPunctuation) => {
-    textSettings.used.keepPunctuation = textSettings.used.keepPunctuation || keepPunctuation;
+  watch(() => sessionStore.activeTextSettings.keepPunctuation, (keepPunctuation) => {
+    usedTextSettings.keepPunctuation = sessionStore.activeTextSettings.keepPunctuation || keepPunctuation;
   });
 
   return {
-    textSettings, hintManagement, lettersConfirmed, validationCounter, sessionTiming,
+    usedTextSettings, hintManagement, lettersConfirmed, validationCounter, sessionDuration,
     hintsLeft, resetHints, resetValidationCounter, isDecryptionSolved, getPrintableSessionDuration
   };
 })

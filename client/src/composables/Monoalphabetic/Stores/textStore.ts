@@ -6,16 +6,12 @@ export const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
 const defaultState = {
   encryptedText: "",
-  sessionId: "",
-  expirationDate: 0,
   assignedLetters: letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: "" }), {}) as { [letter: string]: string }
 }
 
 export const useTextStore = defineStore('text', () => {
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const encryptedText = ref(defaultState.encryptedText);
-  const sessionId = ref(defaultState.sessionId);
-  const expirationDate = ref(defaultState.expirationDate); // Stored in milliseconds since 1970 blah blah blah to circumvent weird Date operations.
   const assignedLetters: { [letter: string]: string } = reactive(defaultState.assignedLetters);
   const letterFrequencies = computed(() => {
     
@@ -43,37 +39,12 @@ export const useTextStore = defineStore('text', () => {
     return encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
   });
 
-  function isSessionExpired() {
-    return Date.now() > expirationDate.value;
-  }
-
-  function setExpirationDate(newExpirationDate: Date) {
-    expirationDate.value = newExpirationDate.getTime();
-    if (isSessionExpired())
-      sessionId.value = defaultState.sessionId;
-  }
-
-  function getExpirationDate() {
-    return new Date(expirationDate.value);
-  }
-
-  function getSessionId() {
-    if (isSessionExpired())
-      sessionId.value = defaultState.sessionId;
-    return sessionId.value;
-  }
-
   function resetDecryption() {
     for (const letter in assignedLetters)
       assignedLetters[letter] = "";
   }
 
-  function resetSessionId() {
-    sessionId.value = defaultState.sessionId;
-  }
-
   return {
-    encryptedText, decryptedText, assignedLetters, letterFrequencies, sessionId, expirationDate,
-    getSessionId, setExpirationDate, getExpirationDate, isSessionExpired, resetDecryption, resetSessionId
+    encryptedText, decryptedText, assignedLetters, letterFrequencies, resetDecryption
   };
 })
