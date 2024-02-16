@@ -1,172 +1,105 @@
 ﻿<script setup lang="ts">
-  import EncryptionExample from './EncryptionExample.vue';
+  import AboutMonoFirstPage from './AboutMonoFirstPage.vue';
+  import AboutMonoSecondPage from './AboutMonoSecondPage.vue';
+  import { goLeft, goRight } from '../../../composables/Monoalphabetic/AboutMono/navigateAboutMono';
+  import { closeAboutMono } from '../../../composables/Monoalphabetic/AboutMono/closeAboutMono';
 
-  function closeAboutMono() {
-    resetAndCloseAboutMonoContainer();
-    resetEncryptionBackgroundMovementAnimation();
-    resetEncryptionTextAnimation();
-  }
-
-  function resetAndCloseAboutMonoContainer() {
-
-    let aboutMono: HTMLElement = document.getElementById("about-mono")!;
-    aboutMono.style.setProperty("opacity", window.getComputedStyle(aboutMono).getPropertyValue("opacity"));
-    aboutMono.classList.remove("inflate-about-mono-container");
-    aboutMono.classList.add("deflate-about-mono-container");
-    setTimeout(function () {
-      aboutMono.classList.remove("deflate-about-mono-container");
-      aboutMono.style.removeProperty("display");
-      aboutMono.style.removeProperty("opacity");
-    }, 700);
-  }
-  // The following code should semantically be in EncryptionExample, but I couldn't find a way to have it there and then import it here
-  function resetEncryptionBackgroundMovementAnimation () {
-
-    setTimeout(function () {
-      for (let i = 0; i < 24; i++) {
-        let encryptedExampleGridElement: HTMLElement = document.getElementById(`cipher-example-${i}`)!;
-        encryptedExampleGridElement.classList.remove("from-green-to-blue-background", "from-blue-to-green-background");
-      }
-    }, 700);
-  }
-
-  function resetEncryptionTextAnimation () {
-    const decryptionExampleMapping: {[letter: string] : string} = {
-      z: "A",
-      m: "D",
-      t: "H",
-      g: "L",
-      f: "M",
-      x: "N",
-      a: "O",
-      e: "U",
-    }
-    setTimeout(function () {
-      for (const letterContainer of document.getElementById("cipher-example-text")!.children) {
-        letterContainer.classList.remove("encrypt-example-letter");
-        if (letterContainer.textContent == letterContainer.textContent!.toLowerCase() && decryptionExampleMapping.hasOwnProperty(letterContainer.textContent)) {
-          letterContainer.textContent = decryptionExampleMapping[letterContainer.textContent];
-        }
-      }
-    }, 700);
-  }
 </script>
 
 <template>
+  <button id="about-mono-go-left" @click="goLeft" class="disabled go-left-about-mono-container material-symbols-outlined material-icons md-24">chevron_left</button>
+  <button id="about-mono-go-right" @click="goRight" class="go-right-about-mono-container material-symbols-outlined material-icons md-24">chevron_right</button>
+  <button id="about-mono-close" @click="closeAboutMono" class="close-about-mono-container material-symbols-outlined material-icons md-24">close</button>
   <div id="about-mono" class="about-mono-container">
-    <button @click="closeAboutMono" class="close-about-mono-container material-symbols-outlined material-icons md-24">close</button>
-    <div class="about-mono-text-blob" id="text-blob-one">
-      <p>El <b>cifrado por sustitución</b> consiste en cambiar los caracteres dentro del mensaje original por otros distintos.</p>
-    </div>
-    <div class="about-mono-text-blob" id="text-blob-two">
-      <p>
-        El <b>cifrado monoalfabético</b> es un tipo de cifrado por sustitución que consiste en reordenar el alfabeto de forma que
-        cada letra sea reemplazada en el mensaje por otra letra, pero siempre la misma.
-      </p>
-    </div>
-    <div class="about-mono-text-blob" id="text-blob-three">
-      <p>Veamos un ejemplo. Haz clic en las letras de la primera fila para encriptar el mensaje:</p>
-      <EncryptionExample />
-    </div>
-    <div class="about-mono-text-blob" id="text-blob-four">
-      La clave para descifrar mensajes cifrados con este método es tener en cuenta las frecuencias de las letras de un determinado idioma, 
-      ya que unas se utilizan comparativamente mucho más que otras. Si bien <b>no hay una correspondencia exacta</b> entre el conjunto del idioma y un texto en particular,
-      esto suele dar un punto de partida con el que empezar a identificar patrones.
-    </div>
+    <AboutMonoFirstPage />
+    <AboutMonoSecondPage />
   </div>
 </template>
 
 <style scoped>
-  b {
-    font-weight: 700;
-  }
-
   div.about-mono-container {
-    align-items: center;
+    align-items: flex-start;
     backdrop-filter: blur(0.2rem) sepia(30%);
     background-color: var(--color-aboutthis-general-background);
     display: none;
-    grid-column-gap: 2rem;
-    grid-template-areas: "one ." ". two" "three ." ". four";
     height: 100vh;
-    justify-content: center;
-    left: 0;
+    justify-content: space-between;
+    left: 0%;
     opacity: 0;
-    padding: 2rem 10rem;
     position: fixed;
     top: 0;
-    width: 100vw;
+    width: 200%;
     z-index: 2;
   }
 
-  button.close-about-mono-container {
+  button {
+    align-items: center;
     background: var(--color-aboutthis-close-background);
     border: 0.2rem solid var(--color-aboutthis-close-border);
     border-radius: 50%;
     color: white;
     cursor: pointer;
+    display: none;
     font-weight: 500;
     height: 3.2rem;
-    margin: 1rem;
-    position: absolute;
-    right: 0;
-    top: 0;
+    justify-content: center;
     transition: all ease 0.2s;
     width: 3.2rem;
+    z-index: 3;
   }
 
-  button.close-about-mono-container:hover {
+  button:hover {
     background: var(--color-aboutthis-close-hover-background);
     border-color: var(--color-aboutthis-close-hover-border);
-    transform: scale(1.1, 1.1);
   }
 
-  button.close-about-mono-container:active {
+  button:active {
     background-color: var(--color-aboutthis-close-active-background);
     border-color: var(--color-aboutthis-close-active-border);
   }
 
-  .about-mono-text-blob {
-    background: var(--color-aboutthis-blob-background);
-    border: 0.2rem solid var(--color-aboutthis-blob-border);
-    border-radius: 2rem;
-    color: white;
-    height: fit-content;
-    max-width: 35rem;
-    padding: 2rem;
-    text-align: justify;
-    word-wrap: anywhere;
+  button.go-left-about-mono-container {
+    position: fixed;
+    top: 50%;
+    left: 3%;
+    transform: translate(0%, -50%);
   }
 
-  #text-blob-one {
-    grid-area: one;
+  button.go-right-about-mono-container {
+    position: fixed;
+    top: 50%;
+    right: 3%;
+    transform: translate(0%, -50%);
   }
 
-  #text-blob-two {
-    grid-area: two;
+  button.close-about-mono-container {
+    position: fixed;
+    right: 3vw;
+    top: 3vh;
   }
 
-  #text-blob-three {
-    grid-area: three;
+  button.go-left-about-mono-container.disabled,
+  button.go-right-about-mono-container.disabled {
+    background-color: var(--color-disabled-button);
+    border-color: var(--color-disabled-button);
+    pointer-events: none;
   }
 
-  #text-blob-four {
-    grid-area: four;
-  }
-
-  div.inflate-about-mono-container {
+  div.inflate-about-mono-container,
+  button.inflate {
     animation-duration: 0.7s;
     animation-fill-mode: forwards;
     animation-name: inflate-about-mono;
     animation-timing-function: ease;
-    display: grid;
+    display: flex;
   }
 
-  div.deflate-about-mono-container {
+  div.deflate-about-mono-container,
+  button.deflate {
     animation-duration: 0.7s;
     animation-fill-mode: forwards;
     animation-name: deflate-about-mono;
-    display: grid;
+    display: flex;
   }
 
   @keyframes inflate-about-mono {
@@ -177,5 +110,29 @@
   @keyframes deflate-about-mono {
     from { opacity: 1; }
     to { opacity: 0; }
+  }
+
+  div.go-right-about-mono-container {
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+    animation-name: go-right-about-mono-container;
+    animation-timing-function: ease;
+  }
+
+  @keyframes go-right-about-mono-container {
+    from { left: 0%; }
+    to { left: -100%; }
+  }
+
+  div.go-left-about-mono-container {
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+    animation-name: go-left-about-mono-container;
+    animation-timing-function: ease;
+  }
+
+  @keyframes go-left-about-mono-container {
+    from { left: -100%; }
+    to { left: 0%; }
   }
 </style>
