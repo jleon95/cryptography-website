@@ -68,6 +68,11 @@
       <p>Veamos un ejemplo. Haz clic en las letras de la primera fila para encriptar el mensaje:</p>
       <EncryptionExample />
     </div>
+    <div class="about-mono-text-blob" id="text-blob-four">
+      La clave para descifrar mensajes cifrados con este método es tener en cuenta las frecuencias de las letras de un determinado idioma, 
+      ya que unas se utilizan comparativamente mucho más que otras. Si bien <b>no hay una correspondencia exacta</b> entre el conjunto del idioma y un texto en particular,
+      esto suele dar un punto de partida con el que empezar a identificar patrones.
+    </div>
   </div>
 </template>
 
@@ -82,7 +87,7 @@
     background-color: var(--color-aboutthis-general-background);
     display: none;
     grid-column-gap: 2rem;
-    grid-template-areas: "one ." ". two" "three .";
+    grid-template-areas: "one ." ". two" "three ." ". four";
     height: 100vh;
     justify-content: center;
     left: 0;
@@ -143,6 +148,10 @@
 
   #text-blob-three {
     grid-area: three;
+  }
+
+  #text-blob-four {
+    grid-area: four;
   }
 
   div.inflate-about-mono-container {
