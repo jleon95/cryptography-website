@@ -23,7 +23,7 @@
   .main-content-grid-item {
     display: flex;
     flex-direction: column;
-    padding: 2% 7%;
+    padding: 1% 4% 1% 10%;
   }
 
   div.table-title-container {
@@ -95,6 +95,8 @@
     color: var(--color-mono-table-content-text);
     font-weight: 500;
     margin: 0 0.1rem 0.1rem 0.1rem;
+    overflow: hidden;
+    text-overflow:ellipsis;
     transition: background ease 0.2s, border-color ease 0.2s;
   }
 </style>

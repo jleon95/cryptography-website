@@ -30,7 +30,7 @@
   .main-content-grid-item {
     display: flex;
     flex-direction: column;
-    padding: 2% 7%;
+    padding: 1% 10% 1% 4%;
   }
 
   div.table-title-container {

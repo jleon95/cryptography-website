@@ -42,6 +42,7 @@
     display: grid;
     grid-template-columns: 50% 50%;
     width: 100%;
-    margin-bottom: 8rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
   }
 </style>
