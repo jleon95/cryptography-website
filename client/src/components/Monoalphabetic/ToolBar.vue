@@ -131,7 +131,7 @@
   }
 
   .toolbar-wrapper .toolbar-icon.disabled {
-    background-color: var(--base-mute-primary);
+    background-color: var(--color-disabled-button);
     pointer-events: none;
   }
 

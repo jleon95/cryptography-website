@@ -28,6 +28,8 @@
 /* semantic color variables for this project */
 :root {
     --color-background: var(--base-very-light-primary);
+    --color-periodic-flash: var(--base-tertiary);
+    --color-disabled-button: var(--base-mute-primary);
     /*NavBar component*/
     --color-navbar-first-background: var(--base-black-mute);
     --color-navbar-second-background: transparent;
