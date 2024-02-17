@@ -36,6 +36,19 @@ export interface UpdateTextRequest {
   }
 }
 
+
+// Format of reveal text requests from the front-end
+export interface RevealTextResponse {
+  originalText: string
+}
+
+// JSONify-able response body for reveal text requests from the front-end
+export interface RevealTextRequest {
+  sessionData: {
+    sessionId: string
+  }
+}
+
 // Format of validation requests from the front-end
 export interface ValidationRequest {
   sessionData: {
