@@ -4,6 +4,9 @@
 
 <template>
   <div id="about-mono-first-page">
+    <div class="page-indicator">
+      1/2
+    </div>
     <div class="about-mono-text-blob" id="text-blob-one">
       <p>El <b>cifrado por sustitución</b> consiste en cambiar los caracteres dentro del mensaje original por otros distintos.</p>
     </div>
@@ -39,10 +42,26 @@
     width: 50%;
   }
 
+  .page-indicator {
+    align-items: center;
+    background: var(--color-aboutthis-blob-background);
+    border-radius: 2rem;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    color: white;
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    left: 3vw;
+    position: absolute;
+    top: 3vh;
+    width: 3.5rem;
+  }
+
   .about-mono-text-blob {
     background: var(--color-aboutthis-blob-background);
     border: 0.2rem solid var(--color-aboutthis-blob-border);
     border-radius: 2rem;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     color: white;
     height: fit-content;
     max-width: 35rem;

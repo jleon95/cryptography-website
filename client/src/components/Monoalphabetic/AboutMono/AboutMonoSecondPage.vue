@@ -4,6 +4,9 @@
 
 <template>
   <div id="about-mono-second-page">
+    <div class="page-indicator">
+      2/2
+    </div>
     <div class="button-help-row">
       <div class="button-help-blob">
         <span class="text-blob">
@@ -66,6 +69,22 @@
     justify-content: center;
     padding: 3% 0;
     width: 50%;
+    position: relative;
+  }
+
+  .page-indicator {
+    align-items: center;
+    background: var(--color-aboutthis-blob-background);
+    border-radius: 2rem;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    color: white;
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    left: 3vw;
+    position: absolute;
+    top: 3vh;
+    width: 3.5rem;
   }
 
   .button-help-row {
@@ -81,6 +100,7 @@
     background: var(--color-aboutthis-blob-background);
     border: 0.2rem solid var(--color-aboutthis-blob-border);
     border-radius: 2rem;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     color: white;
     display: flex;
     flex-direction: column;

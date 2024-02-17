@@ -59,6 +59,7 @@
   }
 
   button.go-left-about-mono-container {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 50%;
     left: 3%;
@@ -66,6 +67,7 @@
   }
 
   button.go-right-about-mono-container {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 50%;
     right: 3%;
@@ -73,6 +75,7 @@
   }
 
   button.close-about-mono-container {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
     position: fixed;
     right: 3vw;
     top: 3vh;
