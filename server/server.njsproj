@@ -52,6 +52,7 @@
     <Folder Include="src\routes\" />
     <Folder Include="src\routes\monoalphabetic\" />
     <Folder Include="src\routes\monoalphabetic\hint\" />
+    <Folder Include="src\routes\monoalphabetic\reveal_text\" />
     <Folder Include="src\routes\monoalphabetic\update_text\" />
     <Folder Include="src\routes\monoalphabetic\validation\" />
     <Folder Include="src\routes\monoalphabetic\new_text\" />
@@ -62,6 +63,8 @@
     <TypeScriptCompile Include="src\routes\monoalphabetic\controller.models.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.logic.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.service.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\reveal_text\reveal_text.controller.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\reveal_text\reveal_text.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\service.models.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\logic.models.ts" />
