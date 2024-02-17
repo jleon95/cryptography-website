@@ -112,6 +112,20 @@
     --color-aboutthis-blob-border: var(--base-dark-primary);
     --color-aboutthis-example-default-letter-background: var(--base-darker-primary);
     --color-aboutthis-example-highlighted-letter-background: var(--base-darker-green);
+    /*Monoalphabetic cipher: text settings component*/
+    --color-text-settings-checkbox-unchecked-background: var(--base-lighter-primary);
+    --color-text-settings-checkbox-checked-background: var(--base-green);
+    --color-text-settings-checkbox-hover-background: var(--base-primary);
+    --color-text-settings-close-background: var(--base-dark-primary);
+    --color-text-settings-close-border: var(--base-dark-primary);
+    --color-text-settings-close-hover-background: var(--base-secondary);
+    --color-text-settings-close-hover-border: var(--base-secondary);
+    --color-text-settings-close-active-background: var(--base-dark-primary);
+    --color-text-settings-close-active-border: var(--base-white);
+    --color-text-settings-title-background: var(--base-dark-primary);
+    --color-text-settings-title-text: var(--base-white);
+    --color-text-settings-body-background: var(--base-white);
+
     --section-gap: 160px;
 }
 

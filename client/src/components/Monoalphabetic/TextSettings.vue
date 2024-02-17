@@ -38,8 +38,8 @@
 
   .text-settings-title {
     align-items: center;
-    background-color: hsla(210, 100%, 40%, 0.9);
-    color: white;
+    background-color: var(--color-text-settings-title-background);
+    color: var(--color-text-settings-title-text);
     display: flex;
     font-size: 1.2rem;
     font-weight: 500;
@@ -53,7 +53,7 @@
 
   .text-settings-form {
     align-content: center;
-    background-color: rgba(255,255,255,0.9);
+    background-color: var(--color-text-settings-body-background);
     display: flex;
     flex-direction: column;
     height: 70%;
@@ -70,7 +70,7 @@
 
   .text-settings-checkbox {
     appearance: none;
-    background-color: var(--base-lighter-primary);
+    background-color: var(--color-text-settings-checkbox-unchecked-background);
     border-radius: 25%;
     cursor: pointer;
     margin-bottom: auto;
@@ -82,11 +82,11 @@
   }
 
   .text-settings-checkbox:hover {
-    background-color: var(--base-primary);
+    background-color: var(--color-text-settings-checkbox-hover-background);
   }
 
   .text-settings-checkbox:checked {
-    background-color: var(--base-green);
+    background-color: var(--color-text-settings-checkbox-checked-background);
   }
 
   .text-settings-checkbox-label {
@@ -97,8 +97,8 @@
   }
 
   button.close-text-settings {
-    background: var(--base-dark-primary);
-    border: 0.2rem solid var(--base--dark-primary);
+    background: var(--color-text-settings-close-background);
+    border: 0.2rem solid var(--color-text-settings-close-border);
     border-radius: 50%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
     color: white;
@@ -115,14 +115,14 @@
   }
 
   button.close-text-settings:hover {
-    background: var(--color-aboutthis-close-hover-background);
-    border-color: var(--color-aboutthis-close-hover-border);
+    background: var(--color-text-settings-close-hover-background);
+    border-color: var(--color-text-settings-close-hover-border);
     transform: translateX(-50%) scale(1.1, 1.1);
   }
 
   button.close-text-settings:active {
-    background-color: var(--color-aboutthis-close-active-background);
-    border-color: var(--color-aboutthis-close-active-border);
+    background-color: var(--color-text-settings-close-active-background);
+    border-color: var(--color-text-settings-close-active-border);
   }
 
   div.inflate-text-settings {
