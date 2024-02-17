@@ -1,15 +1,9 @@
 <script setup lang="ts">
   import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
   import { deployTextSettings } from '../../composables/Monoalphabetic/ButtonFunctionality/changeTextSettings';
+  import { deployAboutMono } from '../../composables/Monoalphabetic/AboutMono/deployAboutMono';
 
   const textStore = useTextStore();
-
-  function deployAboutMono() {
-    let aboutMono: HTMLElement = document.getElementById("about-mono")!;
-    if (aboutMono.classList.contains("deflate-about-mono"))
-      aboutMono.classList.remove("deflate-about-mono");
-    aboutMono.classList.add("inflate-about-mono-container");
-  }
 </script>
 
 <template>
@@ -17,10 +11,10 @@
     <div class="decrypted-text-header-info">
       <p class="header-title">Texto encriptado</p>
       <div class="info-group">
-        <div @click="deployAboutMono" class="icon material-symbols-outlined material-icons">
+        <div @click="deployAboutMono" class="icon material-symbols-outlined material-icons help">
           question_mark
         </div>
-        <div @click="deployTextSettings" class="icon material-symbols-outlined material-icons">
+        <div @click="deployTextSettings" class="icon material-symbols-outlined material-icons not-help">
           settings
         </div>
       </div>
@@ -77,13 +71,18 @@
     transition: all ease 0.5s;
   }
 
-  .icon:hover {
-    background-color: var(--color-mono-encrypted-textarea-info-icon-hover-background);
+  .icon.help {
+    background-color: var(--color-mono-encrypted-textarea-help-icon-background);
+  }
+
+  .icon.help:hover {
+    background-color: var(--color-mono-encrypted-textarea-icon-hover-background);
     transform: rotate(360deg);
   }
 
-  .icon:active {
-    transform: scale(0.9, 0.9);
+  .icon.not-help:hover {
+    background-color: var(--color-mono-encrypted-textarea-icon-hover-background);
+    transform: rotate(360deg);
   }
 
   .main-content-grid-item > textarea {
@@ -95,14 +94,5 @@
     padding: 0.5rem;
     resize: none;
     transition: all ease 0.2s;
-  }
-
-  .main-content-grid-item > p:hover {
-    background-color: var(--base-primary);
-    border-color: var(--base-primary);
-  }
-
-  .main-content-grid-item > p:hover ~ textarea {
-    border-color: var(--base-primary);
   }
 </style>

@@ -52,7 +52,8 @@
     --color-mono-textarea-info-icon-background: var(--base-dark-primary);
     --color-mono-textarea-info-icon-text: var(--base-white);
     /*Monoalphabetic cipher: encrypted text area-specific components*/
-    --color-mono-encrypted-textarea-info-icon-hover-background: var(--base-secondary);
+    --color-mono-encrypted-textarea-help-icon-background: var(--base-black-mute);
+    --color-mono-encrypted-textarea-icon-hover-background: var(--base-secondary);
     /*Monoalphabetic cipher: decrypted text area-specific components*/
     --color-mono-decrypted-textarea-info-icon-hover-background: var(--base-primary);
     --color-mono-decrypted-textarea-info-data-background: transparent;
