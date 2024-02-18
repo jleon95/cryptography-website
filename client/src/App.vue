@@ -9,6 +9,7 @@
   import AboutMono from './components/Monoalphabetic/AboutMono/AboutMono.vue';
   import EndgamePopup from './components/Monoalphabetic/EndgamePopup/EndgamePopup.vue';
   import TextSettings from './components/Monoalphabetic/TextSettings.vue';
+  import SessionExpiredPopup from './components/Monoalphabetic/SessionExpiredPopup.vue';
   import { populateNewText, isSessionExpired } from './composables/Monoalphabetic/ButtonFunctionality/populateNewText';
   import { onBeforeMount } from 'vue';
 
@@ -32,6 +33,7 @@
     </div>
     <AboutMono />
     <TextSettings />
+    <SessionExpiredPopup />
     <EndgamePopup />
     <ToolBar />
   </main>
