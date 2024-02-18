@@ -125,6 +125,16 @@
     --color-text-settings-title-background: var(--base-dark-primary);
     --color-text-settings-title-text: var(--base-white);
     --color-text-settings-body-background: var(--base-white);
+    /*Monoalphabetic cipher: session expired component*/
+    --color-session-expired-popup-close-background: var(--base-dark-primary);
+    --color-session-expired-popup-close-border: var(--base-dark-primary);
+    --color-session-expired-popup-close-hover-background: var(--base-secondary);
+    --color-session-expired-popup-close-hover-border: var(--base-secondary);
+    --color-session-expired-popup-close-active-background: var(--base-dark-primary);
+    --color-session-expired-popup-close-active-border: var(--base-white);
+    --color-session-expired-popup-title-background: var(--base-dark-primary);
+    --color-session-expired-popup-title-text: var(--base-white);
+    --color-session-expired-popup-body-background: var(--base-white);
 
     --section-gap: 160px;
 }

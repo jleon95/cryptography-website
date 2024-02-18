@@ -30,8 +30,8 @@
 
   .session-expired-popup-title {
     align-items: center;
-    background-color: var(--color-text-settings-title-background);
-    color: var(--color-text-settings-title-text);
+    background-color: var(--color-session-expired-popup-title-background);
+    color: var(--color-session-expired-popup-title-text);
     display: flex;
     font-size: 1.2rem;
     font-weight: 500;
@@ -45,7 +45,7 @@
 
   .session-expired-popup-body {
     align-items: center;
-    background-color: var(--color-text-settings-body-background);
+    background-color: var(--color-session-expired-popup-body-background);
     display: flex;
     height: 70%;
     justify-content: center;
@@ -54,8 +54,8 @@
   }
 
   button.close-session-expired-popup {
-    background: var(--color-text-settings-close-background);
-    border: 0.2rem solid var(--color-text-settings-close-border);
+    background: var(--color-session-expired-popup-close-background);
+    border: 0.2rem solid var(--color-session-expired-popup-close-border);
     border-radius: 50%;
     bottom: 37%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
@@ -72,14 +72,14 @@
   }
 
   button.close-session-expired-popup:hover {
-    background: var(--color-text-settings-close-hover-background);
-    border-color: var(--color-text-settings-close-hover-border);
+    background: var(--color-session-expired-popup-close-hover-background);
+    border-color: var(--color-session-expired-popup-close-hover-border);
     transform: translateX(-50%) scale(1.1, 1.1);
   }
 
   button.close-session-expired-popup:active {
-    background-color: var(--color-text-settings-close-active-background);
-    border-color: var(--color-text-settings-close-active-border);
+    background-color: var(--color-session-expired-popup-close-active-background);
+    border-color: var(--color-session-expired-popup-close-active-border);
   }
 
   div.inflate-session-expired-popup {
