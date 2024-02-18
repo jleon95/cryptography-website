@@ -34,22 +34,3 @@ export async function checkMonoalphabeticSessionExists(sessionId: string): Promi
 
   return result !== null;
 }
-
-export async function touchMonoalphabeticSession(sessionId: string, expirationDate: Date): Promise<void> {
-
-  try {
-    await prisma.monoalphabeticSession.update({
-      where: {
-        sessionId: sessionId
-      },
-      data: {
-        expirationDate: expirationDate
-      }
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      childLogger.error("Error when attempting to touch existing MonoalphabeticSession entry.");
-    }
-  }
-}

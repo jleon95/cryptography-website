@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { checkMonoalphabeticSessionExists, touchMonoalphabeticSession, getOriginalText } from './reveal_text.service';
-import { createExpirationDate } from '../utils';
+import { checkMonoalphabeticSessionExists, getOriginalText } from './reveal_text.service';
 import type { RevealTextRequest, RevealTextResponse } from '../controller.models';
 const logger = require('../../../../logger');
 const router = Router();
@@ -12,10 +11,10 @@ router.post('/reveal_text', async (req: Request, res: Response) => {
 
   if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
-    touchMonoalphabeticSession(requestBody.sessionData.sessionId, createExpirationDate());
     const originalText: string = await getOriginalText(requestBody.sessionData.sessionId);
     const responseBody: RevealTextResponse = {
-      originalText: originalText
+      originalText: originalText,
+      sessionData: {}
     };
     childLogger.trace("Received and processed text reveal request");
     res.json(responseBody);

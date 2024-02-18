@@ -1,6 +1,5 @@
 import { LetterMapping, ValidatedLetterMapping } from './logic.models';
 
-// Format of new text requests from the front-end
 export interface NewTextRequest {
   difficultyOptions: {
     keepSpaces: boolean,
@@ -11,21 +10,14 @@ export interface NewTextRequest {
   }
 }
 
-// JSONify-able response body for new text requests from the front-end
 export interface NewTextResponse {
-  sessionData: {
+  encryptedText: string
+  sessionData?: {
     sessionId: string,
-    expirationDate?: Date
+    expirationDate: Date
   },
-  encryptedText: string
 }
 
-// Format of updated text requests from the front-end
-export interface UpdateTextResponse {
-  encryptedText: string
-}
-
-// JSONify-able response body for updated text requests from the front-end
 export interface UpdateTextRequest {
   difficultyOptions: {
     keepSpaces: boolean,
@@ -36,20 +28,24 @@ export interface UpdateTextRequest {
   }
 }
 
-
-// Format of reveal text requests from the front-end
-export interface RevealTextResponse {
-  originalText: string
+export interface UpdateTextResponse {
+  encryptedText: string
+  sessionData?: {
+    expirationDate: Date
+  }
 }
 
-// JSONify-able response body for reveal text requests from the front-end
 export interface RevealTextRequest {
   sessionData: {
     sessionId: string
   }
 }
 
-// Format of validation requests from the front-end
+export interface RevealTextResponse {
+  originalText: string
+  sessionData?: {}
+}
+
 export interface ValidationRequest {
   sessionData: {
     sessionId: string
@@ -57,12 +53,13 @@ export interface ValidationRequest {
   letterMapping: LetterMapping,
 }
 
-// JSONify-able response body for validation requests from the front-end
 export interface ValidationResponse {
   validatedLetterMapping: ValidatedLetterMapping
+  sessionData?: {
+    expirationDate: Date
+  }
 }
 
-// Format of hint requests from the front-end
 export interface HintRequest {
   requestedLetter: string,
   sessionData: {
@@ -70,7 +67,9 @@ export interface HintRequest {
   }
 }
 
-// JSONify-able response body for hint requests from the front-end
 export interface HintResponse {
   correctLetter: string
+  sessionData?: {
+    expirationDate: Date
+  }
 }

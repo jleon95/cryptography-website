@@ -37,7 +37,7 @@ router.post('/new_text', async (req: Request, res: Response) => {
   }
   else {
     const childLogger = logger.child({ sessionId: requestBody.sessionData.sessionId });
-    const responseBody: NewTextResponse = { sessionData: { sessionId: "" }, encryptedText: "" };
+    const responseBody: NewTextResponse = { encryptedText: "" };
     childLogger.warn("Unrecognized non-empty MonoalphabeticSession in request for new MonoalphabeticSession, sending empty response.");
     res.status(400).json(responseBody);
   }

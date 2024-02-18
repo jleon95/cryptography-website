@@ -15,10 +15,14 @@ router.post('/validation', async (req: Request, res: Response) => {
 
   if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
-    touchMonoalphabeticSession(requestBody.sessionData.sessionId, createExpirationDate());
+    const newExpirationDate: Date = createExpirationDate();
+    touchMonoalphabeticSession(requestBody.sessionData.sessionId, newExpirationDate);
     const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
     const responseBody: ValidationResponse = {
-      validatedLetterMapping: validateLetterMapping(requestBody.letterMapping, correctEncryptionMapping) as ValidatedLetterMapping
+      validatedLetterMapping: validateLetterMapping(requestBody.letterMapping, correctEncryptionMapping) as ValidatedLetterMapping,
+      sessionData: {
+        expirationDate: newExpirationDate
+      }
     };
     res.json(responseBody);
   }

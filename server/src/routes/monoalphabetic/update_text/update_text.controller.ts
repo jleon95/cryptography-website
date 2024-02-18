@@ -14,10 +14,14 @@ router.post('/update_text', async (req: Request, res: Response) => {
 
   if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
-    touchMonoalphabeticSession(requestBody.sessionData.sessionId, createExpirationDate());
+    const newExpirationDate: Date = createExpirationDate();
+    touchMonoalphabeticSession(requestBody.sessionData.sessionId, newExpirationDate);
     const encryptedTextInfo: EncryptedTextInfo = await getOriginalTextAndMappingFromMonoalphabeticSession(requestBody.sessionData.sessionId);
     const responseBody: UpdateTextResponse = {
-      encryptedText: await reCreateEncryptedText(encryptedTextInfo, requestBody.difficultyOptions)
+      encryptedText: await reCreateEncryptedText(encryptedTextInfo, requestBody.difficultyOptions),
+      sessionData: {
+        expirationDate: newExpirationDate
+      }
     };
     childLogger.trace("Received and processed text update request");
     res.json(responseBody);

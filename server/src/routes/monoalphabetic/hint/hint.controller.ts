@@ -15,19 +15,23 @@ router.post('/hint', async (req: Request, res: Response) => {
 
   if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
-    touchMonoalphabeticSession(requestBody.sessionData.sessionId, createExpirationDate());
+    const newExpirationDate: Date = createExpirationDate();
+    touchMonoalphabeticSession(requestBody.sessionData.sessionId, newExpirationDate);
     if ((await getRemainingHints(requestBody.sessionData.sessionId)) > 0) {
       consumeHint(requestBody.sessionData.sessionId);
       const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
       const responseBody: HintResponse = {
-        correctLetter: findCorrectLetterFromMapping(requestBody.requestedLetter, correctEncryptionMapping)
+        correctLetter: findCorrectLetterFromMapping(requestBody.requestedLetter, correctEncryptionMapping),
+        sessionData: {
+          expirationDate: newExpirationDate
+        }
       };
       res.json(responseBody);
     }
   }
   else {
     const responseBody: HintResponse = { correctLetter: "" };
-    childLogger.warn("Unrecognized MonoalphabeticSession in validation request, sending empty response.");
+    childLogger.warn("Unrecognized MonoalphabeticSession in hint request, sending empty response.");
     res.status(400).json(responseBody);
   }
 });
