@@ -27,7 +27,9 @@ export async function validateDecryption() {
     };
     const response: ValidationResponse = await callAPI(Action.VALIDATION, validationRequestBody) as ValidationResponse;
 
-    if (Object.keys(response.validatedLetterMapping).length) {
+    if ("sessionData" in response) {
+
+      sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
 
       // Reverse the letter mapping here too.
       for (const letter in response.validatedLetterMapping) {
@@ -44,7 +46,7 @@ export async function validateDecryption() {
         setTimeout(() => deployEndGameScreen(), 1000);
       }
     }
-    else // If the server responds with an empty sessionId, the new text request was rejected.
+    else // If the server responds with empty sessionData, the validation request was rejected.
       sessionStore.$reset();
   }
 }

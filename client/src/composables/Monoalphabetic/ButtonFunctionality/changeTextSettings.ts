@@ -52,9 +52,11 @@ async function updateTextFromNewSettings() {
       }
     };
     const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
-    if (response.encryptedText)
+    if ("sessionData" in response) {
+      sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
       textStore.encryptedText = response.encryptedText;
-    else
+    }
+    else // If the server responds with empty sessionData, the update text request was rejected.
       sessionStore.$reset();
   }
 }

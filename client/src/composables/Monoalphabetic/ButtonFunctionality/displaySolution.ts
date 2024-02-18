@@ -17,11 +17,11 @@ export async function displaySolution() {
         sessionId: sessionStore.sessionId
       }
     };
-    const originalText = (await callAPI(Action.REVEAL_TEXT, revealTextRequestBody) as RevealTextResponse).originalText;
+    const response: RevealTextResponse = await callAPI(Action.REVEAL_TEXT, revealTextRequestBody) as RevealTextResponse;
 
-    if (originalText) {
+    if ("sessionData" in response) {
       const textStore = useTextStore();
-      textStore.originalText = originalText;
+      textStore.originalText = response.originalText;
       gameProgressStore.isSolutionRevealed = true;
       const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
       for (const letter in decipherGridDOMStatesStore.contentCellStyleClasses)

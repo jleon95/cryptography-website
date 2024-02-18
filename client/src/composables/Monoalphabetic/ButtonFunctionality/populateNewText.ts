@@ -26,14 +26,14 @@ export async function populateNewText() {
   gameProgressStore.$reset();
   textStore.$reset();
 
-  if (response.sessionData.sessionId) {
+  if ("sessionData" in response) {
 
-    sessionStore.sessionId = response.sessionData.sessionId;
-    sessionStore.setExpirationDate(new Date(response.sessionData.expirationDate!));
+    sessionStore.sessionId = response.sessionData!.sessionId;
+    sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
     textStore.encryptedText = response.encryptedText;
     gameProgressStore.usedTextSettings = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
     gameProgressStore.sessionDuration.start = (new Date).getTime();
   }
-  else // If the server responds with an empty sessionId, the new text request was rejected.
+  else // If the server responds with empty sessionData, the new text request was rejected.
     sessionStore.$reset();
 }

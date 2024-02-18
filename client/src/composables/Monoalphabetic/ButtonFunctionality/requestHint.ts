@@ -42,7 +42,7 @@ async function sendHintRequest(chosenLetter: string, sessionId: string) {
       sessionId: sessionId
     }
   };
-  return (await callAPI(Action.REQUEST_HINT, hintRequestBody) as HintResponse).correctLetter;
+  return await callAPI(Action.REQUEST_HINT, hintRequestBody) as HintResponse;
 }
 
 export async function requestHint() {
@@ -63,11 +63,12 @@ export async function requestHint() {
     const textStore = useTextStore();
     
     const chosenLetter: string = chooseLetterForHint(textStore.letterFrequencies, decipherGridDOMStatesStore.cellEditableStatus)!
-    const correctLetter: string = await sendHintRequest(chosenLetter, sessionStore.sessionId);
+    const response: HintResponse = await sendHintRequest(chosenLetter, sessionStore.sessionId);
 
-    if (correctLetter) {
+    if ("sessionData" in response) {
+      sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
       gameProgressStore.hintManagement.usedHints++;
-      textStore.assignedLetters[chosenLetter] = correctLetter.toLowerCase();
+      textStore.assignedLetters[chosenLetter] = response.correctLetter.toLowerCase();
       decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);
 
       if (gameProgressStore.isDecryptionSolved()) {
@@ -75,7 +76,7 @@ export async function requestHint() {
         setTimeout(() => deployEndGameScreen(), 1000);
       }
     }
-    else // If the server responds with an empty sessionId, the new text request was rejected.
+    else // If the server responds with empty sessionData, the hint request was rejected.
       sessionStore.$reset();
   }
   sessionStore.requestingHint = false;

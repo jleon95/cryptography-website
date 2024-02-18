@@ -19,9 +19,9 @@ export enum Action {
 }
 
 export interface NewTextResponse {
-  sessionData: {
+  sessionData?: {
     sessionId: string,
-    expirationDate?: Date
+    expirationDate: Date
   },
   encryptedText: string
 }
@@ -38,6 +38,9 @@ export interface NewTextRequest {
 
 export interface UpdateTextResponse {
   encryptedText: string
+  sessionData?: {
+    expirationDate: Date
+  }
 }
 
 export interface UpdateTextRequest {
@@ -62,6 +65,9 @@ export interface RevealTextRequest {
 
 export interface ValidationResponse {
   validatedLetterMapping: { [original: string]: boolean }
+  sessionData?: {
+    expirationDate: Date
+  }
 }
 
 export interface ValidationRequest {
@@ -73,6 +79,9 @@ export interface ValidationRequest {
 
 export interface HintResponse {
   correctLetter: string
+  sessionData?: {
+    expirationDate: Date
+  }
 }
 
 export interface HintRequest {
