@@ -1,4 +1,4 @@
-import { resetAnimationsOfElement } from './utils';
+import { resetAnimationsOfElement } from '../utils';
 
 export function deployAboutMono() {
   const aboutMono: HTMLElement = document.getElementById("about-mono")!;
