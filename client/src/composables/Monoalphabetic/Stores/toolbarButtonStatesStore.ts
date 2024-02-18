@@ -14,7 +14,7 @@ export const useToolbarButtonStatesStore = defineStore("toolbarButtonStates", ()
     return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed || !gameProgressStore.hintsLeft() }
   });
   const resetUnconfirmedDecryptionButton = computed(() => {
-    return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
+    return { disabled: gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
   });
   const displaySolutionButton = computed(() => {
     return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isSolutionRevealed }
