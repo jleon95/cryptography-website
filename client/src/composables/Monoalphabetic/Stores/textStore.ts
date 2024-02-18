@@ -6,13 +6,15 @@ export const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
 const defaultState = {
   encryptedText: "",
-  assignedLetters: letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: "" }), {}) as { [letter: string]: string }
+  assignedLetters: letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: "" }), {}) as { [letter: string]: string },
+  originalText: ""
 }
 
 export const useTextStore = defineStore('text', () => {
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const encryptedText = ref(defaultState.encryptedText);
   const assignedLetters: { [letter: string]: string } = reactive(defaultState.assignedLetters);
+  const originalText = ref(defaultState.originalText);
   const letterFrequencies = computed(() => {
     
     // Initialize all counters to 0
@@ -36,16 +38,20 @@ export const useTextStore = defineStore('text', () => {
   });
 
   const decryptedText = computed(() => {
-    return encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
+    if (!originalText.value)
+      return encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
+    else
+      return originalText.value;
   });
 
   function $reset() {
     encryptedText.value = defaultState.encryptedText;
+    originalText.value = defaultState.originalText;
     for (const letter in assignedLetters)
       assignedLetters[letter] = "";
   }
 
   return {
-    encryptedText, decryptedText, assignedLetters, letterFrequencies, $reset
+    encryptedText, decryptedText, originalText, assignedLetters, letterFrequencies, $reset
   };
 })

@@ -18,11 +18,13 @@ const defaultValues = {
     start: 0,
     finish: 1
   },
+  isSolutionRevealed: false
 }
 
 export const useGameProgressStore = defineStore("gameProgress", () => {
   const sessionStore = useSessionStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+  const isSolutionRevealed = ref(defaultValues.isSolutionRevealed);
   const usedTextSettings = reactive({ ...defaultValues.usedTextSettings });
   const hintManagement = reactive({ ...defaultValues.hintManagement });
   const validationCounter = ref(defaultValues.validationCounter);
@@ -52,6 +54,7 @@ export const useGameProgressStore = defineStore("gameProgress", () => {
   function $reset() {
     hintManagement.usedHints = defaultValues.hintManagement.usedHints;
     validationCounter.value = defaultValues.validationCounter;
+    isSolutionRevealed.value = defaultValues.isSolutionRevealed;
     usedTextSettings.keepSpaces = defaultValues.usedTextSettings.keepSpaces;
     usedTextSettings.keepSpaces = defaultValues.usedTextSettings.keepPunctuation;
     sessionDuration.start = defaultValues.sessionDuration.start;
@@ -67,7 +70,7 @@ export const useGameProgressStore = defineStore("gameProgress", () => {
   });
 
   return {
-    usedTextSettings, hintManagement, lettersConfirmed, validationCounter, sessionDuration,
+    usedTextSettings, hintManagement, lettersConfirmed, validationCounter, sessionDuration, isSolutionRevealed,
     hintsLeft, isDecryptionSolved, getPrintableSessionDuration, $reset
   };
 })
