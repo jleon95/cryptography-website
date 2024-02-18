@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { reactive, ref} from 'vue';
+import { reactive, ref } from 'vue';
+import { deploySessionExpiredPopup } from '../deploySessionExpiredPopup';
 
 const defaultState = {
   sessionId: "",
@@ -37,7 +38,10 @@ export const useSessionStore = defineStore('session', () => {
   function startSessionExpirationTimer() {
     if (sessionExpirationTimer !== null)
       clearTimeout(sessionExpirationTimer);
-    sessionExpirationTimer = setTimeout(() => sessionExpiredFlag.value = true, expirationDate.value - (new Date()).getTime());
+    sessionExpirationTimer = setTimeout(() => {
+      sessionExpiredFlag.value = true;
+      deploySessionExpiredPopup();
+    }, expirationDate.value - (new Date()).getTime());
   }
 
   function $reset() {
