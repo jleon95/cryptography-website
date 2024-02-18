@@ -17,12 +17,18 @@ export async function displaySolution() {
         sessionId: sessionStore.sessionId
       }
     };
-    const textStore = useTextStore();
-    textStore.originalText = (await callAPI(Action.REVEAL_TEXT, revealTextRequestBody) as RevealTextResponse).originalText;
-    gameProgressStore.isSolutionRevealed = true;
-    const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-    for (const letter in decipherGridDOMStatesStore.contentCellStyleClasses)
-      if (!decipherGridDOMStatesStore.contentCellStyleClasses[letter].correct && !decipherGridDOMStatesStore.contentCellStyleClasses[letter].hint)
-        decipherGridDOMStatesStore.updateCellState(letter, CellState.DISABLED);
+    const originalText = (await callAPI(Action.REVEAL_TEXT, revealTextRequestBody) as RevealTextResponse).originalText;
+
+    if (originalText) {
+      const textStore = useTextStore();
+      textStore.originalText = originalText;
+      gameProgressStore.isSolutionRevealed = true;
+      const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+      for (const letter in decipherGridDOMStatesStore.contentCellStyleClasses)
+        if (!decipherGridDOMStatesStore.contentCellStyleClasses[letter].correct && !decipherGridDOMStatesStore.contentCellStyleClasses[letter].hint)
+          decipherGridDOMStatesStore.updateCellState(letter, CellState.DISABLED);
+    }
+    else
+      sessionStore.$reset();
   }
 }
