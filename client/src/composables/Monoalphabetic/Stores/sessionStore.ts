@@ -23,18 +23,10 @@ export const useSessionStore = defineStore('session', () => {
 
   function setExpirationDate(newExpirationDate: Date) {
     expirationDate.value = newExpirationDate.getTime();
-    if (isSessionExpired())
-      sessionId.value = defaultState.sessionId;
   }
 
   function getExpirationDate() {
     return new Date(expirationDate.value);
-  }
-
-  function getSessionIdCheckedForExpiration() {
-    if (isSessionExpired())
-      sessionId.value = defaultState.sessionId;
-    return sessionId.value;
   }
 
   function $reset() {
@@ -45,6 +37,6 @@ export const useSessionStore = defineStore('session', () => {
     requestingHint.value = defaultState.requestingHint;
   }
 
-  return { sessionId, getSessionIdCheckedForExpiration, isSessionExpired, requestingHint, getExpirationDate, setExpirationDate, activeTextSettings, $reset };
+  return { sessionId, isSessionExpired, requestingHint, getExpirationDate, setExpirationDate, activeTextSettings, $reset };
 
 });
