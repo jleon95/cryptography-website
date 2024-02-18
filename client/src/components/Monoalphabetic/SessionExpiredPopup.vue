@@ -25,7 +25,7 @@
     position: fixed;
     text-align: center;
     transform: translate(-50%,-50%);
-    width: 27%;
+    width: 23%;
   }
 
   .session-expired-popup-title {
@@ -49,8 +49,10 @@
     display: flex;
     height: 70%;
     justify-content: center;
+    overflow: hidden;
     padding: 1rem 1.5rem;
     text-align: justify;
+    line-height: 1.4rem;
   }
 
   button.close-session-expired-popup {
