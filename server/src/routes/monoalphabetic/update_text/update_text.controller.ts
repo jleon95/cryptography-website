@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { checkMonoalphabeticSessionExists, touchMonoalphabeticSession, getOriginalTextAndMappingFromMonoalphabeticSession } from './update_text.service';
+import { checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession, getOriginalTextAndMappingFromMonoalphabeticSession } from './update_text.service';
 import { reCreateEncryptedText } from './update_text.logic';
 import { createExpirationDate } from '../utils';
 import type { UpdateTextRequest, UpdateTextResponse } from '../controller.models';
@@ -10,9 +10,8 @@ const router = Router();
 router.post('/update_text', async (req: Request, res: Response) => {
 
   const requestBody: UpdateTextRequest = req.body;
-  const childLogger = logger.child({ sessionId: requestBody.sessionData.sessionId });
-
-  if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
+  
+  if (typeof requestBody.sessionData.sessionId === "string" && await checkActiveMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
 
     const newExpirationDate: Date = createExpirationDate();
     touchMonoalphabeticSession(requestBody.sessionData.sessionId, newExpirationDate);
@@ -23,11 +22,13 @@ router.post('/update_text', async (req: Request, res: Response) => {
         expirationDate: newExpirationDate
       }
     };
-    childLogger.trace("Received and processed text update request");
+    const childLogger = logger.child({ sessionId: requestBody.sessionData.sessionId, expirationDate: newExpirationDate });
+    childLogger.trace("Successfully processed text update request and renewed MonoalphabeticSession expiration date.");
     res.json(responseBody);
   }
   else {
     const responseBody: UpdateTextResponse = { encryptedText: "" };
+    const childLogger = logger.child({ sessionId: requestBody.sessionData.sessionId });
     childLogger.warn("Unrecognized MonoalphabeticSession in text update request, sending empty response.");
     res.status(400).json(responseBody);
   }

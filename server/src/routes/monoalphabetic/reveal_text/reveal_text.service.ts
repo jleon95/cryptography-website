@@ -24,11 +24,14 @@ export async function getOriginalText(sessionId: string): Promise<string> {
   })).content;
 }
 
-export async function checkMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
+export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
 
   let result = await prisma.monoalphabeticSession.findUnique({
     where: {
-      sessionId: sessionId
+      sessionId: sessionId,
+      expirationDate: {
+        gte: new Date()
+      }
     }
   });
 

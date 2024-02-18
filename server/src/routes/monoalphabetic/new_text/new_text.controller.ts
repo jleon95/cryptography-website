@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { insertMonoalphabeticSession, checkMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service';
+import { insertMonoalphabeticSession, checkActiveMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service';
 import { createNewEncryptedText } from './new_text.logic';
 import { chooseNewText } from './new_text.service';
 import { createExpirationDate } from '../utils';
@@ -14,13 +14,13 @@ async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {
   const chosenTextInfo: ChosenOriginalTextInfo = await chooseNewText();
   const encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, requestBody.difficultyOptions);
   const newSession = { sessionId: crypto.randomUUID(), expirationDate: createExpirationDate() };
-  const childLogger = logger.child({ sessionId: newSession.sessionId, expirationDate: newSession.expirationDate });
-  childLogger.trace("Creating new MonoalphabeticSession.");
   await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +process.env["MAX_HINTS"]);
   const responseBody: NewTextResponse = {
     sessionData: newSession,
     encryptedText: encryptedTextInfo.text
   };
+  const childLogger = logger.child({ sessionId: newSession.sessionId, expirationDate: newSession.expirationDate });
+  childLogger.trace("Successfully created new MonoalphabeticSession.");
   return responseBody;
 }
 
@@ -31,7 +31,7 @@ router.post('/new_text', async (req: Request, res: Response) => {
   if (requestBody.sessionData.sessionId === "") {
     res.json(await createNewMonoalphabeticSession(requestBody));
   }
-  else if (typeof requestBody.sessionData.sessionId === "string" && await checkMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
+  else if (typeof requestBody.sessionData.sessionId === "string" && await checkActiveMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
     deleteMonoalphabeticSession(requestBody.sessionData.sessionId);
     res.json(await createNewMonoalphabeticSession(requestBody));
   }
