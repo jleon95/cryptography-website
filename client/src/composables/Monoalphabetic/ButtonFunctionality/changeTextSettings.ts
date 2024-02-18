@@ -26,10 +26,8 @@ async function updateTextFromNewSettings() {
 
   const sessionStore = useSessionStore();
 
-  if (sessionStore.isSessionExpired()) {
-    sessionStore.$reset();
+  if (sessionStore.isSessionExpired())
     return;
-  }
 
   let areThereChanges = false;
 

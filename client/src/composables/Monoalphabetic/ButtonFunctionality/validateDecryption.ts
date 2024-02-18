@@ -10,10 +10,8 @@ export async function validateDecryption() {
 
   const sessionStore = useSessionStore();
 
-  if (sessionStore.isSessionExpired()) {
-    sessionStore.$reset();
+  if (sessionStore.isSessionExpired())
     return;
-  }
 
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const lettersToValidate: { [original: string]: string } = {};

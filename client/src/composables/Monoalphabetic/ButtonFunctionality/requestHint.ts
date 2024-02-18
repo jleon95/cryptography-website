@@ -49,10 +49,8 @@ export async function requestHint() {
 
   const sessionStore = useSessionStore();
 
-  if (sessionStore.isSessionExpired()) {
-    sessionStore.$reset();
+  if (sessionStore.isSessionExpired())
     return;
-  }
 
   // Guard against clicking faster than the state is updated.
   if (sessionStore.requestingHint)

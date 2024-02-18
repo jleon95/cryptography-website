@@ -9,10 +9,8 @@ export async function displaySolution() {
 
   const sessionStore = useSessionStore();
 
-  if (sessionStore.isSessionExpired()) {
-    sessionStore.$reset();
+  if (sessionStore.isSessionExpired())
     return;
-  }
 
   const gameProgressStore = useGameProgressStore();
 
