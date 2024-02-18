@@ -1,5 +1,6 @@
 ﻿<script setup lang="ts">
   import { populateNewText } from '../../composables/Monoalphabetic/ButtonFunctionality/populateNewText';
+  import { displaySolution } from '../../composables/Monoalphabetic/ButtonFunctionality/displaySolution';
   import { validateDecryption } from '../../composables/Monoalphabetic/ButtonFunctionality/validateDecryption';
   import { requestHint } from '../../composables/Monoalphabetic/ButtonFunctionality/requestHint';
   import { deployEndGameScreen } from '../../composables/Monoalphabetic/deployEndgamePopup';
@@ -34,6 +35,10 @@
     <div class="tooltip">
       <span :class="toolbarButtonStatesStore['resetUnconfirmedDecryptionButton']" @click="resetUnconfirmedDecryption" class="toolbar-icon material-symbols-outlined material-icons md-24">restart_alt</span>
       <span class="tooltiptext">Reiniciar partida</span>
+    </div>
+    <div class="tooltip">
+      <span @click="displaySolution" class="toolbar-icon material-symbols-outlined material-icons md-24">grading</span>
+      <span class="tooltiptext">Mostrar solución</span>
     </div>
     <div class="tooltip">
       <span @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
