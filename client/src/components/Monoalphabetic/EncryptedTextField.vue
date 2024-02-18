@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
+  import { useToolbarButtonStatesStore } from '../../composables/Monoalphabetic/Stores/toolbarButtonStatesStore'; 
   import { deployTextSettings } from '../../composables/Monoalphabetic/ButtonFunctionality/changeTextSettings';
   import { deployAboutMono } from '../../composables/Monoalphabetic/AboutMono/deployAboutMono';
 
   const textStore = useTextStore();
+  const toolbarButtonStatesStore = useToolbarButtonStatesStore();
 </script>
 
 <template>
@@ -14,7 +16,7 @@
         <div @click="deployAboutMono" class="icon material-symbols-outlined material-icons help">
           question_mark
         </div>
-        <div @click="deployTextSettings" class="icon material-symbols-outlined material-icons not-help">
+        <div :class="toolbarButtonStatesStore['deployTextSettingsButton']" @click="deployTextSettings" class="icon material-symbols-outlined material-icons not-help">
           settings
         </div>
       </div>
@@ -83,6 +85,11 @@
   .icon.not-help:hover {
     background-color: var(--color-mono-encrypted-textarea-icon-hover-background);
     transform: rotate(360deg);
+  }
+
+  .icon.not-help.disabled {
+    background-color: var(--color-disabled-button);
+    pointer-events: none;
   }
 
   .main-content-grid-item > textarea {

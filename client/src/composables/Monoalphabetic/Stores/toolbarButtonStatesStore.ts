@@ -19,6 +19,9 @@ export const useToolbarButtonStatesStore = defineStore("toolbarButtonStates", ()
   const displaySolutionButton = computed(() => {
     return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isSolutionRevealed }
   });
+  const deployTextSettingsButton = computed(() => {
+    return { disabled: sessionStore.sessionExpiredFlag }
+  })
 
-  return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton, displaySolutionButton };
+  return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton, displaySolutionButton, deployTextSettingsButton };
 });
