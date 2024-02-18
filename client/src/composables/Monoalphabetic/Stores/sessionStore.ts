@@ -8,7 +8,8 @@ const defaultState = {
     keepSpaces: false,
     keepPunctuation: false
   },
-  requestingHint: false
+  requestingHint: false,
+  sessionExpiredFlag: false
 }
 
 export const useSessionStore = defineStore('session', () => {
@@ -16,27 +17,43 @@ export const useSessionStore = defineStore('session', () => {
   const expirationDate = ref(defaultState.expirationDate); // Stored in milliseconds since 1970 blah blah blah to circumvent weird Date operations.
   const activeTextSettings = reactive({ ...defaultState.activeTextSettings });
   const requestingHint = ref(defaultState.requestingHint);
+  const sessionExpiredFlag = ref(defaultState.sessionExpiredFlag);
+  let sessionExpirationTimer: number | null = null;
 
-  function isSessionExpired() {
-    return Date.now() > expirationDate.value;
-  }
-
-  function setExpirationDate(newExpirationDate: Date) {
+  function setExpirationDate(newExpirationDate: Date, startTimer: boolean = true) {
     expirationDate.value = newExpirationDate.getTime();
+    if (startTimer)
+      startSessionExpirationTimer()
   }
 
   function getExpirationDate() {
     return new Date(expirationDate.value);
   }
 
+  function isSessionExpired() {
+    return Date.now() > expirationDate.value;
+  }
+
+  function startSessionExpirationTimer() {
+    if (sessionExpirationTimer !== null)
+      clearTimeout(sessionExpirationTimer);
+    sessionExpirationTimer = setTimeout(() => sessionExpiredFlag.value = true, expirationDate.value - (new Date()).getTime());
+  }
+
   function $reset() {
     sessionId.value = defaultState.sessionId;
     expirationDate.value = defaultState.expirationDate;
+    if (sessionExpirationTimer !== null)
+      clearTimeout(sessionExpirationTimer);
+    sessionExpiredFlag.value = false;
     activeTextSettings.keepSpaces = defaultState.activeTextSettings.keepSpaces;
     activeTextSettings.keepPunctuation = defaultState.activeTextSettings.keepPunctuation;
     requestingHint.value = defaultState.requestingHint;
   }
 
-  return { sessionId, isSessionExpired, requestingHint, getExpirationDate, setExpirationDate, activeTextSettings, $reset };
+  return {
+    sessionId, sessionExpiredFlag, requestingHint, activeTextSettings,
+    setExpirationDate, getExpirationDate, isSessionExpired, startSessionExpirationTimer, $reset
+  };
 
 });

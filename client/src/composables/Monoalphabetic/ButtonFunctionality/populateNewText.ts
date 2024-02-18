@@ -11,10 +11,12 @@ export function isSessionExpired() {
 }
 
 export async function populateNewText() {
+
   const sessionStore = useSessionStore();
-  const textStore = useTextStore();
-  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  const gameProgressStore = useGameProgressStore();
+
+  if (sessionStore.isSessionExpired())
+    sessionStore.$reset();
+
   const options: NewTextRequest = {
     difficultyOptions: sessionStore.activeTextSettings,
     sessionData: {
@@ -22,8 +24,11 @@ export async function populateNewText() {
     }
   };
   const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
+  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   decipherGridDOMStatesStore.$reset();
+  const gameProgressStore = useGameProgressStore();
   gameProgressStore.$reset();
+  const textStore = useTextStore();
   textStore.$reset();
 
   if ("sessionData" in response) {
