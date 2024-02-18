@@ -14,6 +14,9 @@ export const useToolbarButtonStatesStore = defineStore("toolbarButtonStates", ()
   const resetUnconfirmedDecryptionButton = computed(() => {
     return { disabled: gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
   });
+  const displaySolutionButton = computed(() => {
+    return { disabled: gameProgressStore.isSolutionRevealed }
+  });
 
-  return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton };
+  return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton, displaySolutionButton };
 });

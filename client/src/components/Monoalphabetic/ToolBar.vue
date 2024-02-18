@@ -37,7 +37,7 @@
       <span class="tooltiptext">Reiniciar partida</span>
     </div>
     <div class="tooltip">
-      <span @click="displaySolution" class="toolbar-icon material-symbols-outlined material-icons md-24">grading</span>
+      <span :class="toolbarButtonStatesStore['displaySolutionButton']" @click="displaySolution" class="toolbar-icon material-symbols-outlined material-icons md-24">grading</span>
       <span class="tooltiptext">Mostrar solución</span>
     </div>
     <div class="tooltip">
