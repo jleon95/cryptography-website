@@ -25,6 +25,12 @@ function resetTextSettingsStyles() {
 async function updateTextFromNewSettings() {
 
   const sessionStore = useSessionStore();
+
+  if (sessionStore.isSessionExpired()) {
+    sessionStore.$reset();
+    return;
+  }
+
   let areThereChanges = false;
 
   if (sessionStore.activeTextSettings.keepSpaces !== (document.getElementById("keep-spaces-checkbox") as HTMLInputElement).checked) {
@@ -40,11 +46,10 @@ async function updateTextFromNewSettings() {
   // but then I would've had no way to prevent unnecessary API calls in case the user didn't make any changes.
   if (areThereChanges) {
 
-    const sessionStore = useSessionStore();
     const textStore = useTextStore();
     const updateTextRequestBody: UpdateTextRequest = {
       sessionData: {
-        sessionId: sessionStore.getSessionIdCheckedForExpiration()
+        sessionId: sessionStore.sessionId
       },
       difficultyOptions: {
         keepSpaces: sessionStore.activeTextSettings.keepSpaces,

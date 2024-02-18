@@ -18,7 +18,7 @@ export async function populateNewText() {
   const options: NewTextRequest = {
     difficultyOptions: sessionStore.activeTextSettings,
     sessionData: {
-      sessionId: sessionStore.getSessionIdCheckedForExpiration()
+      sessionId: sessionStore.sessionId
     }
   };
   const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;

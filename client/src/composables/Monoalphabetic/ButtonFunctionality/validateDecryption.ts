@@ -9,10 +9,16 @@ import type { ValidationRequest, ValidationResponse } from '../apiCalls';
 export async function validateDecryption() {
 
   const sessionStore = useSessionStore();
-  const textStore = useTextStore();
+
+  if (sessionStore.isSessionExpired()) {
+    sessionStore.$reset();
+    return;
+  }
+
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
   const lettersToValidate: { [original: string]: string } = {};
   // Be careful!! Mapping in backend is {real: encrypted}, but mapping in frontend is {encrypted: real}.
+  const textStore = useTextStore();
   for (const letter in textStore.assignedLetters)
     if (decipherGridDOMStatesStore.cellEditableStatus[letter] && textStore.assignedLetters[letter])
       lettersToValidate[textStore.assignedLetters[letter].toUpperCase()] = letter;
@@ -21,7 +27,7 @@ export async function validateDecryption() {
 
     const validationRequestBody: ValidationRequest = {
       sessionData: {
-        sessionId: sessionStore.getSessionIdCheckedForExpiration()
+        sessionId: sessionStore.sessionId
       },
       letterMapping: lettersToValidate
     };

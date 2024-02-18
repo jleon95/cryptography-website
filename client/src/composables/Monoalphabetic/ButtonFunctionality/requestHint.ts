@@ -49,7 +49,12 @@ export async function requestHint() {
 
   const sessionStore = useSessionStore();
 
-  // Guard against requesting the same letter twice when clicking very fast because the state hasn't been updated yet at that point.
+  if (sessionStore.isSessionExpired()) {
+    sessionStore.$reset();
+    return;
+  }
+
+  // Guard against clicking faster than the state is updated.
   if (sessionStore.requestingHint)
     return;
 

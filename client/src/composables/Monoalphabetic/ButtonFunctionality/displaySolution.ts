@@ -7,11 +7,18 @@ import type { RevealTextRequest, RevealTextResponse } from '../apiCalls';
 
 export async function displaySolution() {
 
+  const sessionStore = useSessionStore();
+
+  if (sessionStore.isSessionExpired()) {
+    sessionStore.$reset();
+    return;
+  }
+
   const gameProgressStore = useGameProgressStore();
 
   if (!gameProgressStore.isSolutionRevealed) {
 
-    const sessionStore = useSessionStore();
+    
     const revealTextRequestBody: RevealTextRequest = {
       sessionData: {
         sessionId: sessionStore.sessionId
