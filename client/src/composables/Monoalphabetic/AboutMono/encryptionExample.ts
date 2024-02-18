@@ -22,7 +22,7 @@ export function resetEncryptionTextAnimation() {
   setTimeout(function () {
     for (const letterContainer of document.getElementById("cipher-example-text")!.children) {
       letterContainer.classList.remove("encrypt-example-letter");
-      if (letterContainer.textContent == letterContainer.textContent!.toLowerCase() && decryptionExampleMapping.hasOwnProperty(letterContainer.textContent)) {
+      if (letterContainer.textContent == letterContainer.textContent!.toLowerCase() && letterContainer.textContent in decryptionExampleMapping) {
         letterContainer.textContent = decryptionExampleMapping[letterContainer.textContent];
       }
     }
