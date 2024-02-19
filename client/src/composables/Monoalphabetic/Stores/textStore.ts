@@ -11,10 +11,11 @@ const defaultState = {
 }
 
 export const useTextStore = defineStore('text', () => {
+  const locallyStoredData = localStorage.getItem("text") ? JSON.parse(localStorage.getItem("text")!) : null;
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  const encryptedText = ref(defaultState.encryptedText);
-  const assignedLetters: { [letter: string]: string } = reactive(defaultState.assignedLetters);
-  const originalText = ref(defaultState.originalText);
+  const encryptedText = locallyStoredData ? ref(locallyStoredData["encryptedText"]) : ref(defaultState.encryptedText);
+  const assignedLetters: { [letter: string]: string } = locallyStoredData ? reactive(locallyStoredData["assignedLetters"]) : reactive(defaultState.assignedLetters);
+  const originalText = locallyStoredData ? ref(locallyStoredData["originalText"]) : ref(defaultState.originalText);
   const letterFrequencies = computed(() => {
     
     // Initialize all counters to 0

@@ -30,8 +30,13 @@ const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
 
 export const useDecipherGridDOMStatesStore = defineStore("decipherGridDOMStates", () => {
 
-  const contentCellStyleClasses: { [letter: string]: CellStyleClasses } = reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: { ...defaultState.contentCellStyles } }), {}));
-  const cellEditableStatus: { [letter: string]: boolean } = reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: defaultState.cellEditableStatus }), {}));
+  const locallyStoredData = localStorage.getItem("decipherGridDOMStates") ? JSON.parse(localStorage.getItem("decipherGridDOMStates")!) : null;
+  const contentCellStyleClasses: { [letter: string]: CellStyleClasses } = locallyStoredData ?
+    reactive(locallyStoredData["contentCellStyleClasses"]) :
+    reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: { ...defaultState.contentCellStyles } }), {}));
+  const cellEditableStatus: { [letter: string]: boolean } = locallyStoredData ?
+    reactive(locallyStoredData["cellEditableStatus"]) :
+    reactive(letters.split("").reduce((obj, letter) => ({ ...obj, [letter]: defaultState.cellEditableStatus }), {}));
 
   function updateCellState(letter: string, newState: CellState): void {
 

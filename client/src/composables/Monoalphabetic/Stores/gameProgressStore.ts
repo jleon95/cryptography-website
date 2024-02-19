@@ -22,13 +22,14 @@ const defaultValues = {
 }
 
 export const useGameProgressStore = defineStore("gameProgress", () => {
+  const locallyStoredData = localStorage.getItem("gameProgress") ? JSON.parse(localStorage.getItem("gameProgress")!) : null;
   const sessionStore = useSessionStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  const isSolutionRevealed = ref(defaultValues.isSolutionRevealed);
-  const usedTextSettings = reactive({ ...defaultValues.usedTextSettings });
-  const hintManagement = reactive({ ...defaultValues.hintManagement });
-  const validationCounter = ref(defaultValues.validationCounter);
-  const sessionDuration = reactive({ ...defaultValues.sessionDuration });
+  const isSolutionRevealed = locallyStoredData ? ref(locallyStoredData["isSolutionRevealed"]) : ref(defaultValues.isSolutionRevealed);
+  const usedTextSettings = locallyStoredData ? reactive({ ...locallyStoredData["usedTextSettings"] }) : reactive({ ...defaultValues.usedTextSettings });
+  const hintManagement = locallyStoredData ? reactive({ ...locallyStoredData["hintManagement"] }) : reactive({ ...defaultValues.hintManagement });
+  const validationCounter = locallyStoredData ? ref(locallyStoredData["validationCounter"]) : ref(defaultValues.validationCounter);
+  const sessionDuration = locallyStoredData ? reactive({ ...locallyStoredData["sessionDuration"] }) : reactive({ ...defaultValues.sessionDuration });
   const lettersConfirmed = computed(() => {
     let sum: number = 0;
     for (const letter in decipherGridDOMStatesStore.cellEditableStatus)
