@@ -10,12 +10,21 @@
   import EndgamePopup from './components/Monoalphabetic/EndgamePopup/EndgamePopup.vue';
   import TextSettings from './components/Monoalphabetic/TextSettings.vue';
   import SessionExpiredPopup from './components/Monoalphabetic/SessionExpiredPopup.vue';
+  import { useSessionStore } from './composables/Monoalphabetic/Stores/sessionStore';
   import { populateNewText, isSessionExpired } from './composables/Monoalphabetic/ButtonFunctionality/populateNewText';
+  import { isTherePreviousActiveSession, subscribeToStores } from './composables/Monoalphabetic/Stores/storeSubscriptions';
   import { onBeforeMount } from 'vue';
 
   onBeforeMount(async () => {
+    
+    subscribeToStores();
+    
     if (isSessionExpired())
       await populateNewText();
+    else {
+      const sessionStore = useSessionStore();
+      sessionStore.startSessionExpirationTimer();
+    }
   });
 </script>
 
