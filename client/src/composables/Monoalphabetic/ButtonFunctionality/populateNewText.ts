@@ -35,6 +35,7 @@ export async function populateNewText() {
 
     sessionStore.sessionId = response.sessionData!.sessionId;
     sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
+    sessionStore.startSessionExpirationTimer();
     textStore.encryptedText = response.encryptedText;
     gameProgressStore.usedTextSettings = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
     gameProgressStore.sessionDuration.start = (new Date).getTime();
