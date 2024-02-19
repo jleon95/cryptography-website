@@ -1,5 +1,9 @@
 import { resetAnimationsOfElement } from './utils';
 
+export function isSessionExpiredPopupDeployed() {
+  return document.getElementById("session-expired-popup-container")!.classList.contains("inflate-session-expired-popup");
+}
+
 export function closeSessionExpiredPopup() {
   const sessionExpiredPopupContainer: HTMLElement = document.getElementById("session-expired-popup-container")!;
   const closeSessionExpiredPopupButton: HTMLElement = document.getElementById("close-session-expired-popup-button")!;

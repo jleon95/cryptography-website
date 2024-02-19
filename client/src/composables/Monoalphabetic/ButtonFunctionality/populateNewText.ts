@@ -3,6 +3,7 @@ import { useSessionStore } from '../Stores/sessionStore';
 import { useTextStore } from '../Stores/textStore';
 import { useDecipherGridDOMStatesStore } from '../Stores/decipherGridDOMStatesStore';
 import { callAPI, Action } from '../apiCalls';
+import { closeSessionExpiredPopup, isSessionExpiredPopupDeployed } from '../deploySessionExpiredPopup';
 import type { NewTextRequest, NewTextResponse } from '../apiCalls';
 
 export function isSessionExpired() {
@@ -16,6 +17,9 @@ export async function populateNewText() {
 
   if (sessionStore.isSessionExpired())
     sessionStore.$reset();
+
+  if (isSessionExpiredPopupDeployed())
+    closeSessionExpiredPopup();
 
   const options: NewTextRequest = {
     difficultyOptions: sessionStore.activeTextSettings,

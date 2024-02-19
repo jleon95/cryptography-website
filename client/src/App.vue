@@ -13,9 +13,9 @@
   import { useSessionStore } from './composables/Monoalphabetic/Stores/sessionStore';
   import { populateNewText, isSessionExpired } from './composables/Monoalphabetic/ButtonFunctionality/populateNewText';
   import { isTherePreviousActiveSession, subscribeToStores } from './composables/Monoalphabetic/Stores/storeSubscriptions';
-  import { onBeforeMount } from 'vue';
+  import { onMounted } from 'vue';
 
-  onBeforeMount(async () => {
+  onMounted(async () => {
     
     subscribeToStores();
     
