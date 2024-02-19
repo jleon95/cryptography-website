@@ -9,7 +9,7 @@ const defaultValues = {
     keepPunctuation: false
   },
   hintManagement: {
-    allowedHints: 3,
+    allowedHints: +import.meta.env.VITE_MAX_HINTS,
     usedHints: 0,
   },
   totalLetters: 27, // In Spanish

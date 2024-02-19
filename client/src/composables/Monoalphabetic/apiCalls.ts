@@ -1,6 +1,6 @@
 export async function callAPI(action: Action, parameters: NewTextRequest|UpdateTextRequest|RevealTextRequest|ValidationRequest|HintRequest): Promise<NewTextResponse|UpdateTextResponse|RevealTextResponse|ValidationResponse|HintResponse> {
 
-  return (await fetch(`http://localhost:1337/monoalphabetic/${action}`, {
+  return (await fetch(`${import.meta.env.VITE_BACKEND_PROTOCOL}://${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}/monoalphabetic/${action}`, {
     headers: {
       'Content-Type': 'application/json'
     },
