@@ -40,7 +40,7 @@ export const useTextStore = defineStore('text', () => {
 
   const decryptedText = computed(() => {
     if (!originalText.value)
-      return encryptedText.value.split("").reduce((text, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
+      return encryptedText.value.split("").reduce((text: string, letter: string) => assignedLetters[letter] ? (text + assignedLetters[letter]) : (text + letter), "");
     else
       return originalText.value;
   });
