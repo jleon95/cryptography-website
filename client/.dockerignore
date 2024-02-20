@@ -1,0 +1,12 @@
+.git
+.dockerignore
+.gitignore
+.github/*
+.vscode
+.env*
+*.esproj*
+README.md
+Dockerfile
+dist
+node_modules
+obj
