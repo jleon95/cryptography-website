@@ -1,4 +1,9 @@
-FROM node:lts-alpine
+FROM node:lts-alpine as build
 WORKDIR /front
 COPY ./ .
+ARG VITE_BACKEND_BASE_URL
+ARG VITE_MAX_HINTS
 RUN npm install && npm run build
+
+FROM nginx:alpine
+COPY --from=build /front/dist /usr/share/nginx/html
