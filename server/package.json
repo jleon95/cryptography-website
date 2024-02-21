@@ -2,6 +2,9 @@
   "name": "server",
   "version": "0.0.0",
   "private": true,
+  "prisma": {
+    "seed": "ts-node src/prisma/seed.ts"
+  },
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
@@ -18,7 +21,8 @@
     "debug": "^2.2.0",
     "express": "^4.18.2",
     "pino": "^8.18.0",
-    "prisma": "^5.9.1"
+    "prisma": "^5.9.1",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/debug": "0.0.30",
