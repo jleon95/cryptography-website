@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+    traefik-reverse-proxy:
+        image: traefik:v2.10
+        container_name: traefik-reverse-proxy
+        command: --api.insecure=true --providers.docker
+        ports:
+            - "80:80"
+            - "8080:8080"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - web
+        labels:
+            - "traefik.http.routers.app-https.middlewares=cors"
+
+    postgres:
+        container_name: postgres
+        image: postgres:latest
+        restart: always
+        expose:
+            - 5432
+        environment:
+            POSTGRES_USER: 'cryptographyDevUser'
+            POSTGRES_PASSWORD: 'notTheActualProductionPassword'
+            POSTGRES_DB: 'cryptographyDev'
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+        networks:
+            - web
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -d cryptographyDev -U cryptographyDevUser"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+    frontend:
+        container_name: frontend
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+            args:
+                VITE_BACKEND_BASE_URL: "http://backend.docker.localhost"
+                VITE_MAX_HINTS: 3
+        volumes:
+            - frontend-data:/front
+        networks:
+            - web
+        labels:
+            - "traefik.http.routers.frontend.rule=Host(`frontend.docker.localhost`)"
+    backend:
+        container_name: backend
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        restart: always
+        expose:
+            - 1337
+        environment:
+            PINO_LOG_LEVEL: "trace"
+            SESSION_DURATION: 7200000
+            MAX_HINTS: 3
+            FRONTEND_ADDRESS: http://frontend.docker.localhost
+            DATABASE_URL: postgresql://cryptographyDevUser:notTheActualProductionPassword@postgres:5432/cryptographyDev?schema=public
+        depends_on:
+            postgres:
+                condition: service_healthy
+        networks:
+            - web
+        labels:
+            - "traefik.http.routers.backend.rule=Host(`backend.docker.localhost`)"
+            - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
+            - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
+            - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
+            - "traefik.http.middlewares.cors.headers.addvaryheader=true"
+volumes:
+    frontend-data:
+    postgres-data:
+    
+networks:
+    web:
+        name: web
