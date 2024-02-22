@@ -1,4 +1,5 @@
 FROM node:lts-alpine as build
+ENV NODE_ENV=production
 WORKDIR /front
 COPY ./ .
 ARG VITE_BACKEND_BASE_URL
