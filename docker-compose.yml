@@ -42,8 +42,6 @@ services:
             args:
                 VITE_BACKEND_BASE_URL: "http://backend.docker.localhost"
                 VITE_MAX_HINTS: 3
-        volumes:
-            - frontend-data:/front
         networks:
             - web
         labels:
@@ -74,7 +72,6 @@ services:
             - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
             - "traefik.http.middlewares.cors.headers.addvaryheader=true"
 volumes:
-    frontend-data:
     postgres-data:
     
 networks:
