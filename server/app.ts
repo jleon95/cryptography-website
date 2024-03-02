@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { AddressInfo } from "net";
-import * as path from 'path';
 import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
+import ping from './src/routes/ping.controller';
 
 const cors = require("cors");
 const debug = require('debug')('my express app');
@@ -30,6 +30,7 @@ app.use(function (req, res, next) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(monoalphabeticRoutes);
+app.use(ping);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
