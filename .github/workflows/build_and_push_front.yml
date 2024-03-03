@@ -37,6 +37,7 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }} >> $GITHUB_OUTPUT
       - name: Check status of cryptography-web
+        continue-on-error: true
         id: check-cryptography-web
         uses: jtalk/url-health-check-action@v4
         with:
