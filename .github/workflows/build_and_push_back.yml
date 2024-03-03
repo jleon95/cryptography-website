@@ -36,3 +36,13 @@ jobs:
           push: true
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }} >> $GITHUB_OUTPUT
+      - name: Ping cryptography-web
+        id: ping-cryptography-web
+        run: ping -c 5 ${{ vars.WEBSITE_ADDRESS }}
+      - name: Trigger cryptography-web deployment
+        if: ${{ steps.ping-cryptography-web.outcome == 'success' }}
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          repository: ${{ secrets.CRYPTOGRAPHY_WEB_DEPLOYMENT_REPO }}
+          token: ${{ secrets.REMOTE_REPO_PAT }}
+          event-type: deploy-cryptography-web
