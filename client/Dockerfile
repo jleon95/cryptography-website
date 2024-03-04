@@ -8,4 +8,4 @@ RUN npm install && npm run build
 
 FROM nginx:alpine
 COPY --from=build /front/dist /usr/share/nginx/html
-COPY --from=build /front/docker_entrypoint_scripts/*.sh /docker-entrypoint.d
+COPY --from=build --chmod=755 /front/docker_entrypoint_scripts/*.sh /docker-entrypoint.d
