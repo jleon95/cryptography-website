@@ -34,6 +34,9 @@ jobs:
           context: ./client
           tags: ${{ secrets.DOCKERHUB_USER }}/cryptography-web-front:latest
           push: true
+          build-args: |
+            VITE_BACKEND_BASE_URL=#{backend_base_url}#
+            VITE_MAX_HINTS=#{max_hints}#
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }} >> $GITHUB_OUTPUT
       - name: Check status of cryptography-web
