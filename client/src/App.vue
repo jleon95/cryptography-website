@@ -4,6 +4,7 @@
 
 <template>
   <router-view v-slot="{ Component, route }">
+    <!-- @vue-ignore -->
     <transition :name="route.meta.transition || 'fade'" mode="out-in">
       <component :is="Component" />
     </transition>
@@ -79,6 +80,7 @@
     transform: translate3d(0, -75vh, 0);
     -webkit-transform: translate3d(0, -75vh, 0);
   }
+
   .main-leave-to {
     opacity: 0;
   }
