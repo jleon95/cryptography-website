@@ -3,13 +3,22 @@
 </script>
 
 <template>
-  <header>
-  </header>
-  <main>
-    <RoutingButtons />
-  </main>
+  <div>
+    <header>
+    </header>
+    <main>
+      <div class="button-container">
+        <RoutingButtons />
+      </div>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-
+  .button-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 </style>
