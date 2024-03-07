@@ -51,7 +51,6 @@
   .toolbar-wrapper {
     align-items: center;
     background: linear-gradient(var(--color-toolbar-first-background) 0%, var(--color-toolbar-first-background) 20%, var(--color-toolbar-second-background) 20%, var(--color-toolbar-second-background) 100%);
-    background-color: var(--color-toolbar-background);
     display: flex;
     justify-content: center;
     position: fixed;

@@ -19,7 +19,6 @@
   .navbar-wrapper {
     align-items: center;
     background: linear-gradient(var(--color-navbar-first-background) 0%, var(--color-navbar-first-background) 80%, var(--color-navbar-second-background) 80%, var(--color-navbar-second-background) 100%);
-    background-color: var(--color-navbar-background);
     display: flex;
     justify-content: center;
     position: relative;
