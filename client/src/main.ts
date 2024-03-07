@@ -5,22 +5,20 @@ import { createApp } from 'vue';
 import * as VueRouter from 'vue-router';
 import MainPage from './components/MainPage.vue';
 import MonoalphabeticApp from './components/MonoalphabeticApp.vue';
-
-const Home = { template: MainPage };
-const Monoalphabetic = { template: MonoalphabeticApp };
+import App from './App.vue';
 
 const routes = [
-  { path: "/", component: Home },
-  { path: "/monoalphabetic", component: Monoalphabetic },
+  { path: "/", component: MainPage, meta: { transition: "main" } },
+  { path: "/monoalphabetic", component: MonoalphabeticApp, meta: { transition: "monoalphabetic" }, },
 ];
 
 const router = VueRouter.createRouter({
-  history: VueRouter.createWebHashHistory(),
+  history: VueRouter.createWebHistory(),
   routes
 });
 
 const pinia = createPinia();
-const app = createApp(MainPage);
+const app = createApp(App);
 
 app.use(router);
 app.use(pinia);
