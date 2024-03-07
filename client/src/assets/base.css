@@ -9,6 +9,7 @@
     --base-black: #181818;
     --base-black-soft: #222222;
     --base-black-mute: #282828;
+    --base-black-extra-mute: #484848;
     --base-very-light-primary: hsla(210, 100%, 97%, 1);
     --base-lighter-primary: hsla(210, 100%, 85%, 1);
     --base-light-primary: hsla(210, 100%, 80%, 1);
@@ -30,7 +31,18 @@
     --color-background: var(--base-very-light-primary);
     --color-periodic-flash: var(--base-tertiary);
     --color-disabled-button: var(--base-mute-primary);
-    /*NavBar component*/
+    /*Main page: buttons*/
+    --color-mainpage-button-card-text: var(--base-white);
+    --color-mainpage-button-card-background: var(--base-dark-primary);
+    --color-mainpage-button-caption-text: var(--base-black);
+    --color-mainpage-button-caption-background: var(--base-white);
+    /*Footer*/
+    --color-footer-background: var(--base-black-mute);
+    --color-footer-github-card-icon-background: var(--base-black);/*It gets inverted*/
+    --color-footer-github-card-name-text: var(--base-white);
+    --color-footer-github-card-name-background: var(--base-black-extra-mute);
+    --color-footer-github-card-hover: var(--base-black-mute);
+    /*Monoalphabetic: NavBar component*/
     --color-navbar-first-background: var(--base-black-mute);
     --color-navbar-second-background: transparent;
     --color-navbar-button-background: var(--base-dark-primary);
@@ -135,7 +147,6 @@
     --color-session-expired-popup-title-background: var(--base-dark-primary);
     --color-session-expired-popup-title-text: var(--base-white);
     --color-session-expired-popup-body-background: var(--base-white);
-
     --section-gap: 160px;
 }
 
@@ -165,6 +176,9 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   transition:
     color 0.5s,
     background-color 0.5s;
