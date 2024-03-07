@@ -1,15 +1,15 @@
 ﻿<template>
   <div class="navbar-wrapper">
     <div class="tooltip">
-      <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">home</a>
+      <router-link to="/" class="navbar-icon material-symbols-outlined material-icons md-24" href="#">home</router-link>
       <span class="tooltiptext">Inicio</span>
     </div>
+    <!--<div class="tooltip">
+    <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">swap_horiz</a>
+    <span class="tooltiptext">Cifrado monoalfabético</span>
+    </div>-->
     <div class="tooltip">
-      <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">swap_horiz</a>
-      <span class="tooltiptext">Cifrado monoalfabético</span>
-    </div>
-    <div class="tooltip">
-      <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">donut_large</a>
+      <router-link to="/transposition" class="navbar-icon disabled material-symbols-outlined material-icons md-24" href="#">donut_large</router-link>
       <span class="tooltiptext">Cifrado por transposición</span>
     </div>
   </div>
