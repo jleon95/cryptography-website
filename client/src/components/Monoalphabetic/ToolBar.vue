@@ -57,6 +57,7 @@
     bottom: 0;
     right: 0;
     width: 100%;
+    z-index: 2;
   }
 
   .toolbar-wrapper span.toolbar-icon {

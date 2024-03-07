@@ -29,7 +29,7 @@
     position: fixed;
     top: 0;
     width: 200%;
-    z-index: 2;
+    z-index: 3;
   }
 
   button {
@@ -45,7 +45,7 @@
     justify-content: center;
     transition: all ease 0.2s;
     width: 3.2rem;
-    z-index: 3;
+    z-index: 4;
   }
 
   button:hover {
