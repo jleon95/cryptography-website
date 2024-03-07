@@ -29,23 +29,25 @@
 </script>
 
 <template>
-  <header>
-    <NavBar/>
-  </header>
-  <main>
-    <div class="main-content-grid">
-      <EncryptedTextField />
-      <DecryptedTextField />
-      <TextLetterGrid />
-      <DecipherLetterGrid />
-      <SpanishLetterGrid />
-    </div>
-    <AboutMono />
-    <TextSettings />
-    <SessionExpiredPopup />
-    <EndgamePopup />
-    <ToolBar />
-  </main>
+  <div>
+    <header>
+      <NavBar />
+    </header>
+    <main>
+      <div class="main-content-grid">
+        <EncryptedTextField />
+        <DecryptedTextField />
+        <TextLetterGrid />
+        <DecipherLetterGrid />
+        <SpanishLetterGrid />
+      </div>
+      <AboutMono />
+      <TextSettings />
+      <SessionExpiredPopup />
+      <EndgamePopup />
+      <ToolBar />
+    </main>
+  </div>
 </template>
 
 <style scoped>
