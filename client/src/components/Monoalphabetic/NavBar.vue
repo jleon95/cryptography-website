@@ -9,7 +9,7 @@
     <span class="tooltiptext">Cifrado monoalfabético</span>
     </div>-->
     <div class="tooltip">
-      <router-link to="/transposition" class="navbar-icon disabled material-symbols-outlined material-icons md-24" href="#">donut_large</router-link>
+      <a class="navbar-icon disabled material-symbols-outlined material-icons md-24" href="#">donut_large</a>
       <span class="tooltiptext">Cifrado por transposición</span>
     </div>
   </div>
