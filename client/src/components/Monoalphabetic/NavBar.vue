@@ -4,10 +4,6 @@
       <router-link to="/" class="navbar-icon material-symbols-outlined material-icons md-24" href="#">home</router-link>
       <span class="tooltiptext">Inicio</span>
     </div>
-    <!--<div class="tooltip">
-    <a class="navbar-icon material-symbols-outlined material-icons md-24" href="#">swap_horiz</a>
-    <span class="tooltiptext">Cifrado monoalfabético</span>
-    </div>-->
     <div class="tooltip">
       <a class="navbar-icon disabled material-symbols-outlined material-icons md-24" href="#">donut_large</a>
       <span class="tooltiptext">Cifrado por transposición</span>
@@ -30,7 +26,6 @@
     border: 0.4rem solid var(--color-navbar-button-border);
     border-radius: 50%;
     color: var(--color-navbar-button-text);
-    font-weight: var(--navbar-base-font-weight);
     margin: 0 0.4rem;
     outline-offset: -1px;
     padding: 1rem 1rem;
