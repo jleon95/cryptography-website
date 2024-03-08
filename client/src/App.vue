@@ -4,6 +4,11 @@
 
 <template>
   <router-view v-slot="{ Component, route }">
+    <transition :name="'fading'" mode="out-in">
+      <div v-if="route.path == '/'" class="background"></div>
+    </transition>
+  </router-view>
+  <router-view v-slot="{ Component, route }">
     <!-- @vue-ignore -->
     <transition :name="route.meta.transition || 'fade'" mode="out-in">
       <component :is="Component" />
@@ -24,6 +29,20 @@
 </template>
 
 <style>
+  .background {
+    background-image: url("/src/assets/background.jpg");
+    background-size: cover;
+    content: "";
+    display: block;
+    filter: sepia(100%) blur(8px) grayscale(80%) contrast(70%);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    right: 0;
+    width: 100vw;
+    z-index: -1;
+  }
+
   .footer {
     align-items: center;
     background-color: var(--color-footer-background);
@@ -73,7 +92,7 @@
 
   .fading-enter-active,
   .fading-leave-active {
-    transition: all 0.7s ease
+    transition: all 0.7s ease;
   }
 
   .main-enter-from {
