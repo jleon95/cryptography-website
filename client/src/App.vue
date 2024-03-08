@@ -5,7 +5,8 @@
 <template>
   <router-view v-slot="{ Component, route }">
     <transition :name="'fading'" mode="out-in">
-      <div v-if="route.path == '/'" class="background"></div>
+      <div v-if="route.path == '/'" class="background-main-page"></div>
+      <div v-else-if="route.path == '/monoalphabetic'" class="background-monoalphabetic"></div>
     </transition>
   </router-view>
   <router-view v-slot="{ Component, route }">
@@ -29,12 +30,26 @@
 </template>
 
 <style>
-  .background {
+  .background-main-page {
     background-image: url("/src/assets/background.jpg");
     background-size: cover;
     content: "";
     display: block;
     filter: sepia(100%) blur(8px) grayscale(80%) contrast(70%);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    right: 0;
+    width: 100vw;
+    z-index: -1;
+  }
+
+  .background-monoalphabetic {
+    background-image: url("/src/assets/background.jpg");
+    background-size: cover;
+    content: "";
+    display: block;
+    filter: sepia(100%) blur(8px) contrast(100%) opacity(15%);
     height: 100vh;
     left: 0;
     position: fixed;

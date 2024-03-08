@@ -28,7 +28,7 @@
 
 /* semantic color variables for this project */
 :root {
-    --color-background: var(--base-very-light-primary);
+    --color-background: var(--base-white);
     --color-periodic-flash: var(--base-tertiary);
     --color-disabled-button: var(--base-mute-primary);
     /*Main page: buttons*/
@@ -38,7 +38,7 @@
     --color-mainpage-button-caption-background: var(--base-white);
     /*Footer*/
     --color-footer-background: var(--base-black-mute);
-    --color-footer-github-card-icon-background: var(--base-black);/*It gets inverted*/
+    --color-footer-github-card-icon-background: var(--base-black); /*It gets inverted*/
     --color-footer-github-card-name-text: var(--base-white);
     --color-footer-github-card-name-background: var(--base-black-extra-mute);
     --color-footer-github-card-hover: var(--base-black-mute);
