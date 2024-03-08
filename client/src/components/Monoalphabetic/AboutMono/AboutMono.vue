@@ -26,6 +26,7 @@
     justify-content: space-between;
     left: 0%;
     opacity: 0;
+    overflow: auto;
     position: fixed;
     top: 0;
     width: 200%;

@@ -65,9 +65,10 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    padding: 3% 0;
+    gap: 2rem 0;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 4% 1%;
     width: 50%;
     position: relative;
   }
