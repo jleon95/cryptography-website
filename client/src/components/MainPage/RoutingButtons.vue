@@ -1,14 +1,14 @@
 <template>
   <div class="main">
     <div class="container">
-      <router-link to="/monoalphabetic">
-        <div class="material-symbols-outlined material-icons md-28">swap_horiz</div>
+      <router-link class="material-symbols-outlined material-icons md-28" to="/monoalphabetic">
+        swap_horiz
       </router-link>
-      <a>
-        <div class="material-symbols-outlined material-icons md-28 disabled">donut_large</div>
+      <a class="material-symbols-outlined material-icons md-28 disabled">
+        donut_large
       </a>
-      <a>
-        <div class="material-symbols-outlined material-icons md-28">question_mark</div>
+      <a class="material-symbols-outlined material-icons md-28">
+        question_mark
       </a>
     </div>
   </div>
@@ -33,7 +33,7 @@
     font-size: 0; /* disable white space between inline block element */
   }
 
-  .container div {
+  .container a {
     align-items: center;
     background-color: var(--base-dark-primary);
     clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
@@ -48,12 +48,12 @@
     width: var(--s);
   }
 
-  .container div:hover {
+  .container a:hover {
     background-color: var(--base-secondary);
     transform: rotate(360deg);
   }
 
-  .container div.disabled {
+  .container a.disabled {
     pointer-events: none;
     background-color: var(--base-mute-primary);
   }
