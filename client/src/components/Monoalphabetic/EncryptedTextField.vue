@@ -93,9 +93,10 @@
   }
 
   .main-content-grid-item > textarea {
-    background-color: var(--color-mono-textarea-text);
+    background-color: var(--color-mono-textarea-background);
     border: 0.2rem solid var(--color-mono-textarea-border);
     border-radius: 0 1rem 1rem 1rem;
+    color: var(--color-mono-textarea-text);
     height: 23rem;
     line-break: anywhere;
     padding: 0.5rem;

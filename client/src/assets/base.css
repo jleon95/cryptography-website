@@ -62,8 +62,8 @@
     --color-mono-textarea-title-background: var(--base-dark-primary);
     --color-mono-textarea-title-text: var(--base-very-light-primary);
     --color-mono-textarea-border: var(--base-dark-primary);
-    --color-mono-textarea-background: var(--base-very-light-primary);
-    --color-mono-textarea-text: var(--base-white);
+    --color-mono-textarea-background: var(--base-white);
+    --color-mono-textarea-text: var(--base-black);
     --color-mono-textarea-info-icon-background: var(--base-dark-primary);
     --color-mono-textarea-info-icon-text: var(--base-white);
     /*Monoalphabetic cipher: encrypted text area-specific components*/
