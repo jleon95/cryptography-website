@@ -32,7 +32,7 @@
         
         </div>
       </div>
-    <textarea readonly>{{ textStore.decryptedText }}</textarea>
+    <textarea id="decrypted-textarea" readonly>{{ textStore.decryptedText }}</textarea>
   </div>
 </template>
 
@@ -104,14 +104,14 @@
   }
 
   .main-content-grid-item > textarea {
-    background-color: var(--color-mono-textarea-text);
+    background-color: var(--color-mono-textarea-background);
     border: 0.2rem solid var(--color-mono-textarea-border);
     border-radius: 0 1rem 1rem 1rem;
+    color: var(--color-mono-textarea-text);
     height: 23rem;
     line-break: anywhere;
     padding: 0.5rem;
     resize: none;
-    transition: all ease 0.2s;
   }
 
   .icon:hover {
@@ -121,6 +121,45 @@
   .show-validations > .icon:hover ~ .number,
   .show-hints > .icon:hover ~ .number {
     transform: rotate(360deg);
+  }
+
+  .reveal-solution {
+    animation-duration: 3s;
+    animation-name: reveal-solution;
+    animation-timing-function: ease;
+  }
+
+  @keyframes reveal-solution {
+    0% {
+      color: var(--color-mono-textarea-text);
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    20% {
+      color: white;
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    25% {
+      color: white;
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    50% {
+      color: white;
+      transform: scale(1,0);
+      transform-origin: 50% top;
+    }
+    75% {
+      color: white;
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    100% {
+      color: var(--color-mono-textarea-text);
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
   }
 
   .material-symbols-outlined {
