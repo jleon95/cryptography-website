@@ -4,6 +4,19 @@ import { useTextStore } from '../Stores/textStore';
 import { useDecipherGridDOMStatesStore, CellState } from '../Stores/decipherGridDOMStatesStore';
 import { callAPI, Action } from '../apiCalls';
 import type { RevealTextRequest, RevealTextResponse } from '../apiCalls';
+import { resetAnimationsOfElement } from '../../../composables/Monoalphabetic/utils';
+
+function displaySolutionInTextarea(solution: string) {
+  const decryptedTextarea: HTMLElement = document.getElementById("decrypted-textarea")!;
+  resetAnimationsOfElement(decryptedTextarea, "reveal-solution", "reveal-solution");
+  setTimeout(() => {
+    const textStore = useTextStore();
+    textStore.originalText = solution;
+  }, 1500);
+  setTimeout(() => {
+    resetAnimationsOfElement(decryptedTextarea, "reveal-solution");
+  }, 3000);
+}
 
 export async function displaySolution() {
 
@@ -25,9 +38,8 @@ export async function displaySolution() {
     const response: RevealTextResponse = await callAPI(Action.REVEAL_TEXT, revealTextRequestBody) as RevealTextResponse;
 
     if ("sessionData" in response) {
-      const textStore = useTextStore();
-      textStore.originalText = response.originalText;
       gameProgressStore.isSolutionRevealed = true;
+      displaySolutionInTextarea(response.originalText);
       const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
       for (const letter in decipherGridDOMStatesStore.contentCellStyleClasses)
         if (!decipherGridDOMStatesStore.contentCellStyleClasses[letter].correct && !decipherGridDOMStatesStore.contentCellStyleClasses[letter].hint)
