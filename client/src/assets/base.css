@@ -32,10 +32,13 @@
     --color-periodic-flash: var(--base-tertiary);
     --color-disabled-button: var(--base-mute-primary);
     /*Main page: buttons*/
-    --color-mainpage-button-card-text: var(--base-white);
-    --color-mainpage-button-card-background: var(--base-dark-primary);
-    --color-mainpage-button-caption-text: var(--base-black);
-    --color-mainpage-button-caption-background: var(--base-white);
+    --color-mainpage-button-text: var(--base-white);
+    --color-mainpage-button-background: var(--base-dark-primary);
+    --color-mainpage-button-hover-background: var(--base-secondary);
+    --color-mainpage-button-active-background: var(--base-dark-primary);
+    --color-mainpage-button-tooltip-text: var(--base-very-light-primary);
+    --color-mainpage-button-tooltip-background: var(--base-black-mute);
+    --color-mainpage-button-tooltip-border: var(--base-black-mute);
     /*Footer*/
     --color-footer-background: var(--base-black-mute);
     --color-footer-github-card-icon-background: var(--base-black); /*It gets inverted*/

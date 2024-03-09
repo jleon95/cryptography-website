@@ -33,9 +33,9 @@
 
   .icon {
     align-items: center;
-    background-color: var(--base-dark-primary);
+    background-color: var(--color-mainpage-button-background);
     clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
-    color: white;
+    color: var(--color-mainpage-button-text);
     cursor: pointer;
     display: inline-flex;
     height: calc(var(--s) * 1.1547);
@@ -45,12 +45,12 @@
   }
 
   .icon:hover {
-    background-color: var(--base-secondary);
+    background-color: var(--color-mainpage-button-hover-background);
     transform: rotate(360deg);
   }
 
   .icon:active {
-    background-color: var(--base-dark-primary);
+    background-color: var(--color-mainpage-button-active-background);
   }
 
   .tooltip.disabled {
@@ -58,7 +58,7 @@
   }
 
   .tooltip.disabled > .icon {
-    background-color: var(--base-mute-primary);
+    background-color: var(--color-disabled-button);
   }
 
   .tooltiptext {
@@ -108,18 +108,18 @@
   }
 
   .tooltip:hover .tooltiptext {
-    background-color: var(--color-toolbar-button-tooltip-background);
-    color: var(--color-toolbar-button-tooltip-text);
+    background-color: var(--color-mainpage-button-tooltip-background);
+    color: var(--color-mainpage-button-tooltip-text);
     visibility: visible;
   }
 
   .tooltip:hover .above::after {
-    border-color: var(--color-toolbar-button-tooltip-border) transparent transparent transparent;
+    border-color: var(--color-mainpage-button-tooltip-border) transparent transparent transparent;
     visibility: visible;
   }
 
   .tooltip:hover .below::after {
-    border-color: transparent transparent var(--color-toolbar-button-tooltip-border) transparent;
+    border-color: transparent transparent var(--color-mainpage-button-tooltip-border) transparent;
     visibility: visible;
   }
 </style>

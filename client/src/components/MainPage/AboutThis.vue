@@ -14,7 +14,7 @@
   .about-this-webpage {
     align-items: center;
     background-color: var(--base-black-mute);
-    border-radius: 0.5rem;
+    border-radius: 0.7rem;
     color: white;
     display: flex;
     justify-content: center;
