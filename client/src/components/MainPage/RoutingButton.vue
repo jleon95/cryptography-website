@@ -17,6 +17,7 @@
 
 <style scoped>
   a { /*<router-link> is converted to <a>*/
+    cursor: default;
     text-decoration: none;
   }
 
@@ -35,6 +36,7 @@
     background-color: var(--base-dark-primary);
     clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
     color: white;
+    cursor: pointer;
     display: inline-flex;
     height: calc(var(--s) * 1.1547);
     justify-content: center;
@@ -42,9 +44,13 @@
     transition: all ease 0.5s;
   }
 
-  .tooltip:hover > .icon {
+  .icon:hover {
     background-color: var(--base-secondary);
     transform: rotate(360deg);
+  }
+
+  .icon:active {
+    background-color: var(--base-dark-primary);
   }
 
   .tooltip.disabled {
