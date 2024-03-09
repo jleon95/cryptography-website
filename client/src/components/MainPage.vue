@@ -1,5 +1,10 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
   import RoutingButtons from './MainPage/RoutingButtons.vue';
+  import { onMounted } from 'vue';
+
+  onMounted(() => {
+    document.title = "Criptografía | Menú principal";
+  })
 </script>
 
 <template>

@@ -17,6 +17,7 @@
 
   onMounted(async () => {
     
+    document.title = "Criptografía | Cifrado monoalfabético";
     subscribeToStores();
     
     if (isSessionExpired())
