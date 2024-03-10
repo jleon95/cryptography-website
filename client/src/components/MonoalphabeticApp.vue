@@ -1,7 +1,7 @@
 ﻿<script setup lang="ts">
   import NavBar from './Monoalphabetic/NavBar.vue';
-  import EncryptedTextField from './Monoalphabetic/EncryptedTextField.vue';
-  import DecryptedTextField from './Monoalphabetic/DecryptedTextField.vue';
+  import EncryptedTextField from './Monoalphabetic/TextFields/EncryptedTextField.vue';
+  import DecryptedTextField from './Monoalphabetic/TextFields/DecryptedTextField.vue';
   import TextLetterGrid from './Monoalphabetic/LetterGrids/TextLetterGrid.vue';
   import DecipherLetterGrid from './Monoalphabetic/LetterGrids/DecipherLetterGrid.vue';
   import SpanishLetterGrid from './Monoalphabetic/LetterGrids/SpanishLetterGrid.vue';

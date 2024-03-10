@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
-  import { useGameProgressStore } from '../../composables/Monoalphabetic/Stores/gameProgressStore';
+  import { useTextStore } from '../../../composables/Monoalphabetic/Stores/textStore';
+  import { useGameProgressStore } from '../../../composables/Monoalphabetic/Stores/gameProgressStore';
 
   const textStore = useTextStore();
   const gameProgressStore = useGameProgressStore();

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
-  import { useToolbarButtonStatesStore } from '../../composables/Monoalphabetic/Stores/toolbarButtonStatesStore'; 
-  import { deployTextSettings } from '../../composables/Monoalphabetic/ButtonFunctionality/changeTextSettings';
-  import { deployAboutMono } from '../../composables/Monoalphabetic/AboutMono/deployAboutMono';
+  import { useTextStore } from '../../../composables/Monoalphabetic/Stores/textStore';
+  import { useToolbarButtonStatesStore } from '../../../composables/Monoalphabetic/Stores/toolbarButtonStatesStore'; 
+  import { deployTextSettings } from '../../../composables/Monoalphabetic/ButtonFunctionality/changeTextSettings';
+  import { deployAboutMono } from '../../../composables/Monoalphabetic/AboutMono/deployAboutMono';
 
   const textStore = useTextStore();
   const toolbarButtonStatesStore = useToolbarButtonStatesStore();
