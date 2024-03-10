@@ -156,4 +156,8 @@
     resize: none;
     transition: all ease 0.2s;
   }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 40;
+  }
 </style>

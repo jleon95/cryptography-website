@@ -44,13 +44,13 @@
         <span class="text-blob">
           Usa este botón para cambiar las opciones de formato del texto (mantener espacios y/o signos de puntuación).
         </span>
-        <span class="page-icon material-symbols-outlined material-icons md-36">settings</span>
+        <span class="page-icon material-symbols-outlined material-icons md-24">settings</span>
       </div>
       <div class="button-help-blob">
         <span class="text-blob">
           Usa este botón para desplegar la tabla de frecuencias de las letras en el idioma español.
         </span>
-        <span class="page-icon material-symbols-outlined material-icons md-36">info</span>
+        <span class="page-icon material-symbols-outlined material-icons md-24">info</span>
       </div>
     </div>
   </div>
@@ -144,11 +144,11 @@
     padding: 0.5rem;
   }
 
-  .material-icons.md-24 {
-    font-size: 24px;
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 40;
   }
 
-  .material-icons.md-36 {
+  .material-icons.md-24 {
     font-size: 24px;
   }
 </style>
