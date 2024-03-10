@@ -44,10 +44,10 @@
 
   .page-indicator {
     align-items: center;
-    background: var(--color-aboutthis-blob-background);
+    background: var(--color-aboutthis-page-indicator-background);
     border-radius: 2rem;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    color: white;
+    color: var(--color-aboutthis-page-indicator-text);
     display: flex;
     height: 2rem;
     justify-content: center;
@@ -58,11 +58,11 @@
   }
 
   .about-mono-text-blob {
-    background: var(--color-aboutthis-blob-background);
-    border: 0.2rem solid var(--color-aboutthis-blob-border);
+    background: var(--color-aboutthis-first-page-blob-background);
+    border: 0.2rem solid var(--color-aboutthis-first-page-blob-border);
     border-radius: 2rem;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    color: white;
+    color: var(--color-aboutthis-first-page-blob-text);
     height: fit-content;
     max-width: 35rem;
     padding: 2rem;

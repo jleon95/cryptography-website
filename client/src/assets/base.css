@@ -39,13 +39,13 @@
     --color-mainpage-button-tooltip-text: var(--base-very-light-primary);
     --color-mainpage-button-tooltip-background: var(--base-black-mute);
     --color-mainpage-button-tooltip-border: var(--base-black-mute);
-    /*Footer*/
+    /*Main page: footer*/
     --color-footer-background: var(--base-black-mute);
     --color-footer-github-card-icon-background: var(--base-black); /*It gets inverted*/
     --color-footer-github-card-name-text: var(--base-white);
     --color-footer-github-card-name-background: var(--base-black-extra-mute);
     --color-footer-github-card-hover: var(--base-black-mute);
-    /*Monoalphabetic: NavBar component*/
+    /*Monoalphabetic cipher: NavBar component*/
     --color-navbar-first-background: var(--base-black-mute);
     --color-navbar-second-background: transparent;
     --color-navbar-button-background: var(--base-dark-primary);
@@ -123,10 +123,15 @@
     --color-aboutthis-close-hover-border: var(--base-secondary);
     --color-aboutthis-close-active-background: var(--base-dark-primary);
     --color-aboutthis-close-active-border: var(--base-white);
-    --color-aboutthis-blob-background: var(--base-dark-primary);
-    --color-aboutthis-blob-border: var(--base-dark-primary);
-    --color-aboutthis-example-default-letter-background: var(--base-darker-primary);
-    --color-aboutthis-example-highlighted-letter-background: var(--base-darker-green);
+    --color-aboutthis-page-indicator-background: var(--base-dark-primary);
+    --color-aboutthis-page-indicator-text: var(--base-white);
+    /*Monoalphabetic cipher: 'about this' component, first page*/
+    --color-aboutthis-first-page-blob-background: var(--base-dark-primary);
+    --color-aboutthis-first-page-blob-border: var(--base-dark-primary);
+    --color-aboutthis-first-page-blob-text: var(--base-white);
+    --color-aboutthis-first-page-example-default-letter-background: var(--base-darker-primary);
+    --color-aboutthis-first-page-example-highlighted-letter-background: var(--base-darker-green);
+    /*Monoalphabetic cipher: 'about this' component, second page*/
     /*Monoalphabetic cipher: text settings component*/
     --color-text-settings-checkbox-unchecked-background: var(--base-lighter-primary);
     --color-text-settings-checkbox-checked-background: var(--base-green);
