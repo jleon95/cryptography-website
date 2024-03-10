@@ -11,7 +11,7 @@
 <template>
   <div class="main-content-grid-item">
     <div class="table-title-container">
-      <p>Sustituir letras</p>
+      <p>Sustituir letras en el texto desencriptado</p>
     </div>
     <div class="table-grid-container">
       <div v-for="(decrypted, original) in textStore.assignedLetters" class="grid-item">

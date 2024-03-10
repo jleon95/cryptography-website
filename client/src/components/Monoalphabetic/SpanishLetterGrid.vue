@@ -7,8 +7,8 @@
 
   const letters: string = "abcdefghijklmnñopqrstuvwxyz";
   const percentages: Array<number> = [12.53, 1.42, 4.68, 5.86, 13.68, 0.69, 1.01, 0.7, 6.25,
-    0.44, 0.02, 4.97, 3.15, 6.71, 0.31, 8.68, 2.51, 0.88,
-    6.87, 7.98, 4.63, 3.93, 0.9, 0.01, 0.22, 0.9, 0.52];
+                                      0.44, 0.02, 4.97, 3.15, 6.71, 0.31, 8.68, 2.51, 0.88,
+                                      6.87, 7.98, 4.63, 3.93, 0.9, 0.01, 0.22, 0.9, 0.52];
 
   for (let i = 0; i < letters.length; i++) {
     let item: GridItem = { letter: letters[i], content: percentages[i] };
@@ -105,7 +105,7 @@
   <div class="main-content-grid-item">
     <div id="spanish-table-title-container" class="table-title-container" @click.once="deployTable">
       <p id="spanish-table-title-icon" class="material-symbols-outlined material-icons md-24">info</p>
-      <p id="spanish-table-title-text">Frecuencia de las letras en el español</p>
+      <p id="spanish-table-title-text">Frecuencia de las letras en el idioma español</p>
     </div>
     <div id="spanish-table-grid-container" class="table-grid-container">
       <div v-for="item in items" class="grid-item">

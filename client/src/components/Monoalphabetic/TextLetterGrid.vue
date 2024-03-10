@@ -8,7 +8,7 @@
 <template>
   <div class="main-content-grid-item">
     <div class="table-title-container">
-      <p>Frecuencia de las letras en el texto</p>
+      <p>Frecuencia de las letras en el texto encriptado</p>
     </div>
     <div class="table-grid-container">
       <div v-for="letter of letters" class="grid-item">
