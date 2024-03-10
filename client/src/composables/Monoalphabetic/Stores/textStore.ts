@@ -32,7 +32,10 @@ export const useTextStore = defineStore('text', () => {
     for (const letter in letterFrequencies) {
       if (!letterFrequencies[letter])
         decipherGridDOMStatesStore.updateCellState(letter, CellState.DISABLED);
-      letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2)); // Percentages rounded to 2 decimal places.
+      if (total)
+        letterFrequencies[letter] = +((letterFrequencies[letter] * 100 / total).toFixed(2)); // Percentages rounded to 2 decimal places.
+      else
+        letterFrequencies[letter] = 0;
     }
 
     return letterFrequencies;
