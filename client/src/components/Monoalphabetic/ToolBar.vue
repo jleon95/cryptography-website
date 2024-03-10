@@ -41,7 +41,7 @@
       <span class="tooltiptext">Mostrar solución</span>
     </div>
     <div class="tooltip">
-      <span @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
+      <span :class="toolbarButtonStatesStore['newTextButton']" @click="populateNewText" class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
       <span class="tooltiptext">Nueva partida</span>
     </div>
   </div>

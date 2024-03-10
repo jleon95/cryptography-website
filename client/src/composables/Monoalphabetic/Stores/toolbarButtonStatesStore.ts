@@ -21,7 +21,10 @@ export const useToolbarButtonStatesStore = defineStore("toolbarButtonStates", ()
   });
   const deployTextSettingsButton = computed(() => {
     return { disabled: sessionStore.sessionExpiredFlag }
-  })
+  });
+  const newTextButton = computed(() => {
+    return { disabled: sessionStore.loadingSolution }
+  });
 
-  return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton, displaySolutionButton, deployTextSettingsButton };
+  return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton, displaySolutionButton, deployTextSettingsButton, newTextButton };
 });

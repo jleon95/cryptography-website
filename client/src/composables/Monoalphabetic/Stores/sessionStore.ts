@@ -9,7 +9,8 @@ const defaultState = {
     keepSpaces: false,
     keepPunctuation: false
   },
-  requestingHint: false,
+  requestingHint: false, // When you load / create a text, you're never in the midst of requesting a hint.
+  loadingSolution: false, // If you request a new text while the animation of displaying the solution is running and the previous text hasn't been swapped out yet, things break.
   sessionExpiredFlag: false
 }
 
@@ -18,7 +19,8 @@ export const useSessionStore = defineStore('session', () => {
   const sessionId = locallyStoredData ? ref(locallyStoredData["sessionId"]) : ref(defaultState.sessionId);
   const expirationDate = locallyStoredData ? ref(locallyStoredData["expirationDate"]) : ref(defaultState.expirationDate);
   const activeTextSettings = locallyStoredData ? reactive({ ...locallyStoredData["activeTextSettings"] }) : reactive({ ...defaultState.activeTextSettings });
-  const requestingHint = ref(defaultState.requestingHint); // When you load / create a text, you're never in the midst of requesting a hint.
+  const requestingHint = ref(defaultState.requestingHint);
+  const loadingSolution = ref(defaultState.loadingSolution);
   const sessionExpiredFlag = ref(defaultState.sessionExpiredFlag); // Loading of expired sessions is already prevented, this only triggers the disabling of buttons.
   const sessionExpirationTimer = locallyStoredData ? ref(locallyStoredData["sessionExpirationTimer"]) : ref(null);
 
@@ -55,7 +57,7 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   return {
-    sessionId, sessionExpirationTimer, expirationDate, sessionExpiredFlag, requestingHint, activeTextSettings,
+    sessionId, sessionExpirationTimer, expirationDate, sessionExpiredFlag, requestingHint, loadingSolution, activeTextSettings,
     setExpirationDate, getExpirationDate, isSessionExpired, startSessionExpirationTimer, $reset
   };
 

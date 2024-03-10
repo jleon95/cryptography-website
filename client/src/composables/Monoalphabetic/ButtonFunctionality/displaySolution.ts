@@ -15,6 +15,8 @@ function displaySolutionInTextarea(solution: string) {
   }, 1500);
   setTimeout(() => {
     resetAnimationsOfElement(decryptedTextarea, "reveal-solution");
+    const sessionStore = useSessionStore();
+    sessionStore.loadingSolution = false;
   }, 3000);
 }
 
@@ -29,7 +31,7 @@ export async function displaySolution() {
 
   if (!gameProgressStore.isSolutionRevealed) {
 
-    
+    sessionStore.loadingSolution = true;
     const revealTextRequestBody: RevealTextRequest = {
       sessionData: {
         sessionId: sessionStore.sessionId
