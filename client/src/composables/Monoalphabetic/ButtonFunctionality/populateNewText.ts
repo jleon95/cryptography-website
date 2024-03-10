@@ -5,10 +5,33 @@ import { useDecipherGridDOMStatesStore } from '../Stores/decipherGridDOMStatesSt
 import { callAPI, Action } from '../apiCalls';
 import { closeSessionExpiredPopup, isSessionExpiredPopupDeployed } from '../deploySessionExpiredPopup';
 import type { NewTextRequest, NewTextResponse } from '../apiCalls';
+import { resetAnimationsOfElement } from '../utils';
 
 export function isSessionExpired() {
   const sessionStore = useSessionStore(); // If put outside it'll run immediately, and thus before the global pinia store has been created.
   return sessionStore.isSessionExpired();
+}
+
+function displayNewText(newText: string, activeDifficultyOptions: { keepSpaces: boolean, keepPunctuation: boolean }) {
+  const encryptedTextarea: HTMLElement = document.getElementById("encrypted-textarea")!;
+  const decryptedTextarea: HTMLElement = document.getElementById("decrypted-textarea")!;
+  resetAnimationsOfElement(encryptedTextarea, "reveal-text", "reveal-text");
+  resetAnimationsOfElement(decryptedTextarea, "reveal-text", "reveal-text");
+  setTimeout(() => { // Just when the text area is fully collapsed.
+    const textStore = useTextStore();
+    textStore.$reset();
+    textStore.encryptedText = newText;
+    const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+    decipherGridDOMStatesStore.$reset();
+  }, 1500);
+  setTimeout(() => {
+    resetAnimationsOfElement(encryptedTextarea, "reveal-text");
+    resetAnimationsOfElement(decryptedTextarea, "reveal-text");
+    const gameProgressStore = useGameProgressStore();
+    gameProgressStore.$reset();
+    gameProgressStore.usedTextSettings = { ...activeDifficultyOptions }; // Know which settings were active from the start of the game session.
+    gameProgressStore.sessionDuration.start = (new Date).getTime();
+  }, 3000);
 }
 
 export async function populateNewText() {
@@ -28,22 +51,21 @@ export async function populateNewText() {
     }
   };
   const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
-  const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
-  decipherGridDOMStatesStore.$reset();
-  const gameProgressStore = useGameProgressStore();
-  gameProgressStore.$reset();
-  const textStore = useTextStore();
-  textStore.$reset();
 
   if ("sessionData" in response) {
 
     sessionStore.sessionId = response.sessionData!.sessionId;
     sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
     sessionStore.startSessionExpirationTimer();
-    textStore.encryptedText = response.encryptedText;
-    gameProgressStore.usedTextSettings = { ...options.difficultyOptions }; // Know which settings were active from the start of the game session.
-    gameProgressStore.sessionDuration.start = (new Date).getTime();
+    displayNewText(response.encryptedText, options.difficultyOptions);
   }
-  else // If the server responds with empty sessionData, the new text request was rejected.
+  else { // If the server responds with empty sessionData, the new text request was rejected.
+    const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
+    decipherGridDOMStatesStore.$reset();
+    const gameProgressStore = useGameProgressStore();
+    gameProgressStore.$reset();
+    const textStore = useTextStore();
+    textStore.$reset();
     sessionStore.$reset();
+  }
 }
