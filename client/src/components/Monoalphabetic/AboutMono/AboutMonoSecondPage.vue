@@ -98,10 +98,10 @@
 
   .page-indicator {
     align-items: center;
-    background: var(--color-aboutthis-blob-background);
+    background: var(--color-aboutthis-page-indicator-background);
     border-radius: 2rem;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    color: white;
+    color: var(--color-aboutthis-page-indicator-text);
     display: flex;
     height: 2rem;
     justify-content: center;
@@ -120,11 +120,11 @@
   .help-blob,
   .wide-help-blob {
     align-items: center;
-    background: var(--color-aboutthis-blob-background);
-    border: 0.2rem solid var(--color-aboutthis-blob-border);
+    background: var(--color-aboutthis-second-page-blob-background);
+    border: 0.2rem solid var(--color-aboutthis-second-page-blob-border);
     border-radius: 2rem;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    color: white;
+    color: var(--color-aboutthis-second-page-blob-text);
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -148,7 +148,8 @@
   }
 
   h3.how-to-play-title {
-    border-bottom: 0.1rem solid white;
+    border-bottom: 0.1rem solid var(--color-aboutthis-second-page-blob-internal-border);
+    color: var(--color-aboutthis-second-page-blob-text);
     font-weight: 500;
     grid-column-end: 3;
     grid-column-start: 1;
@@ -160,13 +161,15 @@
   }
 
   div.how-to-play-text {
+    color: var(--color-aboutthis-second-page-blob-text);
     line-height: 1.5;
     padding-right: 2rem;
     white-space: nowrap;
   }
 
   div.how-to-play-diagram {
-    border-left: 0.1rem solid white;
+    border-left: 0.1rem solid var(--color-aboutthis-second-page-blob-internal-border);
+    color: var(--color-aboutthis-second-page-blob-text);
     display: grid;
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.3rem;
@@ -182,8 +185,8 @@
 
   span.diagram-element {
     align-items: center;
-    background-color: var(--base-darker-primary);
-    border: 0.15rem solid white;
+    background-color: var(--color-aboutthis-second-page-diagram-element-background);
+    border: 0.15rem solid var(--color-aboutthis-second-page-blob-internal-border);
     border-radius: 0.4rem;
     display: flex;
     font-weight: 500;
@@ -193,7 +196,7 @@
   }
 
   span.button-help-text {
-    border-bottom: 0.1rem solid white;
+    border-bottom: 0.1rem solid var(--color-aboutthis-second-page-blob-internal-border);
     overflow: hidden;
     padding-bottom: 1rem;
     word-wrap: anywhere;
@@ -203,7 +206,7 @@
   span.page-icon {
     align-items: center;
     border-radius: 50%;
-    color: var(--color-toolbar-button-text);
+    color: var(--color-aboutthis-second-page-blob-text);
     display: flex;
     justify-content: center;
     text-align: center;

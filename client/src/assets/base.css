@@ -133,6 +133,11 @@
     --color-aboutthis-first-page-example-default-letter-background: var(--base-darker-primary);
     --color-aboutthis-first-page-example-highlighted-letter-background: var(--base-darker-green);
     /*Monoalphabetic cipher: 'about this' component, second page*/
+    --color-aboutthis-second-page-blob-background: var(--base-dark-primary);
+    --color-aboutthis-second-page-blob-border: var(--base-dark-primary);
+    --color-aboutthis-second-page-blob-internal-border: var(--base-white);
+    --color-aboutthis-second-page-blob-text: var(--base-white);
+    --color-aboutthis-second-page-diagram-element-background: var(--base-darker-primary);
     /*Monoalphabetic cipher: text settings component*/
     --color-text-settings-checkbox-unchecked-background: var(--base-lighter-primary);
     --color-text-settings-checkbox-checked-background: var(--base-green);
