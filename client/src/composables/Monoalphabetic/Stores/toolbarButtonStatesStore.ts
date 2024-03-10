@@ -8,22 +8,22 @@ export const useToolbarButtonStatesStore = defineStore("toolbarButtonStates", ()
   const sessionStore = useSessionStore();
   const gameProgressStore = useGameProgressStore();
   const validateDecryptionButton = computed(() => {
-    return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
+    return { disabled: sessionStore.loadingNewText || sessionStore.sessionExpiredFlag || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
   });
   const requestHintButton = computed(() => {
-    return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed || !gameProgressStore.hintsLeft() }
+    return { disabled: sessionStore.loadingNewText || sessionStore.sessionExpiredFlag || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed || !gameProgressStore.hintsLeft() }
   });
   const resetUnconfirmedDecryptionButton = computed(() => {
-    return { disabled: gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
+    return { disabled: sessionStore.loadingNewText || gameProgressStore.isDecryptionSolved() || gameProgressStore.isSolutionRevealed }
   });
   const displaySolutionButton = computed(() => {
-    return { disabled: sessionStore.sessionExpiredFlag || gameProgressStore.isSolutionRevealed }
+    return { disabled: sessionStore.loadingNewText || sessionStore.sessionExpiredFlag || gameProgressStore.isSolutionRevealed }
   });
   const deployTextSettingsButton = computed(() => {
-    return { disabled: sessionStore.sessionExpiredFlag }
+    return { disabled: sessionStore.loadingNewText || sessionStore.sessionExpiredFlag }
   });
   const newTextButton = computed(() => {
-    return { disabled: sessionStore.loadingSolution }
+    return { disabled: sessionStore.loadingNewText || sessionStore.loadingSolution }
   });
 
   return { validateDecryptionButton, requestHintButton, resetUnconfirmedDecryptionButton, displaySolutionButton, deployTextSettingsButton, newTextButton };

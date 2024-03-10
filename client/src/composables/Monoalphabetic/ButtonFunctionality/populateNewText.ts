@@ -31,6 +31,8 @@ function displayNewText(newText: string, activeDifficultyOptions: { keepSpaces: 
     gameProgressStore.$reset();
     gameProgressStore.usedTextSettings = { ...activeDifficultyOptions }; // Know which settings were active from the start of the game session.
     gameProgressStore.sessionDuration.start = (new Date).getTime();
+    const sessionStore = useSessionStore();
+    sessionStore.loadingNewText = false;
   }, 3000);
 }
 
@@ -40,6 +42,8 @@ export async function populateNewText() {
 
   if (sessionStore.isSessionExpired())
     sessionStore.$reset();
+
+  sessionStore.loadingNewText = true;
 
   if (isSessionExpiredPopupDeployed())
     closeSessionExpiredPopup();
