@@ -23,14 +23,14 @@ function displayNewText(newText: string, activeDifficultyOptions: { keepSpaces: 
     textStore.encryptedText = newText;
     const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
     decipherGridDOMStatesStore.$reset();
-  }, 1500);
-  setTimeout(() => {
-    resetAnimationsOfElement(encryptedTextarea, "reveal-text");
-    resetAnimationsOfElement(decryptedTextarea, "reveal-text");
     const gameProgressStore = useGameProgressStore();
     gameProgressStore.$reset();
     gameProgressStore.usedTextSettings = { ...activeDifficultyOptions }; // Know which settings were active from the start of the game session.
     gameProgressStore.sessionDuration.start = (new Date).getTime();
+  }, 1500);
+  setTimeout(() => {
+    resetAnimationsOfElement(encryptedTextarea, "reveal-text");
+    resetAnimationsOfElement(decryptedTextarea, "reveal-text");
     const sessionStore = useSessionStore();
     sessionStore.loadingNewText = false;
   }, 3000);
