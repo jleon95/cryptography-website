@@ -28,29 +28,29 @@
       </div>
       <div class="button-help-blob">
         <span class="text-blob">
-          Usa este botón para empezar una nueva partida. Se mantendrán las opciones de formato del texto activas actualmente.
+          Usa este botón para mostrar el texto original sin encriptar. <b>Esto finalizará la partida</b>.
         </span>
-        <span class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
+        <span class="toolbar-icon material-symbols-outlined material-icons md-24">grading</span>
       </div>
     </div>
     <div class="button-help-row">
       <div class="button-help-blob">
         <span class="text-blob">
+          Usa este botón para empezar una nueva partida. Se mantendrán las opciones de formato del texto activas actualmente.
+        </span>
+        <span class="toolbar-icon material-symbols-outlined material-icons md-24">add</span>
+      </div>
+      <div class="button-help-blob">
+        <span class="text-blob">
           Usa este botón para cambiar las opciones de formato del texto (mantener espacios y/o signos de puntuación).
         </span>
-        <span class="toolbar-icon material-symbols-outlined material-icons md-24">settings</span>
+        <span class="page-icon material-symbols-outlined material-icons md-36">settings</span>
       </div>
       <div class="button-help-blob">
         <span class="text-blob">
           Usa este botón para desplegar la tabla de frecuencias de las letras en el idioma español.
         </span>
-        <span class="toolbar-icon material-symbols-outlined material-icons md-24">info</span>
-      </div>
-      <div class="button-help-blob">
-        <span class="text-blob">
-          Usa este botón para mostrar el texto original sin encriptar. <b>Esto finalizará la partida</b>.
-        </span>
-        <span class="toolbar-icon material-symbols-outlined material-icons md-24">grading</span>
+        <span class="page-icon material-symbols-outlined material-icons md-36">info</span>
       </div>
     </div>
   </div>
@@ -119,18 +119,36 @@
     word-wrap: anywhere;
   }
 
-  span.toolbar-icon {
+  span.toolbar-icon,
+  span.page-icon {
     align-items: center;
-    border: 0.3rem solid var(--color-toolbar-button-hover-border);
     border-radius: 50%;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.7);
     color: var(--color-toolbar-button-text);
     display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  span.toolbar-icon {
+    border: 0.3rem solid var(--color-toolbar-button-hover-border);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.7);
     font-weight: var(--toolbar-base-font-weight);
     height: 4rem;
-    justify-content: center;
     margin-top: 1rem;
-    text-align: center;
     width: 4rem;
+  }
+
+  span.page-icon {
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.6), 0 4px 15px 0 rgba(0, 0, 0, 0.6);
+    margin-top: 2rem;
+    padding: 0.5rem;
+  }
+
+  .material-icons.md-24 {
+    font-size: 24px;
+  }
+
+  .material-icons.md-36 {
+    font-size: 24px;
   }
 </style>
