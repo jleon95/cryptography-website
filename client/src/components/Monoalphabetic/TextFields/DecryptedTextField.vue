@@ -123,13 +123,13 @@
     transform: rotate(360deg);
   }
 
-  .reveal-solution {
+  .reveal-text {
     animation-duration: 3s;
-    animation-name: reveal-solution;
+    animation-name: reveal-text;
     animation-timing-function: ease;
   }
 
-  @keyframes reveal-solution {
+  @keyframes reveal-text {
     0% {
       color: var(--color-mono-textarea-text);
       transform: scale(1,1);

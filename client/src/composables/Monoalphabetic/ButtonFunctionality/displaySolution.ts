@@ -4,17 +4,17 @@ import { useTextStore } from '../Stores/textStore';
 import { useDecipherGridDOMStatesStore, CellState } from '../Stores/decipherGridDOMStatesStore';
 import { callAPI, Action } from '../apiCalls';
 import type { RevealTextRequest, RevealTextResponse } from '../apiCalls';
-import { resetAnimationsOfElement } from '../../../composables/Monoalphabetic/utils';
+import { resetAnimationsOfElement } from '../utils';
 
 function displaySolutionInTextarea(solution: string) {
   const decryptedTextarea: HTMLElement = document.getElementById("decrypted-textarea")!;
-  resetAnimationsOfElement(decryptedTextarea, "reveal-solution", "reveal-solution");
+  resetAnimationsOfElement(decryptedTextarea, "reveal-text", "reveal-text");
   setTimeout(() => {
     const textStore = useTextStore();
     textStore.originalText = solution;
   }, 1500);
   setTimeout(() => {
-    resetAnimationsOfElement(decryptedTextarea, "reveal-solution");
+    resetAnimationsOfElement(decryptedTextarea, "reveal-text");
     const sessionStore = useSessionStore();
     sessionStore.loadingSolution = false;
   }, 3000);
