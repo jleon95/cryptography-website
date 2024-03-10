@@ -1,8 +1,8 @@
 ﻿<script setup lang="ts">
   import contenteditable from 'vue-contenteditable';
-  import { processKeyDown, processKeyUp } from '../../composables/Monoalphabetic/ButtonFunctionality/updateDecryptedText';
-  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
-  import { useDecipherGridDOMStatesStore } from '../../composables/Monoalphabetic/Stores/decipherGridDOMStatesStore';
+  import { processKeyDown, processKeyUp } from '../../../composables/Monoalphabetic/ButtonFunctionality/updateDecryptedText';
+  import { useTextStore } from '../../../composables/Monoalphabetic/Stores/textStore';
+  import { useDecipherGridDOMStatesStore } from '../../../composables/Monoalphabetic/Stores/decipherGridDOMStatesStore';
 
   const textStore = useTextStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();

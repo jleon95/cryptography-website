@@ -2,9 +2,9 @@
   import NavBar from './Monoalphabetic/NavBar.vue';
   import EncryptedTextField from './Monoalphabetic/EncryptedTextField.vue';
   import DecryptedTextField from './Monoalphabetic/DecryptedTextField.vue';
-  import TextLetterGrid from './Monoalphabetic/TextLetterGrid.vue';
-  import DecipherLetterGrid from './Monoalphabetic/DecipherLetterGrid.vue';
-  import SpanishLetterGrid from './Monoalphabetic/SpanishLetterGrid.vue';
+  import TextLetterGrid from './Monoalphabetic/LetterGrids/TextLetterGrid.vue';
+  import DecipherLetterGrid from './Monoalphabetic/LetterGrids/DecipherLetterGrid.vue';
+  import SpanishLetterGrid from './Monoalphabetic/LetterGrids/SpanishLetterGrid.vue';
   import ToolBar from './Monoalphabetic/ToolBar.vue';
   import AboutMono from './Monoalphabetic/AboutMono/AboutMono.vue';
   import EndgamePopup from './Monoalphabetic/EndgamePopup/EndgamePopup.vue';

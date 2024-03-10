@@ -1,5 +1,5 @@
 ﻿<script setup lang="ts">
-  import { useTextStore, letters } from '../../composables/Monoalphabetic/Stores/textStore';
+  import { useTextStore, letters } from '../../../composables/Monoalphabetic/Stores/textStore';
 
   const store = useTextStore();
 
