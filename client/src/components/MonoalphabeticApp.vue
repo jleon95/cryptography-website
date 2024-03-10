@@ -1,11 +1,11 @@
 ﻿<script setup lang="ts">
-  import NavBar from './Monoalphabetic/NavBar.vue';
+  import NavBar from './Monoalphabetic/Bars/NavBar.vue';
+  import ToolBar from './Monoalphabetic/Bars/ToolBar.vue';
   import EncryptedTextField from './Monoalphabetic/TextFields/EncryptedTextField.vue';
   import DecryptedTextField from './Monoalphabetic/TextFields/DecryptedTextField.vue';
   import TextLetterGrid from './Monoalphabetic/LetterGrids/TextLetterGrid.vue';
   import DecipherLetterGrid from './Monoalphabetic/LetterGrids/DecipherLetterGrid.vue';
   import SpanishLetterGrid from './Monoalphabetic/LetterGrids/SpanishLetterGrid.vue';
-  import ToolBar from './Monoalphabetic/ToolBar.vue';
   import AboutMono from './Monoalphabetic/AboutMono/AboutMono.vue';
   import EndgamePopup from './Monoalphabetic/EndgamePopup/EndgamePopup.vue';
   import TextSettings from './Monoalphabetic/TextSettings.vue';

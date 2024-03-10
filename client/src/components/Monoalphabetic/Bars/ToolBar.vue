@@ -1,12 +1,12 @@
 ﻿<script setup lang="ts">
-  import { populateNewText } from '../../composables/Monoalphabetic/ButtonFunctionality/populateNewText';
-  import { displaySolution } from '../../composables/Monoalphabetic/ButtonFunctionality/displaySolution';
-  import { validateDecryption } from '../../composables/Monoalphabetic/ButtonFunctionality/validateDecryption';
-  import { requestHint } from '../../composables/Monoalphabetic/ButtonFunctionality/requestHint';
-  import { deployEndGameScreen } from '../../composables/Monoalphabetic/deployEndgamePopup';
-  import { useTextStore } from '../../composables/Monoalphabetic/Stores/textStore';
-  import { useToolbarButtonStatesStore } from '../../composables/Monoalphabetic/Stores/toolbarButtonStatesStore'; 
-  import { useDecipherGridDOMStatesStore, CellState } from '../../composables/Monoalphabetic/Stores/decipherGridDOMStatesStore';
+  import { populateNewText } from '../../../composables/Monoalphabetic/ButtonFunctionality/populateNewText';
+  import { displaySolution } from '../../../composables/Monoalphabetic/ButtonFunctionality/displaySolution';
+  import { validateDecryption } from '../../../composables/Monoalphabetic/ButtonFunctionality/validateDecryption';
+  import { requestHint } from '../../../composables/Monoalphabetic/ButtonFunctionality/requestHint';
+  import { deployEndGameScreen } from '../../../composables/Monoalphabetic/deployEndgamePopup';
+  import { useTextStore } from '../../../composables/Monoalphabetic/Stores/textStore';
+  import { useToolbarButtonStatesStore } from '../../../composables/Monoalphabetic/Stores/toolbarButtonStatesStore'; 
+  import { useDecipherGridDOMStatesStore, CellState } from '../../../composables/Monoalphabetic/Stores/decipherGridDOMStatesStore';
 
   const textStore = useTextStore();
   const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();
