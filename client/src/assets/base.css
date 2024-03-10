@@ -128,6 +128,7 @@
     /*Monoalphabetic cipher: 'about this' component, first page*/
     --color-aboutthis-first-page-blob-background: var(--base-dark-primary);
     --color-aboutthis-first-page-blob-border: var(--base-dark-primary);
+    --color-aboutthis-first-page-blob-internal-border: var(--base-white);
     --color-aboutthis-first-page-blob-text: var(--base-white);
     --color-aboutthis-first-page-example-default-letter-background: var(--base-darker-primary);
     --color-aboutthis-first-page-example-highlighted-letter-background: var(--base-darker-green);

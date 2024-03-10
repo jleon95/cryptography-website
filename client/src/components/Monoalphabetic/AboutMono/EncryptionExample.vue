@@ -49,28 +49,29 @@
   }
 
   .cipher-example-grid-item.letter {
-    border: 0.2rem solid white;
+    border: 0.2rem solid var(--color-aboutthis-first-page-blob-internal-border);
     border-radius: 0.5rem;
+    color: var(--color-aboutthis-first-page-blob-text);
     height: 3rem;
     width: 3rem;
   }
 
   .letter.original {
-    background-color: var(--color-aboutthis-example-highlighted-letter-background);
+    background-color: var(--color-aboutthis-first-page-example-highlighted-letter-background);
     cursor: pointer;
   }
 
   .letter.encrypted {
-    background-color: var(--color-aboutthis-example-default-letter-background);
+    background-color: var(--color-aboutthis-first-page-example-default-letter-background);
   }
 
   .cipher-example-grid-item.arrow {
-    color: white;
+    color: var(--color-aboutthis-first-page-blob-text);
     margin: 0.2rem 0;
   }
 
   #cipher-example-text {
-    border-top: 0.1rem solid white;
+    border-top: 0.1rem solid var(--color-aboutthis-first-page-blob-internal-border);
     display: flex;
     justify-content: center;
     margin: auto;
@@ -80,8 +81,8 @@
   }
 
   #cipher-example-text .cipher-example-letter, #cipher-example-text .cipher-example-comma {
-    background-color: var(--color-aboutthis-example-default-letter-background);
-    border: 0.2rem solid white;
+    background-color: var(--color-aboutthis-first-page-example-default-letter-background);
+    border: 0.2rem solid var(--color-aboutthis-first-page-blob-internal-border);
     border-radius: 0.5rem;
     height: 3rem;
     margin: 0.15rem;
@@ -109,10 +110,10 @@
 
   @keyframes encrypt-letter {
     0% { transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg); }
-    75% { background: var(--color-aboutthis-example-highlighted-letter-background); }
+    75% { background: var(--color-aboutthis-first-page-example-highlighted-letter-background); }
     100% {
       transform: rotateZ(360deg) rotateX(360deg) rotateY(360deg);
-      background: var(--color-aboutthis-example-highlighted-letter-background);
+      background: var(--color-aboutthis-first-page-example-highlighted-letter-background);
     }
   }
 
@@ -120,10 +121,10 @@
     animation: gradient-green-to-blue 0.5s linear;
     animation-direction: normal;
     animation-fill-mode: forwards;
-    background: linear-gradient(var(--color-aboutthis-example-default-letter-background) 0%, 
-                                var(--color-aboutthis-example-default-letter-background) 50%, 
-                                var(--color-aboutthis-example-highlighted-letter-background) 50%, 
-                                var(--color-aboutthis-example-highlighted-letter-background) 100%);
+    background: linear-gradient(var(--color-aboutthis-first-page-example-default-letter-background) 0%, 
+                                var(--color-aboutthis-first-page-example-default-letter-background) 50%, 
+                                var(--color-aboutthis-first-page-example-highlighted-letter-background) 50%, 
+                                var(--color-aboutthis-first-page-example-highlighted-letter-background) 100%);
     background-position: 0% 0%;
     background-size: 100% 200%;
     cursor: default;
@@ -134,10 +135,10 @@
     animation-delay: 0.5s;
     animation-direction: normal;
     animation-fill-mode: forwards;
-    background: linear-gradient(var(--color-aboutthis-example-highlighted-letter-background) 0%, 
-                                var(--color-aboutthis-example-highlighted-letter-background) 50%, 
-                                var(--color-aboutthis-example-default-letter-background) 50%, 
-                                var(--color-aboutthis-example-default-letter-background) 100%);
+    background: linear-gradient(var(--color-aboutthis-first-page-example-highlighted-letter-background) 0%, 
+                                var(--color-aboutthis-first-page-example-highlighted-letter-background) 50%, 
+                                var(--color-aboutthis-first-page-example-default-letter-background) 50%, 
+                                var(--color-aboutthis-first-page-example-default-letter-background) 100%);
     background-position: 0% 100%;
     background-size: 100% 200%;
   }
