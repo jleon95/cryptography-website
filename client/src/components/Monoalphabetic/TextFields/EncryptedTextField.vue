@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <textarea readonly>{{ textStore.encryptedText }}</textarea>
+    <textarea id="encrypted-textarea" readonly>{{ textStore.encryptedText }}</textarea>
   </div>
 </template>
 
@@ -155,6 +155,45 @@
     padding: 0.5rem;
     resize: none;
     transition: all ease 0.2s;
+  }
+
+  .reveal-text {
+    animation-duration: 3s;
+    animation-name: reveal-text;
+    animation-timing-function: ease;
+  }
+
+  @keyframes reveal-text {
+    0% {
+      color: var(--color-mono-textarea-text);
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    20% {
+      color: white;
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    25% {
+      color: white;
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    50% {
+      color: white;
+      transform: scale(1,0);
+      transform-origin: 50% top;
+    }
+    75% {
+      color: white;
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
+    100% {
+      color: var(--color-mono-textarea-text);
+      transform: scale(1,1);
+      transform-origin: 50% top;
+    }
   }
 
   .material-symbols-outlined {
