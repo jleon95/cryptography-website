@@ -39,6 +39,8 @@
     --color-mainpage-button-tooltip-text: var(--base-very-light-primary);
     --color-mainpage-button-tooltip-background: var(--base-black-mute);
     --color-mainpage-button-tooltip-border: var(--base-black-mute);
+    --color-mainpage-aboutthis-background: var(--base-black-mute);
+    --color-mainpage-aboutthis-text: var(--base-white);
     /*Main page: footer*/
     --color-footer-background: var(--base-black-mute);
     --color-footer-github-card-icon-background: var(--base-black); /*It gets inverted*/

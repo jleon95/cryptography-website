@@ -13,14 +13,14 @@
 <style scoped>
   .about-this-webpage {
     align-items: center;
-    background-color: var(--base-black-mute);
+    background-color: var(--color-mainpage-aboutthis-background);
     border-radius: 0.7rem;
-    color: white;
+    color: var(--color-mainpage-aboutthis-text);
     display: flex;
     justify-content: center;
     left: 50%;
     max-width: 33%;
-    padding: 1rem;
+    padding: 1rem 1.3rem;
     position: absolute;
     text-align: justify;
     top: 150%;
