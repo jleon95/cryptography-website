@@ -13,11 +13,17 @@
     <div class="decrypted-text-header-info">
       <p class="header-title">Texto encriptado</p>
       <div class="info-group">
-        <div @click="deployAboutMono" class="icon material-symbols-outlined material-icons help">
-          question_mark
+        <div class="tooltip">
+          <span @click="deployAboutMono" class="icon material-symbols-outlined material-icons help">
+            question_mark
+          </span>
+          <span class="tooltiptext">Ayuda</span>
         </div>
-        <div :class="toolbarButtonStatesStore['deployTextSettingsButton']" @click="deployTextSettings" class="icon material-symbols-outlined material-icons not-help">
-          settings
+        <div class="tooltip">
+          <span :class="toolbarButtonStatesStore['deployTextSettingsButton']" @click="deployTextSettings" class="icon material-symbols-outlined material-icons text-settings">
+            settings
+          </span>
+          <span class="tooltiptext">Opciones del texto</span>
         </div>
       </div>
     </div>
@@ -60,8 +66,55 @@
     margin-bottom: 0.2rem;
   }
 
-  .info-group .icon:last-child {
+  .info-group .tooltip:last-child {
     margin-left: 0.4rem;
+  }
+
+  .tooltip {
+    position: relative;
+  }
+
+  .tooltiptext {
+    background-color: transparent;
+    border-radius: 0.5rem;
+    color: transparent;
+    display: inline-block;
+    left: 50%;
+    padding: 0.5rem 1rem;
+    position: absolute;
+    text-align: center;
+    top: -120%;
+    transform: translate(-50%, 0);
+    transition: background-color ease 0.6s, color ease 0.6s;
+    transition-delay: 1s;
+    visibility: hidden;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .tooltiptext::after {
+    border-color: transparent transparent transparent transparent;
+    border-style: solid;
+    border-width: 0.4rem;
+    content: "";
+    left: 50%;
+    position: absolute;
+    top: 100%;
+    transform: translate(-50%, 0%);
+    transition: border-color ease 0.6s;
+    transition-delay: 1s;
+  }
+
+  .tooltip:hover .tooltiptext {
+    background-color: var(--color-mainpage-button-tooltip-background);
+    border-color: var(--color-mainpage-button-tooltip-border) transparent transparent transparent;
+    color: var(--color-mainpage-button-tooltip-text);
+    visibility: visible;
+  }
+
+  .tooltip:hover .tooltiptext::after {
+    border-color: var(--color-toolbar-button-tooltip-border) transparent transparent transparent;
+    visibility: visible;
   }
 
   .icon {
@@ -82,12 +135,12 @@
     transform: rotate(360deg);
   }
 
-  .icon.not-help:hover {
+  .icon.text-settings:hover {
     background-color: var(--color-mono-encrypted-textarea-icon-hover-background);
     transform: rotate(360deg);
   }
 
-  .icon.not-help.disabled {
+  .icon.text-settings.disabled {
     background-color: var(--color-disabled-button);
     pointer-events: none;
   }
