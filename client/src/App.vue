@@ -20,7 +20,7 @@
       <div v-if="route.path == '/'">
         <footer class="footer">
           <p>By</p>
-          <a href="https://github.com/jleon95">
+          <a target="_blank" href="https://github.com/jleon95/cryptography-website">
             <i class="fa">&#xf09b;</i> <p>@jleon95</p>
           </a>
         </footer>
