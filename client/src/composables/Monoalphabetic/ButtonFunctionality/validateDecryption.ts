@@ -34,6 +34,7 @@ export async function validateDecryption() {
     if ("sessionData" in response) {
 
       sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
+      sessionStore.startSessionExpirationTimer();
 
       // Reverse the letter mapping here too.
       for (const letter in response.validatedLetterMapping) {

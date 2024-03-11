@@ -70,6 +70,7 @@ export async function requestHint() {
 
     if ("sessionData" in response) {
       sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
+      sessionStore.startSessionExpirationTimer();
       gameProgressStore.hintManagement.usedHints++;
       textStore.assignedLetters[chosenLetter] = response.correctLetter.toLowerCase();
       decipherGridDOMStatesStore.updateCellState(chosenLetter, CellState.HINT);

@@ -56,6 +56,7 @@ async function updateTextFromNewSettings() {
     const response: UpdateTextResponse = await callAPI(Action.UPDATE_TEXT, updateTextRequestBody) as UpdateTextResponse;
     if ("sessionData" in response) {
       sessionStore.setExpirationDate(new Date(response.sessionData!.expirationDate));
+      sessionStore.startSessionExpirationTimer();
       textStore.encryptedText = response.encryptedText;
     }
     else // If the server responds with empty sessionData, the update text request was rejected.
