@@ -1,5 +1,5 @@
-﻿import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+﻿import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 async function main() {
   await prisma.originalText.upsert({
@@ -25,15 +25,26 @@ async function main() {
       id: 1,
       content: 'Cuando el pirata Francis Drake asaltó a Riohacha, en el siglo XVI, la bisabuela de Úrsula Iguarán se asustó tanto con el toque de rebato y el estampido de los cañones, que perdió el control de los nervios y se sentó en un fogón encendido. Las quemaduras la dejaron convertida en una esposa inútil para toda la vida. No podía sentarse sino de medio lado, acomodada en cojines, y algo extraño debió quedarle en el modo de andar, porque nunca volvió a caminar en público. Renunció a toda clase de hábitos sociales obsesionada por la idea de que su cuerpo despedía un olor a chamusquina. El alba la sorprendía en el patio sin atreverse a dormir, porque soñaba que los ingleses con sus feroces perros de asalto se metían por la ventana del dormitorio y la sometían a vergonzosos tormentos con hierros al rojo vivo. Su marido, un comerciante aragonés con quien tenía dos hijos, se gastó media tienda en medicinas y entretenimientos buscando la manera de aliviar sus terrores.'
     }
-  })
+  });
+  await prisma.originalText.upsert({
+    where: {
+      id: 2
+    },
+    update: {
+      content: 'Había un muro. No parecía importante. Era un muro de piedras sin pulir, unidas por una tosca argamasa. Un adulto podía mirar por encima de él, y hasta un niño podía escalarlo. Allí donde atravesaba la carretera, en lugar de tener un portón degeneraba en mera geometría, una línea, una idea de frontera. Pero la idea era real. Era importante. A lo largo de siete generaciones no había habido en el mundo nada más importante que aquel muro. Al igual que todos los muros era ambiguo, bifacético. Lo que había dentro o fuera de él dependía del lado en que uno se encontraba.'
+    },
+    create: {
+      id: 2,
+      content: 'Había un muro. No parecía importante. Era un muro de piedras sin pulir, unidas por una tosca argamasa. Un adulto podía mirar por encima de él, y hasta un niño podía escalarlo. Allí donde atravesaba la carretera, en lugar de tener un portón degeneraba en mera geometría, una línea, una idea de frontera. Pero la idea era real. Era importante. A lo largo de siete generaciones no había habido en el mundo nada más importante que aquel muro. Al igual que todos los muros era ambiguo, bifacético. Lo que había dentro o fuera de él dependía del lado en que uno se encontraba.'
+    }
+  });
 }
 main()
   .then(async () => {
-    console.log("Done seeding")
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

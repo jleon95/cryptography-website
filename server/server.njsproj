@@ -36,11 +36,12 @@
   <ItemGroup>
     <None Include="app.ts" />
     <Content Include=".dockerignore" />
-    <Content Include=".env" />
+    <Content Include=".env.local" />
     <Content Include=".env.development" />
+    <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
     <Content Include="Dockerfile" />
-    <Content Include="docker_startup.sh" />
+    <Content Include="docker_startup\docker_startup.sh" />
     <Content Include="src\prisma\migrations\20240210213819_monoalphabetic\migration.sql" />
     <Content Include="src\prisma\migrations\migration_lock.toml" />
     <Content Include="src\prisma\schema.prisma" />
@@ -48,6 +49,7 @@
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="docker_startup\" />
     <Folder Include="src\" />
     <Folder Include="src\prisma\" />
     <Folder Include="src\prisma\migrations\" />
@@ -55,6 +57,7 @@
     <Folder Include="src\routes\" />
     <Folder Include="src\routes\monoalphabetic\" />
     <Folder Include="src\routes\monoalphabetic\hint\" />
+    <Folder Include="src\routes\monoalphabetic\scheduled_jobs\" />
     <Folder Include="src\routes\monoalphabetic\reveal_text\" />
     <Folder Include="src\routes\monoalphabetic\update_text\" />
     <Folder Include="src\routes\monoalphabetic\validation\" />
@@ -69,6 +72,7 @@
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.service.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\reveal_text\reveal_text.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\reveal_text\reveal_text.service.ts" />
+    <TypeScriptCompile Include="src\routes\monoalphabetic\scheduled_jobs\delete_expired_sessions.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\service.models.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\hint\hint.controller.ts" />
     <TypeScriptCompile Include="src\routes\monoalphabetic\logic.models.ts" />
