@@ -39,19 +39,22 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   function startSessionExpirationTimer() {
-    if (sessionExpirationTimer.value !== null)
-      clearTimeout(sessionExpirationTimer.value);
+    stopSessionExpirationTimer();
     sessionExpirationTimer.value = setTimeout(() => {
       sessionExpiredFlag.value = true;
       deploySessionExpiredPopup();
     }, expirationDate.value - (new Date()).getTime());
   }
 
+  function stopSessionExpirationTimer() {
+    if (sessionExpirationTimer.value !== null)
+      clearTimeout(sessionExpirationTimer.value);
+  }
+
   function $reset() {
     sessionId.value = defaultState.sessionId;
     expirationDate.value = defaultState.expirationDate;
-    if (sessionExpirationTimer !== null)
-      clearTimeout(sessionExpirationTimer.value);
+    stopSessionExpirationTimer();
     sessionExpiredFlag.value = false;
     activeTextSettings.keepSpaces = defaultState.activeTextSettings.keepSpaces;
     activeTextSettings.keepPunctuation = defaultState.activeTextSettings.keepPunctuation;
@@ -60,7 +63,7 @@ export const useSessionStore = defineStore('session', () => {
 
   return {
     sessionId, sessionExpirationTimer, expirationDate, sessionExpiredFlag, requestingHint, loadingSolution, loadingNewText, activeTextSettings,
-    setExpirationDate, getExpirationDate, isSessionExpired, startSessionExpirationTimer, $reset
+    setExpirationDate, getExpirationDate, isSessionExpired, startSessionExpirationTimer, stopSessionExpirationTimer, $reset
   };
 
 });

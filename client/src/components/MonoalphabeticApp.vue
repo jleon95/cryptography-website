@@ -13,7 +13,7 @@
   import { useSessionStore } from '../composables/Monoalphabetic/Stores/sessionStore';
   import { populateNewText, isSessionExpired } from '../composables/Monoalphabetic/ButtonFunctionality/populateNewText';
   import { isTherePreviousActiveSession, subscribeToStores } from '../composables/Monoalphabetic/Stores/storeSubscriptions';
-  import { onMounted } from 'vue';
+  import { onMounted, onUnmounted } from 'vue';
 
   onMounted(async () => {
     
@@ -26,6 +26,11 @@
       const sessionStore = useSessionStore();
       sessionStore.startSessionExpirationTimer();
     }
+  });
+
+  onUnmounted(async () => {
+    const sessionStore = useSessionStore();
+    sessionStore.stopSessionExpirationTimer();
   });
 </script>
 
