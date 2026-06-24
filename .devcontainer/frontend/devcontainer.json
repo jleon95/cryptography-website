@@ -1,0 +1,32 @@
+{
+  "name": "Vue Frontend TS Syntax Devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:4-20-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "always"
+        },
+        "js/ts.validate.enabled": true
+      }
+    }
+  },
+  "onCreateCommand": "npm install -g typescript",
+  "postCreateCommand": "cd /workspace/client && npm install",
+  "remoteUser": "node",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace/client"
+}
