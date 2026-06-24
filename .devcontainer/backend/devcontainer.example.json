@@ -1,5 +1,5 @@
 {
-  "name": "Node/Express TS Syntax & Linting",
+  "name": "Node/Express TS Syntax & Linting (example)",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:4-20-bullseye",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
@@ -27,6 +27,12 @@
   "onCreateCommand": "npm install -g typescript ts-node",
   "postCreateCommand": "cd /workspace/server && npm install",
   "remoteUser": "node",
+  "mounts": [
+    "source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh/<YOUR_PRIVATE_KEY_FILE>,target=/home/node/.ssh/<YOUR_PRIVATE_KEY_FILE>,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh/<YOUR_PUBLIC_KEY_FILE>,target=/home/node/.ssh/<YOUR_PUBLIC_KEY_FILE>,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh/<YOUR_SSH_CONFIG_FILE>,target=/home/node/.ssh/<YOUR_SSH_CONFIG_FILE>,type=bind,consistency=cached"
+  ],
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace/server"
 }
