@@ -1,15 +1,20 @@
 {
-  "name": "Vue Frontend TS Syntax Devcontainer (example)",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:4-20-bullseye",
+  "name": "CryptographyWeb Full Stack Dev Container (example)",
+  "dockerComposeFile": "docker-compose-dev.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/cryptography-website",
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
   "customizations": {
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
-        "ms-vscode.vscode-typescript-next"
+        "ms-vscode.vscode-typescript-next",
+        "Prisma.prisma",
+        "Vue.volar"
       ],
       "settings": {
         "editor.formatOnSave": true,
@@ -24,15 +29,14 @@
       }
     }
   },
-  "onCreateCommand": "npm install -g typescript",
-  "postCreateCommand": "cd /workspace/client && npm install",
+  "onCreateCommand": "npm install -g typescript ts-node",
+  "postCreateCommand": "cd /workspace/client && npm install && cd /workspace/server && npm install",
   "remoteUser": "node",
+  "forwardPorts": [5173],
   "mounts": [
     "source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.ssh/<YOUR_PRIVATE_KEY_FILE>,target=/home/node/.ssh/<YOUR_PRIVATE_KEY_FILE>,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.ssh/<YOUR_PUBLIC_KEY_FILE>,target=/home/node/.ssh/<YOUR_PUBLIC_KEY_FILE>,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.ssh/<YOUR_SSH_CONFIG_FILE>,target=/home/node/.ssh/<YOUR_SSH_CONFIG_FILE>,type=bind,consistency=cached"
-  ],
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
-  "workspaceFolder": "/workspace/client"
+  ]
 }
