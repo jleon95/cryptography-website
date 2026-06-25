@@ -1,0 +1,85 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Frontend: Dev",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "dev"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/client"
+      },
+      "isBackground": true,
+      // Custom problem matcher keeps the task running and detects when the frontend server is ready.
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*VITE.*ready in.*",
+          "endsPattern": "^(?!.)"
+        }
+      }
+    },
+    {
+      "label": "Backend: Dev",
+      "type": "shell",
+      "command": "npm",
+      "args": [
+        "run",
+        "dev"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      },
+      "isBackground": true,
+      // Problem matcher watches the output for the server listening message to know when startup is complete.
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*listening.*",
+          "endsPattern": "^(?!.)"
+        }
+      }
+    },
+    {
+      "label": "Dev: Full Stack (Frontend + Backend)",
+      "dependsOn": [
+        "Frontend: Dev",
+        "Backend: Dev"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "client",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build - client",
+      "detail": "run-p type-check \"build-only {@}\" --"
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "server",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build - server",
+      "detail": "tsc --build"
+    }
+  ]
+}
