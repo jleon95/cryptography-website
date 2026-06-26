@@ -17,7 +17,7 @@ const app = express();
 app.use(cors({ origin: process.env.FRONTEND_ADDRESS, methods: ["GET", "POST"], credentials: true }));
 
 // Custom CORS headers for cross-origin requests with credentials
-app.use(function (req: Request, res: Response, next: NextFunction) {
+app.use(function (_req: Request, res: Response, next: NextFunction) {
   res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_ADDRESS as string);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -37,7 +37,7 @@ app.use(ping);
 
 // ===== 404 Handler =====
 // Catch unmatched requests and forward to error handler
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((_req: Request, _res: Response, next: NextFunction) => {
     const err = new Error('Not Found') as HttpError;
     err.status = 404;
     next(err);
@@ -46,14 +46,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // ===== Error Handlers =====
 // Development: include full error details with stack trace
 if (app.get('env') === 'development') {
-    app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+    app.use((err: HttpError, _req: Request, res: Response, _next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
         let body = { message: err.message, error: err };
         res.status(err.status || 500).send(body);
     });
 }
 
 // Production: hide error details from client
-app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+app.use((err: HttpError, _req: Request, res: Response, _next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
     let body = { message: err.message, error: {} };
     res.status(err.status || 500).send(body);
 });
