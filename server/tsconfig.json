@@ -8,6 +8,12 @@
     "skipLibCheck": true,
     "exactOptionalPropertyTypes": true
   },
+  "include": [
+    "app.ts",
+    "logger.ts",
+    "src/**/*.ts",
+    "environment.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
