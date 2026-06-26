@@ -6,24 +6,18 @@ const logger = require('../../../../logger');
 
 export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
 
-  const ids: {id: number}[] = await prisma.originalText.findMany({
-    select: {
-      id: true,
-      content: false,
-    },
+  const totalOriginalTexts: number = await prisma.originalText.count();
+  if (totalOriginalTexts === 0) {
+    const childLogger = logger.child({ totalOriginalTexts });
+    childLogger.error("Error when attempting to choose new text (no texts found in database).");
+  }
+  const randomIndex = Math.floor(Math.random() * totalOriginalTexts) + 1;
+  const [randomTextRecord] = await prisma.originalText.findMany({
+    skip: randomIndex - 1,
+    take: 1,
   });
-  const chosenId = ids[Math.floor(Math.random() * ids.length)].id;
-  const chosenText: string = (await prisma.originalText.findUnique({
-    where: {
-      id: chosenId
-    },
-    select: {
-      id: false,
-      content: true
-    },
-  })).content;
 
-  return { text: chosenText, id: chosenId };
+  return { text: randomTextRecord.content, id: randomTextRecord.id };
 }
 
 export async function insertMonoalphabeticSession(sessionId: string, expirationDate: Date, letterMapping: LetterMapping, originalTextId: number, maxHints: number): Promise<void> {
