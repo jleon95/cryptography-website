@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { AddressInfo } from "net";
 import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
 import ping from './src/routes/ping.controller';
