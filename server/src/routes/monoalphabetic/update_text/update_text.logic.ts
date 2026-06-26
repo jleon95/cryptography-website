@@ -2,8 +2,6 @@ import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.mo
 
 function encryptTextFromExistingMapping(text: string, existingMapping: LetterMapping): string {
 
-  let letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-
   let newText: Array<string> = text.split("");
 
   for (let i = 0; i < text.length; i++)
