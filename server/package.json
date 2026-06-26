@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "dev": "nodemon --watch src/ --ext ts --exec ts-node app.ts",
+    "dev": "nodemon --watch src/ --ext ts --exec tsx app.ts",
     "start": "node app",
     "db:init": "npx prisma migrate deploy --schema=./src/prisma/schema.prisma && npx prisma db seed",
     "test": "vitest"
@@ -29,8 +29,7 @@
     "express": "^4.18.2",
     "node-schedule": "^2.1.1",
     "pino": "^8.18.0",
-    "prisma": "^5.9.1",
-    "ts-node": "^10.9.2"
+    "prisma": "^5.9.1"
   },
   "devDependencies": {
     "@types/debug": "0.0.30",
@@ -43,6 +42,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.56.0",
     "nodemon": "^3.1.14",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9"
   },
