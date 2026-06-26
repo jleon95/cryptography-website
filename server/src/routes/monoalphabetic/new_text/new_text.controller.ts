@@ -14,7 +14,7 @@ async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {
   const chosenTextInfo: ChosenOriginalTextInfo = await chooseNewText();
   const encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, requestBody.difficultyOptions);
   const newSession = { sessionId: crypto.randomUUID(), expirationDate: createExpirationDate() };
-  await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +process.env["MAX_HINTS"]);
+  await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +(process.env["MAX_HINTS"] as string));
   const responseBody: NewTextResponse = {
     sessionData: newSession,
     encryptedText: encryptedTextInfo.text
