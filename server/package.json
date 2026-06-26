@@ -13,6 +13,7 @@
     "clean": "tsc --build --clean",
     "dev": "nodemon --watch src/ --ext ts --exec ts-node app.ts",
     "start": "node app",
+    "db:init": "npx prisma migrate deploy --schema=./src/prisma/schema.prisma && npx prisma db seed",
     "test": "vitest"
   },
   "description": "server",
