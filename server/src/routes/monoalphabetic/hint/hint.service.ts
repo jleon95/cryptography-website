@@ -56,23 +56,23 @@ export async function touchMonoalphabeticSession(sessionId: string, expirationDa
 }
 
 export async function getRemainingHints(sessionId: string): Promise<number> {
-  try {
-    const result = await prisma.monoalphabeticSession.findUnique({
-      where: {
-        sessionId: sessionId
-      },
-      select: {
-        maxHints: true,
-        hintsUsed: true
-      }
-    });
-    return result.maxHints - result.hintsUsed;
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      childLogger.error("Error when attempting to access existing MonoalphabeticSession entry.");
+  const result = await prisma.monoalphabeticSession.findUnique({
+    where: {
+      sessionId: sessionId
+    },
+    select: {
+      maxHints: true,
+      hintsUsed: true
     }
+  });
+
+  if (!result) {
+    const childLogger = logger.child({ sessionId });
+    childLogger.warn("MonoalphabeticSession not found when attempting to get remaining hints.");
+    throw new Error(`MonoalphabeticSession not found for sessionId=${sessionId}`);
   }
+
+  return result.maxHints - result.hintsUsed;
 }
 
 export async function consumeHint(sessionId: string): Promise<void> {
