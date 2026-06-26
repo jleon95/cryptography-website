@@ -4,24 +4,40 @@ const logger = require('../../../../logger');
 
 export async function getOriginalText(sessionId: string): Promise<string> {
 
-  const monoalphabeticSessionInfo = (await prisma.monoalphabeticSession.findUnique({
-    where: {
-      sessionId: sessionId
-    },
-    select: {
-      originalTextId: true,
-      encryptionMapping: true
-    }
-  }));
+  const childLogger = logger.child({ sessionId });
+  childLogger.trace("Retrieving original text for reveal request.");
 
-  return (await prisma.originalText.findUnique({
-    where: {
-      id: monoalphabeticSessionInfo.originalTextId
-    },
-    select: {
-      content: true
+  return await prisma.$transaction(async (tx) => {
+    const monoalphabeticSessionInfo = await tx.monoalphabeticSession.findUnique({
+      where: {
+        sessionId: sessionId
+      },
+      select: {
+        originalTextId: true,
+        encryptionMapping: true
+      }
+    });
+
+    if (!monoalphabeticSessionInfo) {
+      childLogger.warn("MonoalphabeticSession not found during reveal request.");
+      throw new Error(`MonoalphabeticSession not found for sessionId=${sessionId}`);
     }
-  })).content;
+
+    const originalTextRecord = await tx.originalText.findUnique({
+      where: {
+        id: monoalphabeticSessionInfo.originalTextId
+      },
+      select: {
+        content: true
+      }
+    });
+
+    if (!originalTextRecord) {
+      childLogger.warn({ originalTextId: monoalphabeticSessionInfo?.originalTextId }, "Original text record not found during reveal request.");
+    }
+
+    return originalTextRecord!.content;
+  });
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
