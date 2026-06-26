@@ -2,16 +2,21 @@ import * as express from 'express';
 import { AddressInfo } from "net";
 import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
 import ping from './src/routes/ping.controller';
+import { Request, Response, NextFunction } from 'express';
+
+interface HttpError extends Error {
+    status?: number;
+}
 
 const cors = require("cors");
 const debug = require('debug')('my express app');
 const app = express();
 
 app.use(cors({ origin: process.env.FRONTEND_ADDRESS, methods: ["GET", "POST"], credentials: true }));
-app.use(function (req, res, next) {
+app.use(function (req: Request, res: Response, next: NextFunction) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_ADDRESS);
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_ADDRESS as string);
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -33,9 +38,9 @@ app.use(monoalphabeticRoutes);
 app.use(ping);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err[ 'status' ] = 404;
+app.use((req: Request, res: Response, next: NextFunction) => {
+    const err = new Error('Not Found') as HttpError;
+    err.status = 404;
     next(err);
 });
 
@@ -44,15 +49,15 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+    app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
         let body = { message: err.message, error: err };
-        res.status(err[ 'status' ] || 500).send(body);
+        res.status(err.status || 500).send(body);
     });
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
     let body = { message: err.message, error: {} };
     res.status(err.status || 500).send(body);
 });
