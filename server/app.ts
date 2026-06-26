@@ -12,42 +12,39 @@ const cors = require("cors");
 const debug = require('debug')('my express app');
 const app = express();
 
+// ===== CORS Configuration =====
+// Enable CORS for frontend requests
 app.use(cors({ origin: process.env.FRONTEND_ADDRESS, methods: ["GET", "POST"], credentials: true }));
+
+// Custom CORS headers for cross-origin requests with credentials
 app.use(function (req: Request, res: Response, next: NextFunction) {
-
-  // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_ADDRESS as string);
-
-  // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-  // Pass to next layer of middleware
   next();
 });
 
+// ===== Request Body Parsing =====
+// Parse incoming JSON and URL-encoded request bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ===== Route Handlers =====
+// Process API requests
 app.use(monoalphabeticRoutes);
 app.use(ping);
 
-// catch 404 and forward to error handler
+// ===== 404 Handler =====
+// Catch unmatched requests and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
     const err = new Error('Not Found') as HttpError;
     err.status = 404;
     next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
+// ===== Error Handlers =====
+// Development: include full error details with stack trace
 if (app.get('env') === 'development') {
     app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
         let body = { message: err.message, error: err };
@@ -55,8 +52,7 @@ if (app.get('env') === 'development') {
     });
 }
 
-// production error handler
-// no stacktraces leaked to user
+// Production: hide error details from client
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
     let body = { message: err.message, error: {} };
     res.status(err.status || 500).send(body);
