@@ -1,7 +1,7 @@
 ﻿import { Request, Response, Router } from 'express';
 const router = Router();
 
-router.get('/ping', async (req: Request, res: Response) => {
+router.get('/ping', async (_req: Request, res: Response) => {
   res.send("pong");
 });
 
