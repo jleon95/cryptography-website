@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession, getOriginalTextAndMappingFromMonoalphabeticSession } from './update_text.service';
-import { reCreateEncryptedText } from './update_text.logic';
-import { createExpirationDate } from '../utils';
-import type { UpdateTextRequest, UpdateTextResponse } from '../controller.models';
-import type { EncryptedTextInfo } from '../logic.models';
+import { checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession, getOriginalTextAndMappingFromMonoalphabeticSession } from './update_text.service.js';
+import { reCreateEncryptedText } from './update_text.logic.js';
+import { createExpirationDate } from '../utils.js';
+import type { UpdateTextRequest, UpdateTextResponse } from '../controller.models.js';
+import type { EncryptedTextInfo } from '../logic.models.js';
 const logger = require('../../../../logger');
 const router = Router();
 

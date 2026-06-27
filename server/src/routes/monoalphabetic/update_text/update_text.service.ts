@@ -1,6 +1,6 @@
-import prisma from '../../../prisma/prisma-client';
+import prisma from '../../../prisma/prisma-client.js';
 import { Prisma } from '@prisma/client';
-import type { EncryptedTextInfo, LetterMapping } from '../logic.models';
+import type { EncryptedTextInfo, LetterMapping } from '../logic.models.js';
 const logger = require('../../../../logger');
 
 export async function getOriginalTextAndMappingFromMonoalphabeticSession(sessionId: string): Promise<EncryptedTextInfo> {

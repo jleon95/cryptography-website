@@ -1,7 +1,7 @@
 import express from 'express';
 import { AddressInfo } from "net";
-import monoalphabeticRoutes from './src/routes/monoalphabetic/routes';
-import ping from './src/routes/ping.controller';
+import monoalphabeticRoutes from './src/routes/monoalphabetic/routes.js';
+import ping from './src/routes/ping.controller.js';
 import { Request, Response, NextFunction } from 'express';
 
 interface HttpError extends Error {

@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { insertMonoalphabeticSession, checkActiveMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service';
-import { createNewEncryptedText } from './new_text.logic';
-import { chooseNewText } from './new_text.service';
-import { createExpirationDate } from '../utils';
-import type { EncryptedTextInfo } from '../logic.models';
-import type { ChosenOriginalTextInfo } from '../service.models';
-import type { NewTextRequest, NewTextResponse } from '../controller.models';
+import { insertMonoalphabeticSession, checkActiveMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service.js';
+import { createNewEncryptedText } from './new_text.logic.js';
+import { chooseNewText } from './new_text.service.js';
+import { createExpirationDate } from '../utils.js';
+import type { EncryptedTextInfo } from '../logic.models.js';
+import type { ChosenOriginalTextInfo } from '../service.models.js';
+import type { NewTextRequest, NewTextResponse } from '../controller.models.js';
 const logger = require('../../../../logger');
 const crypto = require("crypto");
 const router = Router();

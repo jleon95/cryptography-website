@@ -1,6 +1,6 @@
-import prisma from '../../../prisma/prisma-client';
+import prisma from '../../../prisma/prisma-client.js';
 import { Prisma } from '@prisma/client';
-import { LetterMapping } from '../logic.models';
+import { LetterMapping } from '../logic.models.js';
 const logger = require('../../../../logger');
 
 export async function getEncryptionMapping(sessionId: string): Promise<LetterMapping> {

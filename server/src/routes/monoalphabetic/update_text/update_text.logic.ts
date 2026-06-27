@@ -1,4 +1,4 @@
-import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models';
+import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models.js';
 
 function encryptTextFromExistingMapping(text: string, existingMapping: LetterMapping): string {
 

@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
-import { checkActiveMonoalphabeticSessionExists, getOriginalText } from './reveal_text.service';
-import type { RevealTextRequest, RevealTextResponse } from '../controller.models';
+import { checkActiveMonoalphabeticSessionExists, getOriginalText } from './reveal_text.service.js';
+import type { RevealTextRequest, RevealTextResponse } from '../controller.models.js';
 const logger = require('../../../../logger');
 const router = Router();
 

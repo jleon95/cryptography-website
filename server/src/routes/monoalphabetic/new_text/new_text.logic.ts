@@ -1,4 +1,4 @@
-﻿import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models';
+﻿import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models.js';
 
 // Fisher-Yates shuffle
 function shuffle(array: Array<string>): Array<string> {

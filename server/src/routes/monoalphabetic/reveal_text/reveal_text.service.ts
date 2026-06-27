@@ -1,4 +1,4 @@
-import prisma from '../../../prisma/prisma-client';
+import prisma from '../../../prisma/prisma-client.js';
 const logger = require('../../../../logger');
 
 export async function getOriginalText(sessionId: string): Promise<string> {

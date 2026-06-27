@@ -1,4 +1,4 @@
-import { LetterMapping } from '../logic.models';
+import { LetterMapping } from '../logic.models.js';
 export function findCorrectLetterFromMapping(requestedLetter: string, letterMapping: LetterMapping): string {
 
   for (const letter in letterMapping) {

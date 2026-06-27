@@ -1,4 +1,4 @@
-import prisma from '../../../prisma/prisma-client';
+import prisma from '../../../prisma/prisma-client.js';
 const schedule = require('node-schedule');
 const logger = require('../../../../logger');
 

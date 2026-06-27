@@ -1,6 +1,6 @@
-import prisma from '../../../prisma/prisma-client';
-import type { LetterMapping } from '../logic.models';
-import type { ChosenOriginalTextInfo } from '../service.models';
+import prisma from '../../../prisma/prisma-client.js';
+import type { LetterMapping } from '../logic.models.js';
+import type { ChosenOriginalTextInfo } from '../service.models.js';
 import { Prisma } from '@prisma/client';
 const logger = require('../../../../logger');
 
