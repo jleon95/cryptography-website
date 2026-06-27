@@ -18,7 +18,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/app.js ./app.js
 COPY --from=build /app/logger.js ./logger.js
 COPY --from=build /app/environment.d.ts ./environment.d.ts
-COPY --from=build /app/src ./src
+COPY --from=build --exclude=**/*.ts /app/src ./src
 COPY --from=build /app/src/prisma/schema.prisma ./src/prisma/schema.prisma
 COPY --from=build /app/docker_startup ./docker_startup
 
