@@ -14,6 +14,7 @@
     "clean": "tsc --build --clean",
     "dev": "nodemon --watch src/ --ext ts --exec tsx app.ts",
     "start": "node app",
+    "db:generate-schema": "npx prisma generate --schema=./src/prisma/schema.prisma",
     "db:init": "npx prisma migrate deploy --schema=./src/prisma/schema.prisma && npx prisma db seed",
     "db:seed:dev": "npx prisma db seed",
     "db:seed:prod": "node src/prisma/seed.js",
