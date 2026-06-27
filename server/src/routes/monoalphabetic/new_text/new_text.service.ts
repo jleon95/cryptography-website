@@ -18,6 +18,10 @@ export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
       take: 1,
     });
 
+    if (!randomTextRecord) {
+      throw new Error('Unable to retrieve the chosen new text.');
+    }
+
     return { text: randomTextRecord.content, id: randomTextRecord.id };
   });
 }
