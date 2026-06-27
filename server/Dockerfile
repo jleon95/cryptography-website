@@ -2,7 +2,7 @@ FROM node:24-bullseye AS build
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 RUN npx prisma generate --schema=./src/prisma/schema.prisma && \

@@ -1,10 +1,10 @@
-FROM node:lts-alpine as build
+FROM node:lts-alpine AS build
 ENV NODE_ENV=production
 WORKDIR /front
 COPY ./ .
 ARG VITE_BACKEND_BASE_URL
 ARG VITE_MAX_HINTS
-RUN npm install && npm run build
+RUN npm ci && npm run build
 
 FROM nginx:alpine
 COPY --from=build --chmod=755 /front/docker_entrypoint_scripts/*.sh /docker-entrypoint.d
