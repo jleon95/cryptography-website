@@ -10,7 +10,7 @@ module.exports = pino({
     },
   },
   timestamp: pino.stdTimeFunctions.isoTime,
-  bindings: (bindings: Bindings) => {
+  bindings: (_bindings: Bindings) => {
     return {};
   },
   base: undefined
