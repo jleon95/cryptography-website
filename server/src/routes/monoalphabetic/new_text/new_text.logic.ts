@@ -7,11 +7,17 @@ function shuffle(array: Array<string>): Array<string> {
   let currentIndex = newArray.length, randomIndex;
 
   while (currentIndex > 0) {
-
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
-    [newArray[currentIndex], newArray[randomIndex]] = [
-      newArray[randomIndex], newArray[currentIndex]];
+
+    const currentValue = newArray[currentIndex];
+    const randomValue = newArray[randomIndex];
+
+    if (currentValue === undefined || randomValue === undefined)
+      continue;
+
+    newArray[currentIndex] = randomValue;
+    newArray[randomIndex] = currentValue;
   }
 
   return newArray;
