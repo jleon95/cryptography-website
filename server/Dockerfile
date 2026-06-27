@@ -13,14 +13,7 @@ FROM node:24-bullseye-slim AS runtime
 ENV NODE_ENV=production
 WORKDIR /app
 
-COPY package*.json ./
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/app.js ./app.js
-COPY --from=build /app/logger.js ./logger.js
-COPY --from=build /app/environment.d.ts ./environment.d.ts
-COPY --from=build --exclude=**/*.ts /app/src ./src
-COPY --from=build /app/src/prisma/schema.prisma ./src/prisma/schema.prisma
-COPY --from=build /app/docker_startup ./docker_startup
+COPY --from=build --exclude=./*.json --exclude=./*.tsbuildinfo --exclude=**/*.ts* /app ./
 
 EXPOSE 1337
 CMD ["sh", "./docker_startup/docker_startup.sh"]
