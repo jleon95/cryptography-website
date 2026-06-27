@@ -1,10 +1,10 @@
 import { Request, Response, Router } from 'express';
-import { getEncryptionMapping, checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession, getRemainingHints, consumeHint } from './hint.service';
-import { findCorrectLetterFromMapping } from './hint.logic';
-import { createExpirationDate } from '../utils';
-import type { HintRequest, HintResponse } from '../controller.models';
-import type { LetterMapping } from '../logic.models';
-const logger = require('../../../../logger');
+import { getEncryptionMapping, checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession, getRemainingHints, consumeHint } from './hint.service.js';
+import { findCorrectLetterFromMapping } from './hint.logic.js';
+import { createExpirationDate } from '../utils.js';
+import type { HintRequest, HintResponse } from '../controller.models.js';
+import type { LetterMapping } from '../logic.models.js';
+import logger from '../../../../logger.js';
 
 const router = Router();
 

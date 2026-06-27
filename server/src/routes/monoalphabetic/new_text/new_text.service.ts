@@ -1,29 +1,29 @@
-import prisma from '../../../prisma/prisma-client';
-import type { LetterMapping } from '../logic.models';
-import type { ChosenOriginalTextInfo } from '../service.models';
+import prisma from '../../../prisma/prisma-client.js';
+import type { LetterMapping } from '../logic.models.js';
+import type { ChosenOriginalTextInfo } from '../service.models.js';
 import { Prisma } from '@prisma/client';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 
 export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
 
-  const ids: {id: number}[] = await prisma.originalText.findMany({
-    select: {
-      id: true,
-      content: false,
-    },
-  });
-  const chosenId = ids[Math.floor(Math.random() * ids.length)].id;
-  const chosenText: string = (await prisma.originalText.findUnique({
-    where: {
-      id: chosenId
-    },
-    select: {
-      id: false,
-      content: true
-    },
-  })).content;
+  return await prisma.$transaction(async (tx) => {
+    const totalOriginalTexts: number = await tx.originalText.count();
+    if (totalOriginalTexts === 0) {
+      const childLogger = logger.child({ totalOriginalTexts });
+      childLogger.error("Error when attempting to choose new text (no texts found in database).");
+    }
+    const randomIndex = Math.floor(Math.random() * totalOriginalTexts) + 1;
+    const [randomTextRecord] = await tx.originalText.findMany({
+      skip: randomIndex - 1,
+      take: 1,
+    });
 
-  return { text: chosenText, id: chosenId };
+    if (!randomTextRecord) {
+      throw new Error('Unable to retrieve the chosen new text.');
+    }
+
+    return { text: randomTextRecord.content, id: randomTextRecord.id };
+  });
 }
 
 export async function insertMonoalphabeticSession(sessionId: string, expirationDate: Date, letterMapping: LetterMapping, originalTextId: number, maxHints: number): Promise<void> {

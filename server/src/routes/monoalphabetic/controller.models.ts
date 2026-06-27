@@ -1,4 +1,4 @@
-import { LetterMapping, ValidatedLetterMapping } from './logic.models';
+import { LetterMapping, ValidatedLetterMapping } from './logic.models.js';
 
 export interface NewTextRequest {
   difficultyOptions: {

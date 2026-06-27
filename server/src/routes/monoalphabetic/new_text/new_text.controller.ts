@@ -1,20 +1,20 @@
 import { Request, Response, Router } from 'express';
-import { insertMonoalphabeticSession, checkActiveMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service';
-import { createNewEncryptedText } from './new_text.logic';
-import { chooseNewText } from './new_text.service';
-import { createExpirationDate } from '../utils';
-import type { EncryptedTextInfo } from '../logic.models';
-import type { ChosenOriginalTextInfo } from '../service.models';
-import type { NewTextRequest, NewTextResponse } from '../controller.models';
-const logger = require('../../../../logger');
-const crypto = require("crypto");
+import { insertMonoalphabeticSession, checkActiveMonoalphabeticSessionExists, deleteMonoalphabeticSession } from './new_text.service.js';
+import { createNewEncryptedText } from './new_text.logic.js';
+import { chooseNewText } from './new_text.service.js';
+import { createExpirationDate } from '../utils.js';
+import type { EncryptedTextInfo } from '../logic.models.js';
+import type { ChosenOriginalTextInfo } from '../service.models.js';
+import type { NewTextRequest, NewTextResponse } from '../controller.models.js';
+import logger from '../../../../logger.js';
+import crypto from "crypto";
 const router = Router();
 
 async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {
   const chosenTextInfo: ChosenOriginalTextInfo = await chooseNewText();
   const encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, requestBody.difficultyOptions);
   const newSession = { sessionId: crypto.randomUUID(), expirationDate: createExpirationDate() };
-  await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +process.env["MAX_HINTS"]);
+  await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +(process.env["MAX_HINTS"] as string));
   const responseBody: NewTextResponse = {
     sessionData: newSession,
     encryptedText: encryptedTextInfo.text

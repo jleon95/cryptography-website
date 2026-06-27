@@ -1,30 +1,46 @@
-import prisma from '../../../prisma/prisma-client';
+import prisma from '../../../prisma/prisma-client.js';
 import { Prisma } from '@prisma/client';
-import type { EncryptedTextInfo, LetterMapping } from '../logic.models';
-const logger = require('../../../../logger');
+import type { EncryptedTextInfo, LetterMapping } from '../logic.models.js';
+import logger from '../../../../logger.js';
 
 export async function getOriginalTextAndMappingFromMonoalphabeticSession(sessionId: string): Promise<EncryptedTextInfo> {
 
-  const monoalphabeticSessionInfo = (await prisma.monoalphabeticSession.findUnique({
-    where: {
-      sessionId: sessionId
-    },
-    select: {
-      originalTextId: true,
-      encryptionMapping: true
-    }
-  }));
+  return await prisma.$transaction(async (tx) => {
+    const monoalphabeticSessionInfo = await tx.monoalphabeticSession.findUnique({
+      where: {
+        sessionId: sessionId
+      },
+      select: {
+        originalTextId: true,
+        encryptionMapping: true
+      }
+    });
 
-  const originalText: string = (await prisma.originalText.findUnique({
-    where: {
-      id: monoalphabeticSessionInfo.originalTextId
-    },
-    select: {
-      content: true
+    if (!monoalphabeticSessionInfo) {
+      const childLogger = logger.child({ sessionId });
+      childLogger.warn("MonoalphabeticSession not found.");
+      throw new Error(`MonoalphabeticSession not found for sessionId=${sessionId}`);
     }
-  })).content;
+    const originalTextRecord = await tx.originalText.findUnique({
+      where: {
+        id: monoalphabeticSessionInfo.originalTextId
+      },
+      select: {
+        content: true
+      }
+    });
 
-  return { text: originalText, letterMapping: monoalphabeticSessionInfo.encryptionMapping as LetterMapping };
+    if (!originalTextRecord) {
+      const childLogger = logger.child({ sessionId });
+      childLogger.error({ originalTextId: monoalphabeticSessionInfo.originalTextId }, "Original text record missing for MonoalphabeticSession.");
+      throw new Error(`Original text not found for id=${monoalphabeticSessionInfo.originalTextId}`);
+    }
+
+    return {
+      text: originalTextRecord.content,
+      letterMapping: monoalphabeticSessionInfo.encryptionMapping as LetterMapping
+    };
+  });
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {

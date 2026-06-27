@@ -1,10 +1,10 @@
 ﻿import { Request, Response, Router } from 'express';
-import { getEncryptionMapping, checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession } from './validation.service';
-import { validateLetterMapping } from './validation.logic';
-import { createExpirationDate } from '../utils';
-import type { LetterMapping, ValidatedLetterMapping } from '../logic.models';
-import type { ValidationRequest, ValidationResponse } from '../controller.models';
-const logger = require('../../../../logger');
+import { getEncryptionMapping, checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession } from './validation.service.js';
+import { validateLetterMapping } from './validation.logic.js';
+import { createExpirationDate } from '../utils.js';
+import type { LetterMapping, ValidatedLetterMapping } from '../logic.models.js';
+import type { ValidationRequest, ValidationResponse } from '../controller.models.js';
+import logger from '../../../../logger.js';
 
 const router = Router();
 

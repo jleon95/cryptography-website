@@ -1,16 +1,11 @@
-import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models';
+import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models.js';
 
 function encryptTextFromExistingMapping(text: string, existingMapping: LetterMapping): string {
 
-  let letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-
-  let newText: Array<string> = text.split("");
-
-  for (let i = 0; i < text.length; i++)
-    if (text[i] in existingMapping)
-      newText[i] = existingMapping[text[i]];
-
-  return newText.join("");
+  // Careful: the text may contain characters that are not in the letter mapping, such as spaces or punctuation. Those should be left unchanged.
+  return text.replace(/./g, (character: string): string => {
+    return existingMapping[character] !== undefined ? existingMapping[character] : character;
+  });
 }
 
 export async function reCreateEncryptedText(existingEncryptedTextInfo: EncryptedTextInfo, options: PreProcessOptions): Promise<string> {

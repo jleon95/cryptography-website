@@ -1,24 +1,25 @@
-import prisma from '../../../prisma/prisma-client';
+import prisma from '../../../prisma/prisma-client.js';
 import { Prisma } from '@prisma/client';
-import { LetterMapping } from '../logic.models';
-const logger = require('../../../../logger');
+import { LetterMapping } from '../logic.models.js';
+import logger from '../../../../logger.js';
 
 export async function getEncryptionMapping(sessionId: string): Promise<LetterMapping> {
-  try {
-    return (await prisma.monoalphabeticSession.findUnique({
-      where: {
-        sessionId: sessionId
-      },
-      select: {
-        encryptionMapping: true
-      }
-    })).encryptionMapping as LetterMapping;
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      childLogger.error("Error when attempting to access MonoalphabeticSession entry.");
+  const session = await prisma.monoalphabeticSession.findUnique({
+    where: {
+      sessionId: sessionId
+    },
+    select: {
+      encryptionMapping: true
     }
+  });
+
+  if (!session) {
+    const childLogger = logger.child({ sessionId });
+    childLogger.warn("MonoalphabeticSession not found when attempting to access encryption mapping.");
+    throw new Error(`MonoalphabeticSession not found for sessionId=${sessionId}`);
   }
+
+  return session.encryptionMapping as LetterMapping;
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
