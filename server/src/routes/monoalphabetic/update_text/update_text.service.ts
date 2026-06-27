@@ -5,8 +5,6 @@ const logger = require('../../../../logger');
 
 export async function getOriginalTextAndMappingFromMonoalphabeticSession(sessionId: string): Promise<EncryptedTextInfo> {
 
-  const childLogger = logger.child({ sessionId });
-
   return await prisma.$transaction(async (tx) => {
     const monoalphabeticSessionInfo = await tx.monoalphabeticSession.findUnique({
       where: {
