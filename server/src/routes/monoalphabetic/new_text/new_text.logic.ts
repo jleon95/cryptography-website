@@ -3,24 +3,25 @@
 // Fisher-Yates shuffle
 function shuffle(array: Array<string>): Array<string> {
 
-  let currentIndex = array.length, randomIndex;
+  let newArray = [...array];
+  let currentIndex = newArray.length, randomIndex;
 
   while (currentIndex > 0) {
 
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+    [newArray[currentIndex], newArray[randomIndex]] = [
+      newArray[randomIndex], newArray[currentIndex]];
   }
 
-  return array;
+  return newArray;
 }
 
 function encryptText(text: string): EncryptedTextInfo {
 
-  let letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-  let shuffledLetters = shuffle(letters);
-  let mapping: LetterMapping = {};
+  const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const shuffledLetters = shuffle(letters);
+  const mapping: LetterMapping = {};
 
   for (let i = 0; i < letters.length; i++) {
     const letter = letters[i];
@@ -32,13 +33,12 @@ function encryptText(text: string): EncryptedTextInfo {
     mapping[letter] = shuffledLetter;
   }
 
-  let newText: Array<string> = text.split("");
+  // Careful: the text may contain characters that are not in the letter mapping, such as spaces or punctuation. Those should be left unchanged.
+  const newText = text.replace(/./g, (character: string): string => {
+    return mapping[character] !== undefined ? mapping[character] : character;
+  });
 
-  for (let i = 0; i < text.length; i++)
-    if (text[i] in mapping)
-      newText[i] = mapping[text[i]];
-
-  return { text: newText.join(""), letterMapping: mapping };
+  return { text: newText, letterMapping: mapping };
 }
 
 export async function createNewEncryptedText(newText: string, options: PreProcessOptions = { keepSpaces: false, keepPunctuation: false }): Promise<EncryptedTextInfo> {
