@@ -18,12 +18,19 @@ function shuffle(array: Array<string>): Array<string> {
 
 function encryptText(text: string): EncryptedTextInfo {
 
-  let letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-  let shuffledLetters = shuffle(letters.split(""));
+  let letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  let shuffledLetters = shuffle(letters);
   let mapping: LetterMapping = {};
 
-  for (let i = 0; i < letters.length; i++)
-    mapping[letters[i]] = shuffledLetters[i];
+  for (let i = 0; i < letters.length; i++) {
+    const letter = letters[i];
+    const shuffledLetter = shuffledLetters[i];
+
+    if (letter === undefined || shuffledLetter === undefined)
+      continue;
+
+    mapping[letter] = shuffledLetter;
+  }
 
   let newText: Array<string> = text.split("");
 
