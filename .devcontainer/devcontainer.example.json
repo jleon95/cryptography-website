@@ -11,17 +11,12 @@
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
         "ms-vscode.vscode-typescript-next",
         "Prisma.prisma",
-        "Vue.volar"
+        "Vue.volar",
+        "arktypeio.arkdark"
       ],
       "settings": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "[typescript]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
         "editor.codeActionsOnSave": {
           "source.fixAll.eslint": "always"
         },
@@ -29,10 +24,11 @@
       }
     }
   },
-  "onCreateCommand": "npm install -g typescript ts-node",
-  "postCreateCommand": "cd /workspace/client && npm install && cd /workspace/server && npm install",
+  "postCreateCommand": "cd /workspaces/cryptography-website/client && npm install && cd /workspaces/cryptography-website/server && npm install",
   "remoteUser": "node",
-  "forwardPorts": [5173],
+  "forwardPorts": [
+    5173
+  ],
   "mounts": [
     "source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
     "source=${localEnv:HOME}/.ssh/<YOUR_PRIVATE_KEY_FILE>,target=/home/node/.ssh/<YOUR_PRIVATE_KEY_FILE>,type=bind,consistency=cached",
