@@ -1,5 +1,5 @@
 import prisma from '../../../prisma/prisma-client.js';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 
 export async function getOriginalText(sessionId: string): Promise<string> {
 

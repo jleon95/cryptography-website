@@ -4,7 +4,7 @@ import { findCorrectLetterFromMapping } from './hint.logic.js';
 import { createExpirationDate } from '../utils.js';
 import type { HintRequest, HintResponse } from '../controller.models.js';
 import type { LetterMapping } from '../logic.models.js';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 
 const router = Router();
 

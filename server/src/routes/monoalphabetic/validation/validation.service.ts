@@ -1,7 +1,7 @@
 import prisma from '../../../prisma/prisma-client.js';
 import { Prisma } from '@prisma/client';
 import { LetterMapping } from '../logic.models.js';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 
 export async function getEncryptionMapping(sessionId: string): Promise<LetterMapping> {
   const session = await prisma.monoalphabeticSession.findUnique({

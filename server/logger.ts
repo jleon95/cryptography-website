@@ -1,17 +1,17 @@
-import { Bindings } from "pino";
+import { pino, Bindings } from "pino";
 
-const pino = require("pino");
-
-module.exports = pino({
+const logger = pino({
   level: process.env.PINO_LOG_LEVEL || "info",
   formatters: {
     level: (label: string) => {
       return { level: label.toUpperCase() };
     },
+    bindings: (_bindings: Bindings) => {
+      return {};
+    }
   },
   timestamp: pino.stdTimeFunctions.isoTime,
-  bindings: (_bindings: Bindings) => {
-    return {};
-  },
-  base: undefined
+  base: null
 });
+
+export default logger;

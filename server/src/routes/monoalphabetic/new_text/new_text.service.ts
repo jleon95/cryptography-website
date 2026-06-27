@@ -2,7 +2,7 @@ import prisma from '../../../prisma/prisma-client.js';
 import type { LetterMapping } from '../logic.models.js';
 import type { ChosenOriginalTextInfo } from '../service.models.js';
 import { Prisma } from '@prisma/client';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 
 export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
 

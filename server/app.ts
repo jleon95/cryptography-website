@@ -3,13 +3,14 @@ import { AddressInfo } from "net";
 import monoalphabeticRoutes from './src/routes/monoalphabetic/routes.js';
 import ping from './src/routes/ping.controller.js';
 import { Request, Response, NextFunction } from 'express';
+import cors from "cors";
+import Debug from 'debug';
 
 interface HttpError extends Error {
     status?: number;
 }
 
-const cors = require("cors");
-const debug = require('debug')('my express app');
+const debug = Debug('my express app');
 const app = express();
 
 // ===== CORS Configuration =====

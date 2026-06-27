@@ -4,7 +4,7 @@ import { reCreateEncryptedText } from './update_text.logic.js';
 import { createExpirationDate } from '../utils.js';
 import type { UpdateTextRequest, UpdateTextResponse } from '../controller.models.js';
 import type { EncryptedTextInfo } from '../logic.models.js';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 const router = Router();
 
 router.post('/update_text', async (req: Request, res: Response) => {

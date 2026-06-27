@@ -1,6 +1,6 @@
 import prisma from '../../../prisma/prisma-client.js';
-const schedule = require('node-schedule');
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
+import schedule from 'node-schedule';
 
 async function scheduleDeletionOfExpiredSessions(): Promise<void> {
   schedule.scheduleJob(process.env["SESSION_DELETION_CRON_SCHEDULE"], deleteExpiredSessions);

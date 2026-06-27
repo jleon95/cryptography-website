@@ -6,8 +6,8 @@ import { createExpirationDate } from '../utils.js';
 import type { EncryptedTextInfo } from '../logic.models.js';
 import type { ChosenOriginalTextInfo } from '../service.models.js';
 import type { NewTextRequest, NewTextResponse } from '../controller.models.js';
-const logger = require('../../../../logger');
-const crypto = require("crypto");
+import logger from '../../../../logger.js';
+import crypto from "crypto";
 const router = Router();
 
 async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {

@@ -4,7 +4,7 @@ import { validateLetterMapping } from './validation.logic.js';
 import { createExpirationDate } from '../utils.js';
 import type { LetterMapping, ValidatedLetterMapping } from '../logic.models.js';
 import type { ValidationRequest, ValidationResponse } from '../controller.models.js';
-const logger = require('../../../../logger');
+import logger from '../../../../logger.js';
 
 const router = Router();
 
