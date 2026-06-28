@@ -56,7 +56,7 @@ services:
             - 1337
         environment:
             DATABASE_URL: postgresql://cryptographyDevUser:notTheActualProductionPassword@postgres:5432/cryptographyDev?schema=public
-            FRONTEND_ADDRESS: http://frontend.docker.localhost
+            FRONTEND_URL: http://frontend.docker.localhost
             MAX_HINTS: 3
             NODE_ENV: "development"
             PINO_LOG_LEVEL: "trace"

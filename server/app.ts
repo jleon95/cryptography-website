@@ -16,11 +16,11 @@ const app = express();
 
 // ===== CORS Configuration =====
 // Enable CORS for frontend requests
-app.use(cors({ origin: validEnv.FRONTEND_ADDRESS, methods: ["GET", "POST"], credentials: true }));
+app.use(cors({ origin: validEnv.FRONTEND_URL, methods: ["GET", "POST"], credentials: true }));
 
 // Custom CORS headers for cross-origin requests with credentials
 app.use(function (_req: Request, res: Response, next: NextFunction) {
-  res.setHeader('Access-Control-Allow-Origin', validEnv.FRONTEND_ADDRESS);
+  res.setHeader('Access-Control-Allow-Origin', validEnv.FRONTEND_URL);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
