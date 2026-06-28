@@ -3,16 +3,16 @@ import logger from "../../../../logger.js";
 import type { ValidationRequest, ValidationResponse } from "../controller.models.js";
 import type { LetterMapping, ValidatedLetterMapping } from "../logic.models.js";
 import { createExpirationDate } from "../utils.js";
-import { validateLetterMapping } from "./validation.logic.js";
 import {
   checkActiveMonoalphabeticSessionExists,
   getEncryptionMapping,
   touchMonoalphabeticSession,
-} from "./validation.service.js";
+} from "./validate_solution.repository.js";
+import { validateLetterMapping } from "./validate_solution.service.js";
 
 const router = Router();
 
-router.post("/validation", async (req: Request, res: Response) => {
+router.post("/validate_solution", async (req: Request, res: Response) => {
   const requestBody: ValidationRequest = req.body;
 
   if (
