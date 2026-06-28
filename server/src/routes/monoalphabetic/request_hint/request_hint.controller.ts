@@ -3,18 +3,18 @@ import logger from "../../../../logger.js";
 import type { HintRequest, HintResponse } from "../controller.models.js";
 import type { LetterMapping } from "../logic.models.js";
 import { createExpirationDate } from "../utils.js";
-import { findCorrectLetterFromMapping } from "./hint.logic.js";
 import {
   checkActiveMonoalphabeticSessionExists,
   consumeHint,
   getEncryptionMapping,
   getRemainingHints,
   touchMonoalphabeticSession,
-} from "./hint.service.js";
+} from "./request_hint.repository.js";
+import { findCorrectLetterFromMapping } from "./request_hint.service.js";
 
 const router = Router();
 
-router.post("/hint", async (req: Request, res: Response) => {
+router.post("/request_hint", async (req: Request, res: Response) => {
   const requestBody: HintRequest = req.body;
 
   if (

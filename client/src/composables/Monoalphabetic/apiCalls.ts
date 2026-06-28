@@ -14,7 +14,7 @@ export enum Action {
   NEW_TEXT = "new_text",
   UPDATE_TEXT = "update_text",
   REVEAL_TEXT = "reveal_text",
-  REQUEST_HINT = "hint",
+  REQUEST_HINT = "request_hint",
   VALIDATION = "validation"
 }
 
