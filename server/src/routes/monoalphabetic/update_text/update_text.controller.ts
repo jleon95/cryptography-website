@@ -3,12 +3,12 @@ import logger from "../../../../logger.js";
 import type { UpdateTextRequest, UpdateTextResponse } from "../controller.models.js";
 import type { EncryptedTextInfo } from "../logic.models.js";
 import { createExpirationDate } from "../utils.js";
-import { reCreateEncryptedText } from "./update_text.logic.js";
 import {
   checkActiveMonoalphabeticSessionExists,
   getOriginalTextAndMappingFromMonoalphabeticSession,
   touchMonoalphabeticSession,
-} from "./update_text.service.js";
+} from "./update_text.repository.js";
+import { reCreateEncryptedText } from "./update_text.service.js";
 
 const router = Router();
 
