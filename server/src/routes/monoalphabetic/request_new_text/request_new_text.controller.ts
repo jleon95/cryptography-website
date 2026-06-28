@@ -6,13 +6,13 @@ import type { NewTextRequest, NewTextResponse } from "../controller.models.js";
 import type { EncryptedTextInfo } from "../logic.models.js";
 import type { ChosenOriginalTextInfo } from "../service.models.js";
 import { createExpirationDate } from "../utils.js";
-import { createNewEncryptedText } from "./new_text.logic.js";
 import {
   checkActiveMonoalphabeticSessionExists,
   chooseNewText,
   deleteMonoalphabeticSession,
   insertMonoalphabeticSession,
-} from "./new_text.service.js";
+} from "./request_new_text.repository.js";
+import { createNewEncryptedText } from "./request_new_text.service.js";
 
 const router = Router();
 
@@ -42,7 +42,7 @@ async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {
   return responseBody;
 }
 
-router.post("/new_text", async (req: Request, res: Response) => {
+router.post("/request_new_text", async (req: Request, res: Response) => {
   const requestBody: NewTextRequest = req.body;
 
   if (requestBody.sessionData.sessionId === "") {
