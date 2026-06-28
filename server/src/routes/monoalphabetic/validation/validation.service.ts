@@ -1,21 +1,23 @@
-import prisma from '../../../prisma/prisma-client.js';
-import { Prisma } from '@prisma/client';
-import { LetterMapping } from '../logic.models.js';
-import logger from '../../../../logger.js';
+import { Prisma } from "@prisma/client";
+import logger from "../../../../logger.js";
+import prisma from "../../../prisma/prisma-client.js";
+import type { LetterMapping } from "../logic.models.js";
 
 export async function getEncryptionMapping(sessionId: string): Promise<LetterMapping> {
   const session = await prisma.monoalphabeticSession.findUnique({
     where: {
-      sessionId: sessionId
+      sessionId: sessionId,
     },
     select: {
-      encryptionMapping: true
-    }
+      encryptionMapping: true,
+    },
   });
 
   if (!session) {
     const childLogger = logger.child({ sessionId });
-    childLogger.warn("MonoalphabeticSession not found when attempting to access encryption mapping.");
+    childLogger.warn(
+      "MonoalphabeticSession not found when attempting to access encryption mapping.",
+    );
     throw new Error(`MonoalphabeticSession not found for sessionId=${sessionId}`);
   }
 
@@ -23,30 +25,30 @@ export async function getEncryptionMapping(sessionId: string): Promise<LetterMap
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
-
-  let result = await prisma.monoalphabeticSession.findUnique({
+  const result = await prisma.monoalphabeticSession.findUnique({
     where: {
       sessionId: sessionId,
       expirationDate: {
-        gte: new Date()
-      }
-    }
+        gte: new Date(),
+      },
+    },
   });
 
   return result !== null;
 }
 
-
-export async function touchMonoalphabeticSession(sessionId: string, expirationDate: Date): Promise<void> {
-
+export async function touchMonoalphabeticSession(
+  sessionId: string,
+  expirationDate: Date,
+): Promise<void> {
   try {
     await prisma.monoalphabeticSession.update({
       where: {
-        sessionId: sessionId
+        sessionId: sessionId,
       },
       data: {
-        expirationDate: expirationDate
-      }
+        expirationDate: expirationDate,
+      },
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

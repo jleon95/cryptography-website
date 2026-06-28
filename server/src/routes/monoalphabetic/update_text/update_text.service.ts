@@ -1,19 +1,20 @@
-import prisma from '../../../prisma/prisma-client.js';
-import { Prisma } from '@prisma/client';
-import type { EncryptedTextInfo, LetterMapping } from '../logic.models.js';
-import logger from '../../../../logger.js';
+import { Prisma } from "@prisma/client";
+import logger from "../../../../logger.js";
+import prisma from "../../../prisma/prisma-client.js";
+import type { EncryptedTextInfo, LetterMapping } from "../logic.models.js";
 
-export async function getOriginalTextAndMappingFromMonoalphabeticSession(sessionId: string): Promise<EncryptedTextInfo> {
-
+export async function getOriginalTextAndMappingFromMonoalphabeticSession(
+  sessionId: string,
+): Promise<EncryptedTextInfo> {
   return await prisma.$transaction(async (tx) => {
     const monoalphabeticSessionInfo = await tx.monoalphabeticSession.findUnique({
       where: {
-        sessionId: sessionId
+        sessionId: sessionId,
       },
       select: {
         originalTextId: true,
-        encryptionMapping: true
-      }
+        encryptionMapping: true,
+      },
     });
 
     if (!monoalphabeticSessionInfo) {
@@ -23,51 +24,54 @@ export async function getOriginalTextAndMappingFromMonoalphabeticSession(session
     }
     const originalTextRecord = await tx.originalText.findUnique({
       where: {
-        id: monoalphabeticSessionInfo.originalTextId
+        id: monoalphabeticSessionInfo.originalTextId,
       },
       select: {
-        content: true
-      }
+        content: true,
+      },
     });
 
     if (!originalTextRecord) {
       const childLogger = logger.child({ sessionId });
-      childLogger.error({ originalTextId: monoalphabeticSessionInfo.originalTextId }, "Original text record missing for MonoalphabeticSession.");
+      childLogger.error(
+        { originalTextId: monoalphabeticSessionInfo.originalTextId },
+        "Original text record missing for MonoalphabeticSession.",
+      );
       throw new Error(`Original text not found for id=${monoalphabeticSessionInfo.originalTextId}`);
     }
 
     return {
       text: originalTextRecord.content,
-      letterMapping: monoalphabeticSessionInfo.encryptionMapping as LetterMapping
+      letterMapping: monoalphabeticSessionInfo.encryptionMapping as LetterMapping,
     };
   });
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
-
-  let result = await prisma.monoalphabeticSession.findUnique({
+  const result = await prisma.monoalphabeticSession.findUnique({
     where: {
       sessionId: sessionId,
       expirationDate: {
-        gte: new Date()
-      }
-    }
+        gte: new Date(),
+      },
+    },
   });
 
   return result !== null;
 }
 
-
-export async function touchMonoalphabeticSession(sessionId: string, expirationDate: Date): Promise<void> {
-
+export async function touchMonoalphabeticSession(
+  sessionId: string,
+  expirationDate: Date,
+): Promise<void> {
   try {
     await prisma.monoalphabeticSession.update({
       where: {
-        sessionId: sessionId
+        sessionId: sessionId,
       },
       data: {
-        expirationDate: expirationDate
-      }
+        expirationDate: expirationDate,
+      },
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

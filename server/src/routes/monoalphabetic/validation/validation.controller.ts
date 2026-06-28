@@ -1,36 +1,52 @@
-﻿import { Request, Response, Router } from 'express';
-import { getEncryptionMapping, checkActiveMonoalphabeticSessionExists, touchMonoalphabeticSession } from './validation.service.js';
-import { validateLetterMapping } from './validation.logic.js';
-import { createExpirationDate } from '../utils.js';
-import type { LetterMapping, ValidatedLetterMapping } from '../logic.models.js';
-import type { ValidationRequest, ValidationResponse } from '../controller.models.js';
-import logger from '../../../../logger.js';
+﻿import { type Request, type Response, Router } from "express";
+import logger from "../../../../logger.js";
+import type { ValidationRequest, ValidationResponse } from "../controller.models.js";
+import type { LetterMapping, ValidatedLetterMapping } from "../logic.models.js";
+import { createExpirationDate } from "../utils.js";
+import { validateLetterMapping } from "./validation.logic.js";
+import {
+  checkActiveMonoalphabeticSessionExists,
+  getEncryptionMapping,
+  touchMonoalphabeticSession,
+} from "./validation.service.js";
 
 const router = Router();
 
-router.post('/validation', async (req: Request, res: Response) => {
-
+router.post("/validation", async (req: Request, res: Response) => {
   const requestBody: ValidationRequest = req.body;
 
-  if (typeof requestBody.sessionData.sessionId === "string" && await checkActiveMonoalphabeticSessionExists(requestBody.sessionData.sessionId)) {
-
+  if (
+    typeof requestBody.sessionData.sessionId === "string" &&
+    (await checkActiveMonoalphabeticSessionExists(requestBody.sessionData.sessionId))
+  ) {
     const newExpirationDate: Date = createExpirationDate();
     touchMonoalphabeticSession(requestBody.sessionData.sessionId, newExpirationDate);
-    const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(requestBody.sessionData.sessionId);
+    const correctEncryptionMapping: LetterMapping = await getEncryptionMapping(
+      requestBody.sessionData.sessionId,
+    );
     const responseBody: ValidationResponse = {
-      validatedLetterMapping: validateLetterMapping(requestBody.letterMapping, correctEncryptionMapping) as ValidatedLetterMapping,
+      validatedLetterMapping: validateLetterMapping(
+        requestBody.letterMapping,
+        correctEncryptionMapping,
+      ) as ValidatedLetterMapping,
       sessionData: {
-        expirationDate: newExpirationDate
-      }
+        expirationDate: newExpirationDate,
+      },
     };
-    const childLogger = logger.child({ sessionId: requestBody.sessionData.sessionId, expirationDate: newExpirationDate });
-    childLogger.trace("Successfully processed validation request and renewed MonoalphabeticSession expiration date.");
+    const childLogger = logger.child({
+      sessionId: requestBody.sessionData.sessionId,
+      expirationDate: newExpirationDate,
+    });
+    childLogger.trace(
+      "Successfully processed validation request and renewed MonoalphabeticSession expiration date.",
+    );
     res.json(responseBody);
-  }
-  else {
+  } else {
     const responseBody: ValidationResponse = { validatedLetterMapping: {} };
     const childLogger = logger.child({ sessionId: requestBody.sessionData.sessionId });
-    childLogger.warn("Unrecognized MonoalphabeticSession in validation request, sending empty response.");
+    childLogger.warn(
+      "Unrecognized MonoalphabeticSession in validation request, sending empty response.",
+    );
     res.status(400).json(responseBody);
   }
 });
