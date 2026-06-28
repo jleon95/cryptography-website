@@ -1,7 +1,8 @@
 import { pino, Bindings } from "pino";
+import { env as validEnv } from './src/env.js';
 
 const logger = pino({
-  level: process.env.PINO_LOG_LEVEL || "info",
+  level: validEnv.PINO_LOG_LEVEL || "info",
   formatters: {
     level: (label: string) => {
       return { level: label.toUpperCase() };

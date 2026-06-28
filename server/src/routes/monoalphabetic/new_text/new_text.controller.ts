@@ -8,13 +8,14 @@ import type { ChosenOriginalTextInfo } from '../service.models.js';
 import type { NewTextRequest, NewTextResponse } from '../controller.models.js';
 import logger from '../../../../logger.js';
 import crypto from "crypto";
+import { env as validEnv } from '../../../env.js';
 const router = Router();
 
 async function createNewMonoalphabeticSession(requestBody: NewTextRequest) {
   const chosenTextInfo: ChosenOriginalTextInfo = await chooseNewText();
   const encryptedTextInfo: EncryptedTextInfo = await createNewEncryptedText(chosenTextInfo.text, requestBody.difficultyOptions);
   const newSession = { sessionId: crypto.randomUUID(), expirationDate: createExpirationDate() };
-  await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +(process.env["MAX_HINTS"] as string));
+  await insertMonoalphabeticSession(newSession.sessionId, newSession.expirationDate, encryptedTextInfo.letterMapping, chosenTextInfo.id, +validEnv.MAX_HINTS);
   const responseBody: NewTextResponse = {
     sessionData: newSession,
     encryptedText: encryptedTextInfo.text

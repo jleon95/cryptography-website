@@ -1,12 +1,12 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PINO_LOG_LEVEL: string;
-      SESSION_DURATION: string;
-      MAX_HINTS: string;
-      FRONTEND_ADDRESS: string;
       DATABASE_URL: string;
+      FRONTEND_URL: string;
+      MAX_HINTS: string;
+      PINO_LOG_LEVEL: string;
       SESSION_DELETION_CRON_SCHEDULE: string;
+      SESSION_DURATION: string;
     }
   }
 }

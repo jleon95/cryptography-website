@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { env as validEnv } from '../env.js';
 
 declare global {
   namespace NodeJS {
@@ -16,7 +17,7 @@ declare const global: CustomNodeJsGlobal;
 
 const prisma = global.prisma || new PrismaClient();
 
-if (process.env.NODE_ENV === 'development') {
+if (validEnv.NODE_ENV === 'development') {
   global.prisma = prisma;
 }
 
