@@ -8,7 +8,7 @@ export const Env = type({
 	FRONTEND_ADDRESS: "string",
 	MAX_HINTS: "number > 0",
 	NODE_ENV: "'development' | 'production'",
-	PINO_LOG_LEVEL: "string?",
+	PINO_LOG_LEVEL: "'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'",
 	SESSION_DELETION_CRON_SCHEDULE: "string",
 	SESSION_DURATION: "number > 0",
 });
