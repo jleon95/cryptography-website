@@ -1,5 +1,5 @@
-import { pino, Bindings } from "pino";
-import { env as validEnv } from './src/env.js';
+import { type Bindings, pino } from "pino";
+import { env as validEnv } from "./src/env.js";
 
 const logger = pino({
   level: validEnv.PINO_LOG_LEVEL || "info",
@@ -9,10 +9,10 @@ const logger = pino({
     },
     bindings: (_bindings: Bindings) => {
       return {};
-    }
+    },
   },
   timestamp: pino.stdTimeFunctions.isoTime,
-  base: null
+  base: null,
 });
 
 export default logger;

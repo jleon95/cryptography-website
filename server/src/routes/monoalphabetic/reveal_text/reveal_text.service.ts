@@ -1,20 +1,19 @@
-import prisma from '../../../prisma/prisma-client.js';
-import logger from '../../../../logger.js';
+import logger from "../../../../logger.js";
+import prisma from "../../../prisma/prisma-client.js";
 
 export async function getOriginalText(sessionId: string): Promise<string> {
-
   const childLogger = logger.child({ sessionId });
   childLogger.trace("Retrieving original text for reveal request.");
 
   return await prisma.$transaction(async (tx) => {
     const monoalphabeticSessionInfo = await tx.monoalphabeticSession.findUnique({
       where: {
-        sessionId: sessionId
+        sessionId: sessionId,
       },
       select: {
         originalTextId: true,
-        encryptionMapping: true
-      }
+        encryptionMapping: true,
+      },
     });
 
     if (!monoalphabeticSessionInfo) {
@@ -24,30 +23,33 @@ export async function getOriginalText(sessionId: string): Promise<string> {
 
     const originalTextRecord = await tx.originalText.findUnique({
       where: {
-        id: monoalphabeticSessionInfo.originalTextId
+        id: monoalphabeticSessionInfo.originalTextId,
       },
       select: {
-        content: true
-      }
+        content: true,
+      },
     });
 
     if (!originalTextRecord) {
-      childLogger.warn({ originalTextId: monoalphabeticSessionInfo?.originalTextId }, "Original text record not found during reveal request.");
+      childLogger.warn(
+        { originalTextId: monoalphabeticSessionInfo?.originalTextId },
+        "Original text record not found during reveal request.",
+      );
+      throw new Error("Original text record not found during reveal request.");
     }
 
-    return originalTextRecord!.content;
+    return originalTextRecord.content;
   });
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
-
-  let result = await prisma.monoalphabeticSession.findUnique({
+  const result = await prisma.monoalphabeticSession.findUnique({
     where: {
       sessionId: sessionId,
       expirationDate: {
-        gte: new Date()
-      }
-    }
+        gte: new Date(),
+      },
+    },
   });
 
   return result !== null;

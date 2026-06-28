@@ -1,12 +1,15 @@
-﻿import { LetterMapping, ValidatedLetterMapping } from '../logic.models.js';
+﻿import type { LetterMapping, ValidatedLetterMapping } from "../logic.models.js";
 
-export function validateLetterMapping(letterMappingUnderReview: LetterMapping, correctLetterMapping: LetterMapping): ValidatedLetterMapping {
-
+export function validateLetterMapping(
+  letterMappingUnderReview: LetterMapping,
+  correctLetterMapping: LetterMapping,
+): ValidatedLetterMapping {
   const validatedMapping: ValidatedLetterMapping = {};
 
+  // Non-null assertion because it will have been validated before this function is called.
   for (const letter in letterMappingUnderReview)
-    // Non-null assertion because it will have been validated before this function is called.
-    validatedMapping[letter] = letterMappingUnderReview[letter]!.toUpperCase() === correctLetterMapping[letter] ? true : false;
+    validatedMapping[letter] =
+      letterMappingUnderReview[letter]!.toUpperCase() === correctLetterMapping[letter];
 
   return validatedMapping;
 }

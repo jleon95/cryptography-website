@@ -1,10 +1,9 @@
-﻿import { PreProcessOptions, LetterMapping, EncryptedTextInfo } from '../logic.models.js';
+﻿import type { EncryptedTextInfo, LetterMapping, PreProcessOptions } from "../logic.models.js";
 
 // Fisher-Yates shuffle
 function shuffle(array: Array<string>): Array<string> {
-
-  let newArray = [...array];
-  let currentIndex = newArray.length, randomIndex;
+  const newArray = [...array];
+  let currentIndex = newArray.length, randomIndex: number;
 
   while (currentIndex > 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
@@ -13,8 +12,7 @@ function shuffle(array: Array<string>): Array<string> {
     const currentValue = newArray[currentIndex];
     const randomValue = newArray[randomIndex];
 
-    if (currentValue === undefined || randomValue === undefined)
-      continue;
+    if (currentValue === undefined || randomValue === undefined) continue;
 
     newArray[currentIndex] = randomValue;
     newArray[randomIndex] = currentValue;
@@ -24,8 +22,7 @@ function shuffle(array: Array<string>): Array<string> {
 }
 
 function encryptText(text: string): EncryptedTextInfo {
-
-  const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
   const shuffledLetters = shuffle(letters);
   const mapping: LetterMapping = {};
 
@@ -33,8 +30,7 @@ function encryptText(text: string): EncryptedTextInfo {
     const letter = letters[i];
     const shuffledLetter = shuffledLetters[i];
 
-    if (letter === undefined || shuffledLetter === undefined)
-      continue;
+    if (letter === undefined || shuffledLetter === undefined) continue;
 
     mapping[letter] = shuffledLetter;
   }
@@ -47,9 +43,14 @@ function encryptText(text: string): EncryptedTextInfo {
   return { text: newText, letterMapping: mapping };
 }
 
-export async function createNewEncryptedText(newText: string, options: PreProcessOptions = { keepSpaces: false, keepPunctuation: false }): Promise<EncryptedTextInfo> {
-
-  newText = newText.normalize("NFD").replace(/[\u0301|\u0308]/gu, "").toUpperCase(); // Remove accents and diaeresis
+export async function createNewEncryptedText(
+  newText: string,
+  options: PreProcessOptions = { keepSpaces: false, keepPunctuation: false },
+): Promise<EncryptedTextInfo> {
+  newText = newText
+    .normalize("NFD")
+    .replace(/[\u0301|\u0308]/gu, "")
+    .toUpperCase(); // Remove accents and diaeresis
   newText = newText.replace(/N\u0303/gu, "\u00D1"); // Swap N + ~ modifier for the proper character
   newText = options.keepSpaces ? newText : newText.replace(/\s/gu, "");
   newText = options.keepPunctuation ? newText : newText.replace(/\p{Punctuation}/gu, "");

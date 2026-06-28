@@ -1,11 +1,10 @@
-import prisma from '../../../prisma/prisma-client.js';
-import type { LetterMapping } from '../logic.models.js';
-import type { ChosenOriginalTextInfo } from '../service.models.js';
-import { Prisma } from '@prisma/client';
-import logger from '../../../../logger.js';
+import { Prisma } from "@prisma/client";
+import logger from "../../../../logger.js";
+import prisma from "../../../prisma/prisma-client.js";
+import type { LetterMapping } from "../logic.models.js";
+import type { ChosenOriginalTextInfo } from "../service.models.js";
 
 export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
-
   return await prisma.$transaction(async (tx) => {
     const totalOriginalTexts: number = await tx.originalText.count();
     if (totalOriginalTexts === 0) {
@@ -19,15 +18,20 @@ export async function chooseNewText(): Promise<ChosenOriginalTextInfo> {
     });
 
     if (!randomTextRecord) {
-      throw new Error('Unable to retrieve the chosen new text.');
+      throw new Error("Unable to retrieve the chosen new text.");
     }
 
     return { text: randomTextRecord.content, id: randomTextRecord.id };
   });
 }
 
-export async function insertMonoalphabeticSession(sessionId: string, expirationDate: Date, letterMapping: LetterMapping, originalTextId: number, maxHints: number): Promise<void> {
-
+export async function insertMonoalphabeticSession(
+  sessionId: string,
+  expirationDate: Date,
+  letterMapping: LetterMapping,
+  originalTextId: number,
+  maxHints: number,
+): Promise<void> {
   try {
     await prisma.monoalphabeticSession.create({
       data: {
@@ -36,8 +40,8 @@ export async function insertMonoalphabeticSession(sessionId: string, expirationD
         originalTextId: originalTextId,
         encryptionMapping: letterMapping,
         hintsUsed: 0,
-        maxHints: maxHints
-      }
+        maxHints: maxHints,
+      },
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -48,26 +52,24 @@ export async function insertMonoalphabeticSession(sessionId: string, expirationD
 }
 
 export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
-
-  let result = await prisma.monoalphabeticSession.findUnique({
+  const result = await prisma.monoalphabeticSession.findUnique({
     where: {
       sessionId: sessionId,
       expirationDate: {
-        gte: new Date()
-      }
-    }
+        gte: new Date(),
+      },
+    },
   });
 
   return result !== null;
 }
 
 export async function deleteMonoalphabeticSession(sessionId: string): Promise<void> {
-
   try {
     await prisma.monoalphabeticSession.delete({
       where: {
-        sessionId: sessionId
-      }
+        sessionId: sessionId,
+      },
     });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {

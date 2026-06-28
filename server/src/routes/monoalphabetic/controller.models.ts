@@ -1,75 +1,75 @@
-import { LetterMapping, ValidatedLetterMapping } from './logic.models.js';
+import type { LetterMapping, ValidatedLetterMapping } from "./logic.models.js";
 
 export interface NewTextRequest {
   difficultyOptions: {
-    keepSpaces: boolean,
-    keepPunctuation: boolean
-  },
+    keepSpaces: boolean;
+    keepPunctuation: boolean;
+  };
   sessionData: {
-    sessionId: string,
-  }
+    sessionId: string;
+  };
 }
 
 export interface NewTextResponse {
-  encryptedText: string
+  encryptedText: string;
   sessionData?: {
-    sessionId: string,
-    expirationDate: Date
-  },
+    sessionId: string;
+    expirationDate: Date;
+  };
 }
 
 export interface UpdateTextRequest {
   difficultyOptions: {
-    keepSpaces: boolean,
-    keepPunctuation: boolean
-  },
+    keepSpaces: boolean;
+    keepPunctuation: boolean;
+  };
   sessionData: {
-    sessionId: string,
-  }
+    sessionId: string;
+  };
 }
 
 export interface UpdateTextResponse {
-  encryptedText: string
+  encryptedText: string;
   sessionData?: {
-    expirationDate: Date
-  }
+    expirationDate: Date;
+  };
 }
 
 export interface RevealTextRequest {
   sessionData: {
-    sessionId: string
-  }
+    sessionId: string;
+  };
 }
 
 export interface RevealTextResponse {
-  originalText: string
-  sessionData?: {}
+  originalText: string;
+  sessionData?: {};
 }
 
 export interface ValidationRequest {
   sessionData: {
-    sessionId: string
-  }
-  letterMapping: LetterMapping,
+    sessionId: string;
+  };
+  letterMapping: LetterMapping;
 }
 
 export interface ValidationResponse {
-  validatedLetterMapping: ValidatedLetterMapping
+  validatedLetterMapping: ValidatedLetterMapping;
   sessionData?: {
-    expirationDate: Date
-  }
+    expirationDate: Date;
+  };
 }
 
 export interface HintRequest {
-  requestedLetter: string,
+  requestedLetter: string;
   sessionData: {
-    sessionId: string
-  }
+    sessionId: string;
+  };
 }
 
 export interface HintResponse {
-  correctLetter: string
+  correctLetter: string;
   sessionData?: {
-    expirationDate: Date
-  }
+    expirationDate: Date;
+  };
 }
