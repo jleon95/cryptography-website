@@ -10,7 +10,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "dbaeumer.vscode-eslint",
+        "biomejs.biome",
         "ms-vscode.vscode-typescript-next",
         "Prisma.prisma",
         "Vue.volar",
@@ -18,9 +18,16 @@
       ],
       "settings": {
         "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": "always"
+          "source.fixAll.biome": "always",
+          "source.organizeImports.biome": "explicit"
         },
-        "js/ts.validate.enabled": true
+        "js/ts.validate.enabled": true,
+        "biome.configurationPath": "/workspaces/cryptography-website/biome.json",
+        "biome.lsp.bin": "/workspaces/cryptography-website/server/node_modules/@biomejs/biome/bin/biome",
+        "[json]": {
+          "editor.tabSize": 2,
+          "editor.detectIndentation": false
+        }
       }
     }
   },
