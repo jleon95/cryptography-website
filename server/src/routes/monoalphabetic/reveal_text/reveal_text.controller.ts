@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
 import logger from "../../../../logger.js";
 import type { RevealTextRequest, RevealTextResponse } from "../controller.models.js";
-import { checkActiveMonoalphabeticSessionExists, getOriginalText } from "./reveal_text.service.js";
+import { checkActiveMonoalphabeticSessionExists, getOriginalText } from "./reveal_text.repository.js";
 
 const router = Router();
 
