@@ -5,6 +5,7 @@ import ping from './src/routes/ping.controller.js';
 import { Request, Response, NextFunction } from 'express';
 import cors from "cors";
 import Debug from 'debug';
+import { env as validEnv } from './src/env.js';
 
 interface HttpError extends Error {
     status?: number;
@@ -15,11 +16,11 @@ const app = express();
 
 // ===== CORS Configuration =====
 // Enable CORS for frontend requests
-app.use(cors({ origin: process.env.FRONTEND_ADDRESS, methods: ["GET", "POST"], credentials: true }));
+app.use(cors({ origin: validEnv.FRONTEND_ADDRESS, methods: ["GET", "POST"], credentials: true }));
 
 // Custom CORS headers for cross-origin requests with credentials
 app.use(function (_req: Request, res: Response, next: NextFunction) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_ADDRESS as string);
+  res.setHeader('Access-Control-Allow-Origin', validEnv.FRONTEND_ADDRESS);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
