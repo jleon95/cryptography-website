@@ -54,7 +54,7 @@ export async function populateNewText() {
       sessionId: sessionStore.sessionId
     }
   };
-  const response: NewTextResponse = await callAPI(Action.NEW_TEXT, options) as NewTextResponse;
+  const response: NewTextResponse = await callAPI(Action.REQUEST_NEW_TEXT, options) as NewTextResponse;
 
   if ("sessionData" in response) {
 

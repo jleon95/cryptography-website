@@ -29,7 +29,7 @@ export async function validateDecryption() {
       },
       letterMapping: lettersToValidate
     };
-    const response: ValidationResponse = await callAPI(Action.VALIDATION, validationRequestBody) as ValidationResponse;
+    const response: ValidationResponse = await callAPI(Action.VALIDATE_SOLUTION, validationRequestBody) as ValidationResponse;
 
     if ("sessionData" in response) {
 

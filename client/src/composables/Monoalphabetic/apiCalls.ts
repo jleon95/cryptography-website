@@ -11,11 +11,11 @@ export async function callAPI(action: Action, parameters: NewTextRequest|UpdateT
 }
 
 export enum Action {
-  NEW_TEXT = "new_text",
+  REQUEST_NEW_TEXT = "request_new_text",
   UPDATE_TEXT = "update_text",
   REVEAL_TEXT = "reveal_text",
-  REQUEST_HINT = "hint",
-  VALIDATION = "validation"
+  REQUEST_HINT = "request_hint",
+  VALIDATE_SOLUTION = "validate_solution"
 }
 
 export interface NewTextResponse {

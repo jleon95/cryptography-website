@@ -1,82 +1,22 @@
-import { Prisma } from "@prisma/client";
-import logger from "../../../../logger.js";
-import prisma from "../../../prisma/prisma-client.js";
-import type { EncryptedTextInfo, LetterMapping } from "../logic.models.js";
+import type { EncryptedTextInfo, LetterMapping, PreProcessOptions } from "../logic.models.js";
 
-export async function getOriginalTextAndMappingFromMonoalphabeticSession(
-  sessionId: string,
-): Promise<EncryptedTextInfo> {
-  return await prisma.$transaction(async (tx) => {
-    const monoalphabeticSessionInfo = await tx.monoalphabeticSession.findUnique({
-      where: {
-        sessionId: sessionId,
-      },
-      select: {
-        originalTextId: true,
-        encryptionMapping: true,
-      },
-    });
-
-    if (!monoalphabeticSessionInfo) {
-      const childLogger = logger.child({ sessionId });
-      childLogger.warn("MonoalphabeticSession not found.");
-      throw new Error(`MonoalphabeticSession not found for sessionId=${sessionId}`);
-    }
-    const originalTextRecord = await tx.originalText.findUnique({
-      where: {
-        id: monoalphabeticSessionInfo.originalTextId,
-      },
-      select: {
-        content: true,
-      },
-    });
-
-    if (!originalTextRecord) {
-      const childLogger = logger.child({ sessionId });
-      childLogger.error(
-        { originalTextId: monoalphabeticSessionInfo.originalTextId },
-        "Original text record missing for MonoalphabeticSession.",
-      );
-      throw new Error(`Original text not found for id=${monoalphabeticSessionInfo.originalTextId}`);
-    }
-
-    return {
-      text: originalTextRecord.content,
-      letterMapping: monoalphabeticSessionInfo.encryptionMapping as LetterMapping,
-    };
+function encryptTextFromExistingMapping(text: string, existingMapping: LetterMapping): string {
+  // Careful: the text may contain characters that are not in the letter mapping, such as spaces or punctuation. Those should be left unchanged.
+  return text.replace(/./g, (character: string): string => {
+    return existingMapping[character] !== undefined ? existingMapping[character] : character;
   });
 }
 
-export async function checkActiveMonoalphabeticSessionExists(sessionId: string): Promise<boolean> {
-  const result = await prisma.monoalphabeticSession.findUnique({
-    where: {
-      sessionId: sessionId,
-      expirationDate: {
-        gte: new Date(),
-      },
-    },
-  });
-
-  return result !== null;
-}
-
-export async function touchMonoalphabeticSession(
-  sessionId: string,
-  expirationDate: Date,
-): Promise<void> {
-  try {
-    await prisma.monoalphabeticSession.update({
-      where: {
-        sessionId: sessionId,
-      },
-      data: {
-        expirationDate: expirationDate,
-      },
-    });
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      const childLogger = logger.child({ sessionId, errorCode: e.code, errorMeta: e.meta });
-      childLogger.error("Error when attempting to touch existing MonoalphabeticSession entry.");
-    }
-  }
+export async function reCreateEncryptedText(
+  existingEncryptedTextInfo: EncryptedTextInfo,
+  options: PreProcessOptions,
+): Promise<string> {
+  let newText = existingEncryptedTextInfo.text
+    .normalize("NFD")
+    .replace(/[\u0301|\u0308]/gu, "")
+    .toUpperCase(); // Remove accents and diaeresis
+  newText = newText.replace(/N\u0303/gu, "\u00D1"); // Swap N + ~ modifier for the proper character
+  newText = options.keepSpaces ? newText : newText.replace(/\s/gu, "");
+  newText = options.keepPunctuation ? newText : newText.replace(/\p{Punctuation}/gu, "");
+  return encryptTextFromExistingMapping(newText, existingEncryptedTextInfo.letterMapping);
 }
