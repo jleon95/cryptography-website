@@ -39,7 +39,7 @@ export async function displaySolution() {
     };
     const response: RevealTextResponse = await callAPI(Action.REVEAL_TEXT, revealTextRequestBody) as RevealTextResponse;
 
-    if ("sessionData" in response) {
+    if ("originalText" in response) {
       gameProgressStore.isSolutionRevealed = true;
       displaySolutionInTextarea(response.originalText);
       const decipherGridDOMStatesStore = useDecipherGridDOMStatesStore();

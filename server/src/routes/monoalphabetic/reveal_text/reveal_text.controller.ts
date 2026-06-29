@@ -15,8 +15,7 @@ router.post("/reveal_text", async (req: Request, res: Response) => {
   ) {
     const originalText: string = await getOriginalText(requestBody.sessionData.sessionId);
     const responseBody: RevealTextResponse = {
-      originalText: originalText,
-      sessionData: {},
+      originalText: originalText
     };
     childLogger.trace("Successfully processed text reveal request.");
     res.json(responseBody);
