@@ -1,4 +1,4 @@
-import type { EncryptedTextInfo, LetterMapping, PreProcessOptions } from "../logic.models.js";
+import type { EncryptedTextInfo, LetterMapping, PreProcessOptions } from "../service.models.js";
 
 function encryptTextFromExistingMapping(text: string, existingMapping: LetterMapping): string {
   // Careful: the text may contain characters that are not in the letter mapping, such as spaces or punctuation. Those should be left unchanged.

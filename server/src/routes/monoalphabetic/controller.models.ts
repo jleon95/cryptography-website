@@ -1,75 +1,108 @@
-import type { LetterMapping, ValidatedLetterMapping } from "./logic.models.js";
+import { type as arkType } from "arktype";
+import { LetterMapping, ValidatedLetterMapping } from "./service.models.js";
 
-export interface NewTextRequest {
+// --- NewText: Request / Response ---
+export const NewTextRequest = arkType({
   difficultyOptions: {
-    keepSpaces: boolean;
-    keepPunctuation: boolean;
-  };
+    keepSpaces: "boolean",
+    keepPunctuation: "boolean",
+  },
   sessionData: {
-    sessionId: string;
-  };
-}
+    sessionId: "string.uuid",
+  },
+});
 
-export interface NewTextResponse {
-  encryptedText: string;
-  sessionData?: {
-    sessionId: string;
-    expirationDate: Date;
-  };
-}
+export type NewTextRequest = typeof NewTextRequest.infer;
 
-export interface UpdateTextRequest {
+
+export const NewTextResponse = arkType({ 
+  encryptedText: "string.alpha > 0",
+  "sessionData?": {
+    sessionId: "string.uuid",
+    expirationDate: "Date",
+  },
+});
+
+export type NewTextResponse = typeof NewTextResponse.infer;
+
+
+// --- UpdateText: Request / Response ---
+export const UpdateTextRequest = arkType({
   difficultyOptions: {
-    keepSpaces: boolean;
-    keepPunctuation: boolean;
-  };
+    keepSpaces: "boolean",
+    keepPunctuation: "boolean",
+  },
   sessionData: {
-    sessionId: string;
-  };
-}
+    sessionId: "string.uuid",
+  },
+});
 
-export interface UpdateTextResponse {
-  encryptedText: string;
-  sessionData?: {
-    expirationDate: Date;
-  };
-}
+export type UpdateTextRequest = typeof UpdateTextRequest.infer;
 
-export interface RevealTextRequest {
+
+export const UpdateTextResponse = arkType({
+  encryptedText: "string.alpha > 0",
+  "sessionData?": {
+    expirationDate: "Date",
+  },
+});
+
+export type UpdateTextResponse = typeof UpdateTextResponse.infer;
+
+// --- RevealText: Request / Response ---
+export const RevealTextRequest = arkType({
   sessionData: {
-    sessionId: string;
-  };
-}
+    sessionId: "string.uuid",
+  },
+});
 
-export interface RevealTextResponse {
-  originalText: string;
-  sessionData?: {};
-}
+export type RevealTextRequest = typeof RevealTextRequest.infer;
 
-export interface ValidationRequest {
+
+export const RevealTextResponse = arkType({
+  originalText: "string > 0"
+});
+
+export type RevealTextResponse = typeof RevealTextResponse.infer;
+
+
+// --- Validation: Request / Response ---
+export const ValidationRequest = arkType({
   sessionData: {
-    sessionId: string;
-  };
-  letterMapping: LetterMapping;
-}
+    sessionId: "string.uuid",
+  },
+  letterMapping: LetterMapping,
+});
 
-export interface ValidationResponse {
-  validatedLetterMapping: ValidatedLetterMapping;
-  sessionData?: {
-    expirationDate: Date;
-  };
-}
+export type ValidationRequest = typeof ValidationRequest.infer;
 
-export interface HintRequest {
-  requestedLetter: string;
+
+export const ValidationResponse = arkType({
+  validatedLetterMapping: ValidatedLetterMapping,
+  "sessionData?": {
+    expirationDate: "Date",
+  },
+});
+
+export type ValidationResponse = typeof ValidationResponse.infer;
+
+
+// --- Hint: Request / Response ---
+export const HintRequest = arkType({
+  requestedLetter: "string.alpha == 1",
   sessionData: {
-    sessionId: string;
-  };
-}
+    sessionId: "string.uuid",
+  },
+});
 
-export interface HintResponse {
-  correctLetter: string;
-  sessionData?: {
-    expirationDate: Date;
-  };
-}
+export type HintRequest = typeof HintRequest.infer;
+
+
+export const HintResponse = arkType({
+  correctLetter: "string.alpha == 1",
+  "sessionData?": {
+    expirationDate: "Date",
+  },
+});
+
+export type HintResponse = typeof HintResponse.infer;

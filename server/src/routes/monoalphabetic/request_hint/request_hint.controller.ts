@@ -1,7 +1,7 @@
 import { type Request, type Response, Router } from "express";
 import logger from "../../../../logger.js";
 import type { HintRequest, HintResponse } from "../controller.models.js";
-import type { LetterMapping } from "../logic.models.js";
+import type { LetterMapping } from "../service.models.js";
 import { createExpirationDate } from "../utils.js";
 import {
   checkActiveMonoalphabeticSessionExists,
