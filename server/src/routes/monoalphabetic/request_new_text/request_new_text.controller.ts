@@ -3,8 +3,8 @@ import { type Request, type Response, Router } from "express";
 import logger from "../../../../logger.js";
 import { env as validEnv } from "../../../env.js";
 import type { NewTextRequest, NewTextResponse } from "../controller.models.js";
-import type { EncryptedTextInfo } from "../logic.models.js";
-import type { ChosenOriginalTextInfo } from "../service.models.js";
+import type { ChosenOriginalTextInfo } from "../repository.models.js";
+import type { EncryptedTextInfo } from "../service.models.js";
 import { createExpirationDate } from "../utils.js";
 import {
   checkActiveMonoalphabeticSessionExists,

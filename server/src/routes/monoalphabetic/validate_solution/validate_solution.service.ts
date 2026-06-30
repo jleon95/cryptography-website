@@ -1,4 +1,4 @@
-﻿import type { LetterMapping, ValidatedLetterMapping } from "../logic.models.js";
+﻿import type { LetterMapping, ValidatedLetterMapping } from "../service.models.js";
 
 export function validateLetterMapping(
   letterMappingUnderReview: LetterMapping,
