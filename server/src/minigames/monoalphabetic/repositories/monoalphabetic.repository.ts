@@ -126,4 +126,21 @@ export class MonoalphabeticRepository implements IMonoalphabeticRepository {
       throw new AppError("Failed to update monoalphabetic session.", 500, false);
     }
   }
+
+  public async deleteSession(sessionId: string, tx = this.prisma): Promise<void> {
+    try {
+      await tx.monoalphabeticSession.delete({
+        where: {
+          sessionId: sessionId,
+        },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2025") {
+          throw new NotFoundError("Monoalphabetic session not found.");
+        }
+      }
+      throw new AppError("Failed to delete monoalphabetic session.", 500, false);
+    }
+  }
 }

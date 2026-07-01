@@ -27,4 +27,6 @@ export interface IMonoalphabeticRepository {
     isHintConsumed?: boolean,
     tx?: PrismaClient,
   ): Promise<void>;
+
+  deleteSession(sessionId: string, tx?: PrismaClient): Promise<void>;
 }
