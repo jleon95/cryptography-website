@@ -89,5 +89,9 @@ export class MonoalphabeticService {
     return newEncryptedTextInfo.encryptedText;
   }
 
-  public async revealText(sessionId: string): Promise<string> {}
+  public async revealText(sessionId: string): Promise<string> {
+    const currentSession: GetSessionResponse =
+      await this.monoalphabeticRepository.getSessionById(sessionId);
+    return this.monoalphabeticRepository.getTextById(currentSession.originalTextId);
+  }
 }
