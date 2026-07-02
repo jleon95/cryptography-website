@@ -13,6 +13,8 @@ export interface IMonoalphabeticRepository {
 
   getTextByOffset(offset: number, tx?: PrismaClient): Promise<string>;
 
+  getTextById(textId: number, tx?: PrismaClient): Promise<string>;
+
   createSession(
     sessionId: string,
     expirationDate: Date,

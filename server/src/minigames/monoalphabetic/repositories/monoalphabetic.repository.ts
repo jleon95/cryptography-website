@@ -40,6 +40,24 @@ export class MonoalphabeticRepository implements IMonoalphabeticRepository {
     }
   }
 
+  public async getTextById(textId: number, tx = this.prisma): Promise<string> {
+    try {
+      const textRecord = await tx.originalText.findUniqueOrThrow({
+        where: {
+          id: textId,
+        },
+      });
+      return textRecord.content;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === "P2025") {
+          throw new NotFoundError("Monoalphabetic text not found.");
+        }
+      }
+      throw new AppError("Failed to get monoalphabetic text from database.", 500, false);
+    }
+  }
+
   public async createSession(
     sessionId: string,
     expirationDate: Date,
