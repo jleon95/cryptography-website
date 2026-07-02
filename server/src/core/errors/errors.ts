@@ -3,7 +3,7 @@ export class AppError extends Error {
 
   constructor(
     message: string,
-    public readonly statusCode: number = 500,
+    public readonly statusCode?: number,
     public readonly isOperational: boolean = true,
   ) {
     super(message);
@@ -35,5 +35,11 @@ export class NotFoundError extends AppError {
   // 404 = resource not found
   constructor(message: string) {
     super(message, 404);
+  }
+}
+
+export class MonoalphabeticNoHintsLeftError extends AppError {
+  constructor(message: string) {
+    super(message, 403);
   }
 }
