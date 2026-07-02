@@ -2,8 +2,10 @@ import type { PrismaClient } from "@prisma/client";
 import type { LetterMapping } from "../../dtos/logic.dto.js";
 
 export type GetSessionResponse = {
-  originalTextId: number;
   encryptionMapping: LetterMapping;
+  expirationDate: Date;
+  hintsUsed: number;
+  originalTextId: number;
 };
 
 export interface IMonoalphabeticRepository {

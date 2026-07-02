@@ -84,8 +84,10 @@ export class MonoalphabeticRepository implements IMonoalphabeticRepository {
         },
       });
       return {
-        originalTextId: session.originalTextId,
         encryptionMapping: session.encryptionMapping,
+        expirationDate: session.expirationDate,
+        hintsUsed: session.hintsUsed,
+        originalTextId: session.originalTextId,
       } as GetSessionResponse;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
