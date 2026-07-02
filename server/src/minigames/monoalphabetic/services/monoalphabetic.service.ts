@@ -67,11 +67,27 @@ export class MonoalphabeticService {
     userMapping: LetterMapping,
   ): Promise<ValidatedLetterMapping> {}
 
-  public async updateDifficulty(
+  public async updateTextWithDifficultyOptions(
     sessionId: string,
     keepSpaces: boolean,
     keepPunctuation: boolean,
-  ): Promise<void> {}
+  ): Promise<string> {
+    const currentSession: GetSessionResponse =
+      await this.monoalphabeticRepository.getSessionById(sessionId);
+    const originalText: string = await this.monoalphabeticRepository.getTextById(
+      currentSession.originalTextId,
+    );
+    const newEncryptedTextInfo = createNewEncryptedText(
+      originalText,
+      keepSpaces,
+      keepPunctuation,
+    );
+    this.monoalphabeticRepository.updateSession(
+      sessionId,
+      createExpirationDate(),
+    );
+    return newEncryptedTextInfo.encryptedText;
+  }
 
   public async revealText(sessionId: string): Promise<string> {}
 }
